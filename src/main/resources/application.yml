@@ -1,0 +1,25 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: adote-um-amanha
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ages
+    username: ${DB_USERNAME:ages}
+    password: ${DB_PASSWORD:ages}
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:adote-um-amanha-jwt}
+    expiration: ${JWT_EXPIRATION:86400000} # 1 dia em m
+  public:
+    path: "/public/**"
