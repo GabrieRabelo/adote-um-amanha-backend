@@ -9,10 +9,11 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Entity(name = "usuario")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "email")
+@Entity(name = "usuario")
+@Builder(setterPrefix = "with")
 public class UsuarioEntity implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
@@ -31,6 +32,15 @@ public class UsuarioEntity implements Serializable {
 
     @JsonIgnore
     private String senha;
+
+    private String documento;
+
+    private String telefone;
+
+    private String site;
+
+    @Embedded
+    private Endereco endereco;
 
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
