@@ -1,6 +1,5 @@
 package br.com.ages.adoteumamanha.controller;
 
-import br.com.ages.adoteumamanha.controller.api.LoginControllerApi;
 import br.com.ages.adoteumamanha.dto.request.LoginRequest;
 import br.com.ages.adoteumamanha.dto.response.LoginResponse;
 import br.com.ages.adoteumamanha.security.AuthenticationService;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/public/autenticacao")
-public class LoginController implements LoginControllerApi {
+public class LoginController {
 
     private final AuthenticationService service;
 

@@ -2,6 +2,7 @@ package br.com.ages.adoteumamanha.repository;
 
 import br.com.ages.adoteumamanha.domain.entity.Endereco;
 import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,7 @@ class UsuarioRepositoryTest {
                 .withAtivo(true)
                 .withDocumento("12312312312")
                 .withEndereco(endereco)
+                .withPerfil(Perfil.CASA)
                 .build();
 
         usuarioRepository.save(usuarioParaSalvar);
