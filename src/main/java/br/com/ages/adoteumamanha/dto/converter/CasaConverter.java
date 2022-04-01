@@ -1,4 +1,4 @@
-package br.com.ages.adoteumamanha.converter;
+package br.com.ages.adoteumamanha.dto.converter;
 
 import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;

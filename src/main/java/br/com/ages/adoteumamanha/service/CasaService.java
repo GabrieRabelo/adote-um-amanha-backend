@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.service;
 
-import br.com.ages.adoteumamanha.converter.CasaConverter;
+import br.com.ages.adoteumamanha.dto.converter.CasaConverter;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
