@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.domain.entity;
 
-import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
+import br.com.ages.adoteumamanha.domain.enumeration.RoleEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class UsuarioEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_ID, allocationSize = 1)
     @Column(nullable = false)
-    private Long idUsuario;
+    private Long id;
 
     private Boolean ativo;
 
@@ -33,7 +33,7 @@ public class UsuarioEntity implements Serializable {
     private String senha;
 
     @Enumerated(EnumType.STRING)
-    private Perfil perfil;
+    private RoleEnum roleEnum;
 
 }
 

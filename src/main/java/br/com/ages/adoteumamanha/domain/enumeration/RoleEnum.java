@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum Perfil {
+public enum RoleEnum {
 
     ADMIN("ROLE_ADMIN"),
     CASA("ROLE_CASA"),
