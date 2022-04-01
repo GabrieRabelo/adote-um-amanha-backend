@@ -16,7 +16,7 @@ public class CasaController {
 
     private final CasaService casaService;
 
-    @GetMapping(value = "/public/casas/{id}")
+    @GetMapping(value = "/casas/{id}")
     public ResponseEntity<CasaDescricaoResponse> buscaCasaPorId(@PathVariable Long id) {
 
         log.info("Buscando um usuario por id. Id: {}", id);
