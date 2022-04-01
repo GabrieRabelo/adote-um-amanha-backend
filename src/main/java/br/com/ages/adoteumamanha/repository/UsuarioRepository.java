@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.repository;
 
 import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
     Optional<UsuarioEntity> findByEmail(String email);
+
+    Optional<UsuarioEntity> findByIdAndPerfil(Long id, Perfil perfil);
 
 }

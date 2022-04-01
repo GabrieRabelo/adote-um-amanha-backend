@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,9 @@ class CasaServiceTest {
                 .withEmail("usuario@gmail.com")
                 .withNome("jarbas")
                 .withTelefone("0")
+                .withPerfil(Perfil.CASA)
                 .build();
-        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
+        when(usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.of(usuario));
 
         var casaDescricao = casaService.buscaCasaDescricao(id);
 
@@ -46,7 +48,7 @@ class CasaServiceTest {
     void buscaCasaDescricaoComResultadoVazio() {
 
         long id = 1;
-        when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
+        when(usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.empty());
 
         var casaDescricao = casaService.buscaCasaDescricao(id);
 

@@ -51,4 +51,37 @@ class UsuarioRepositoryTest {
 
         assertThat(usuario.getEmail()).isEqualTo(usuarioParaSalvar.getEmail());
     }
+
+// TOD0 : PESQUISAR COMO REALIZAR ESTE TESTE
+//    @Test
+//    void getByIdAndPerfil() {
+//        //Arrange
+//        Endereco endereco = Endereco.builder()
+//                .withBairro("Partenon")
+//                .withCEP("91530034")
+//                .withComplemento("")
+//                .withNumero(1)
+//                .build();
+//
+//        UsuarioEntity usuarioParaSalvar = UsuarioEntity.builder()
+//                .withEmail("rabelo@rab.elo")
+//                .withAtivo(true)
+//                .withDocumento("12312312312")
+//                .withEndereco(endereco)
+//                .withPerfil(Perfil.CASA)
+//                .build();
+//
+//        usuarioRepository.save(usuarioParaSalvar);
+//        var user = usuarioParaSalvar.getIdUsuario();
+//        var usuarioSalvo = usuarioRepository.findAll().stream().findFirst().get();
+//
+//        //Act
+//        Optional<UsuarioEntity> usuarioOpt = usuarioRepository.findByIdAndPerfil(user, Perfil.CASA);
+//
+//        //Assert
+//        assertThat(usuarioOpt).isPresent();
+//        var usuario = usuarioOpt.get();
+//
+//        assertThat(usuario.getEmail()).isEqualTo(usuarioParaSalvar.getEmail());
+//    }
 }
