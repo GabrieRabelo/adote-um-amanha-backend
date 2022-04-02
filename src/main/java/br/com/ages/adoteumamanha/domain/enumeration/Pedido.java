@@ -3,10 +3,10 @@ package br.com.ages.adoteumamanha.domain.enumeration;
 import lombok.Getter;
 
 @Getter
-public enum CategoriaEnum {
+public enum Pedido {
 
-    BEM,
-    SERVIÇO
+    DOACAO,
+    NECESSIDADE
 
 }
 

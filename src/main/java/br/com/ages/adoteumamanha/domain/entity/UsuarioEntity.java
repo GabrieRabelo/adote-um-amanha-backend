@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.domain.entity;
 
-import br.com.ages.adoteumamanha.domain.enumeration.RoleEnum;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -9,10 +9,12 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Entity(name = "usuario")
+@Table(name = "usuario")
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "email")
+@Builder(setterPrefix = "with")
 public class UsuarioEntity implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
@@ -23,17 +25,22 @@ public class UsuarioEntity implements Serializable {
     @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Boolean ativo;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
     private String email;
 
     @JsonIgnore
+    @Column(nullable = false)
     private String senha;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoleEnum roleEnum;
+    private Perfil perfil;
 
 }
 

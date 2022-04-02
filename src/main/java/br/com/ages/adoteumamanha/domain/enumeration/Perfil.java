@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum RoleEnum {
+public enum Perfil {
 
     ADMIN("ROLE_ADMIN"),
     CASA("ROLE_CASA"),
     DOADOR("ROLE_DOADOR");
 
-    private final String role;
+    private final String descricao;
 
 }
 
