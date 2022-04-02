@@ -3,7 +3,7 @@ package br.com.ages.adoteumamanha.domain.enumeration;
 import lombok.Getter;
 
 @Getter
-public enum SubCategoriaEnum {
+public enum Subcategoria {
 
     SAUDE,
     PROFISSIONALIZACAO,

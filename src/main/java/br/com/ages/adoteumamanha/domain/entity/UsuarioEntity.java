@@ -1,15 +1,17 @@
 package br.com.ages.adoteumamanha.domain.entity;
 
-import br.com.ages.adoteumamanha.domain.enumeration.RoleEnum;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Builder
 @Getter
 @Setter
-@Entity(name = "usuario")
+@Table(name = "usuario")
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "email")
@@ -23,17 +25,22 @@ public class UsuarioEntity implements Serializable {
     @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Boolean ativo;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
     private String email;
 
     @JsonIgnore
+    @Column(nullable = false)
     private String senha;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoleEnum roleEnum;
+    private Perfil perfil;
 
 }
 
