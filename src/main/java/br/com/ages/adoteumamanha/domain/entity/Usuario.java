@@ -12,9 +12,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "email")
-@Entity(name = "usuario")
+@Entity
 @Builder(setterPrefix = "with")
-public class UsuarioEntity implements Serializable {
+public class Usuario implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
     public static final String SEQUENCE_ID = "USUARIO_ID_SEQ";
@@ -22,7 +22,7 @@ public class UsuarioEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_ID, allocationSize = 1)
     @Column(nullable = false)
-    private Long idUsuario;
+    private Long id;
 
     private Boolean ativo;
 

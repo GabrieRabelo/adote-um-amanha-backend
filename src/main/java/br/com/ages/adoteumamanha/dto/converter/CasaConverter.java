@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.dto.converter;
 
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CasaConverter {
 
-    public static CasaDescricaoResponse paraResponse(UsuarioEntity usuarioEntity) {
+    public static CasaDescricaoResponse paraResponse(Usuario usuario) {
         return CasaDescricaoResponse.builder()
-                .withSite(usuarioEntity.getSite())
-                .withEndereco(usuarioEntity.getEndereco())
-                .withEmail(usuarioEntity.getEmail())
-                .withNome(usuarioEntity.getNome())
-                .withTelefone(usuarioEntity.getTelefone())
+                .withSite(usuario.getSite())
+                .withEndereco(usuario.getEndereco())
+                .withEmail(usuario.getEmail())
+                .withNome(usuario.getNome())
+                .withTelefone(usuario.getTelefone())
                 .build();
     }
 }

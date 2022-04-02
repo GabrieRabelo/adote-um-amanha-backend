@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.service;
 
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
@@ -21,7 +21,7 @@ class CasaServiceTest {
     void buscaCasaDescricao() {
 
         long id = 1;
-        var usuario = UsuarioEntity.builder()
+        var usuario = Usuario.builder()
                 .withSite("batata.com")
                 .withEmail("usuario@gmail.com")
                 .withNome("jarbas")

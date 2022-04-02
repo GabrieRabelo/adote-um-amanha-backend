@@ -1,9 +1,10 @@
 package br.com.ages.adoteumamanha.repository;
 
 import br.com.ages.adoteumamanha.domain.entity.Endereco;
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ class UsuarioRepositoryTest {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @BeforeEach
+    void setUp() {
+        usuarioRepository.deleteAll();
+    }
+
     @Test
     void getByEmail() {
         //Arrange
@@ -32,7 +38,7 @@ class UsuarioRepositoryTest {
                 .withNumero(1)
                 .build();
 
-        UsuarioEntity usuarioParaSalvar = UsuarioEntity.builder()
+        Usuario usuarioParaSalvar = Usuario.builder()
                 .withEmail("rabelo@rab.elo")
                 .withAtivo(true)
                 .withDocumento("12312312312")
@@ -43,7 +49,7 @@ class UsuarioRepositoryTest {
         usuarioRepository.save(usuarioParaSalvar);
 
         //Act
-        Optional<UsuarioEntity> usuarioOpt = usuarioRepository.findByEmail("rabelo@rab.elo");
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail("rabelo@rab.elo");
 
         //Assert
         assertThat(usuarioOpt).isPresent();
@@ -52,36 +58,61 @@ class UsuarioRepositoryTest {
         assertThat(usuario.getEmail()).isEqualTo(usuarioParaSalvar.getEmail());
     }
 
-// TOD0 : PESQUISAR COMO REALIZAR ESTE TESTE
-//    @Test
-//    void getByIdAndPerfil() {
-//        //Arrange
-//        Endereco endereco = Endereco.builder()
-//                .withBairro("Partenon")
-//                .withCEP("91530034")
-//                .withComplemento("")
-//                .withNumero(1)
-//                .build();
-//
-//        UsuarioEntity usuarioParaSalvar = UsuarioEntity.builder()
-//                .withEmail("rabelo@rab.elo")
-//                .withAtivo(true)
-//                .withDocumento("12312312312")
-//                .withEndereco(endereco)
-//                .withPerfil(Perfil.CASA)
-//                .build();
-//
-//        usuarioRepository.save(usuarioParaSalvar);
-//        var user = usuarioParaSalvar.getIdUsuario();
-//        var usuarioSalvo = usuarioRepository.findAll().stream().findFirst().get();
-//
-//        //Act
-//        Optional<UsuarioEntity> usuarioOpt = usuarioRepository.findByIdAndPerfil(user, Perfil.CASA);
-//
-//        //Assert
-//        assertThat(usuarioOpt).isPresent();
-//        var usuario = usuarioOpt.get();
-//
-//        assertThat(usuario.getEmail()).isEqualTo(usuarioParaSalvar.getEmail());
-//    }
+    @Test
+    void getByIdAndPerfil() {
+        //Arrange
+        Endereco endereco = Endereco.builder()
+                .withBairro("Partenon")
+                .withCEP("91530034")
+                .withComplemento("")
+                .withNumero(1)
+                .build();
+
+        Usuario usuarioParaSalvar = Usuario.builder()
+                .withEmail("rabelo@rab.elo")
+                .withAtivo(true)
+                .withDocumento("12312312312")
+                .withEndereco(endereco)
+                .withPerfil(Perfil.CASA)
+                .build();
+
+        usuarioRepository.save(usuarioParaSalvar);
+
+        //Act
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByIdAndPerfil(usuarioParaSalvar.getId(), Perfil.CASA);
+
+        //Assert
+        assertThat(usuarioOpt).isPresent();
+        var usuario = usuarioOpt.get();
+
+        assertThat(usuario.getEmail()).isEqualTo(usuarioParaSalvar.getEmail());
+    }
+
+    @Test
+    void getByIdAndPerfil_vazio() {
+        //Arrange
+        Endereco endereco = Endereco.builder()
+                .withBairro("Partenon")
+                .withCEP("91530034")
+                .withComplemento("")
+                .withNumero(1)
+                .build();
+
+        Usuario usuarioParaSalvar = Usuario.builder()
+                .withEmail("rabelo@rab.elo")
+                .withAtivo(true)
+                .withDocumento("12312312312")
+                .withEndereco(endereco)
+                .withPerfil(Perfil.CASA)
+                .build();
+
+        usuarioRepository.save(usuarioParaSalvar);
+
+        //Act
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByIdAndPerfil(usuarioParaSalvar.getId(), Perfil.ADMIN);
+
+        //Assert
+        assertThat(usuarioOpt).isEmpty();
+
+    }
 }
