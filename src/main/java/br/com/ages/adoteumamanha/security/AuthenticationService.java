@@ -27,7 +27,7 @@ public class AuthenticationService {
                 .authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("Usuário usuário {} autenticado", username);
+        log.info("Usuário {} autenticado", username);
 
         return LoginResponse.builder()
                 .accessToken(HEADER_PREFIX + jwtTokenProvider.generateToken(authentication))
