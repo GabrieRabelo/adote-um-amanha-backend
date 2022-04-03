@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
-    public static final String SEQUENCE_ID = "USUARIO_ID_SEQ";
+    public static final String SEQUENCE_ID = "ID_SEQ";
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_ID, allocationSize = 1)
