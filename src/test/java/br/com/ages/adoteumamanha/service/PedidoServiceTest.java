@@ -1,7 +1,7 @@
 package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.PedidoEntity;
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
@@ -48,7 +48,7 @@ public class PedidoServiceTest {
 
     @Before
     public void setup() {
-        userPrincipal = UserPrincipal.create(Fixture.make(UsuarioEntity.builder()).build());
+        userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder()).build());
     }
 
     @Test

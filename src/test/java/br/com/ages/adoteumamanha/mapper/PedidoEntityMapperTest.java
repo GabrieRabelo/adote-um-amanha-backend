@@ -1,7 +1,7 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.PedidoEntity;
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.fixture.Fixture;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -20,7 +20,7 @@ public class PedidoEntityMapperTest {
 
     @Before
     public void setup() {
-        userPrincipal = UserPrincipal.create(Fixture.make(UsuarioEntity.builder()).build());
+        userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder()).build());
     }
 
     @Test

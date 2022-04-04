@@ -9,13 +9,13 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Table(name = "usuario")
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "email")
 @Builder(setterPrefix = "with")
-public class UsuarioEntity implements Serializable {
+@Entity
+@Table(name = "usuario")
+public class Usuario implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
     public static final String SEQUENCE_ID = "USUARIO_ID_SEQ";
@@ -37,6 +37,26 @@ public class UsuarioEntity implements Serializable {
     @JsonIgnore
     @Column(nullable = false)
     private String senha;
+
+    @Column(nullable = false)
+    private String documento;
+
+    @Column(nullable = false)
+    private String telefone;
+
+    @Column(nullable = false)
+    private String site;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride( name = "rua", column = @Column(name = "endereco_rua")),
+            @AttributeOverride( name = "bairro", column = @Column(name = "endereco_bairro")),
+            @AttributeOverride( name = "numero", column = @Column(name = "endereco_numero")),
+            @AttributeOverride( name = "complemento", column = @Column(name = "endereco_complemento")),
+            @AttributeOverride( name = "CEP", column = @Column(name = "endereco_CEP"))
+    })
+    @Column(nullable = false)
+    private Endereco endereco;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

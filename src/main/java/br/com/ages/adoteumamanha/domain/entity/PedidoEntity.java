@@ -54,7 +54,7 @@ public class PedidoEntity implements Serializable {
     private LocalDateTime dataHora;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private UsuarioEntity usuario;
+    private Usuario usuario;
 
 }
 
