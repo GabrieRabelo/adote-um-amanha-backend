@@ -12,6 +12,8 @@ import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -37,12 +39,16 @@ public class PedidoService {
         repository.save(entity);
     }
 
-    public NecessidadesResponse listarNecessidades() {
+    public List<PedidoEntity> listarNecessidades(int page, int size) {
 
-        final List<PedidoEntity> pedidoEntities = repository.findAllByPedido(Pedido.NECESSIDADE);
+        Pageable paging = PageRequest.of(page, size);
 
-        return NecessidadesResponse.builder()
-                .withNecessidades(necessidadesResponseMapper.apply(pedidoEntities))
-                .build();
+        final List<PedidoEntity> pedidoEntities = repository.findAllByPedido(Pedido.NECESSIDADE, paging);
+
+        return pedidoEntities;
+
+        //return NecessidadesResponse.builder()
+                //.withNecessidades(necessidadesResponseMapper.apply(pedidoEntities))
+                //.build();
     }
 }

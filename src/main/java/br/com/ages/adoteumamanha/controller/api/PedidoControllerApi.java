@@ -1,7 +1,7 @@
 package br.com.ages.adoteumamanha.controller.api;
 
+import br.com.ages.adoteumamanha.domain.entity.PedidoEntity;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
-import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Api(tags = "Pedido")
 public interface PedidoControllerApi {
@@ -35,5 +37,5 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<NecessidadesResponse> listarNecessidades();
+    ResponseEntity<List<PedidoEntity>> listarNecessidades(int page, int size);
 }
