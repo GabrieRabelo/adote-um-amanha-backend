@@ -42,7 +42,7 @@ public class UserPrincipal implements UserDetails {
     }
 
     public static UserPrincipal create(final Usuario usuario) {
-        final List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPerfil().getRole()));
+        final List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPerfil().getDescricao()));
 
         return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
                 usuario.getAtivo(), authorities);

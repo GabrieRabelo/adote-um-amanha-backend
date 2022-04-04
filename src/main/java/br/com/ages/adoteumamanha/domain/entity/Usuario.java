@@ -12,8 +12,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "email")
-@Entity
 @Builder(setterPrefix = "with")
+@Entity
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
@@ -24,24 +25,33 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Boolean ativo;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
     private String email;
 
     @JsonIgnore
+    @Column(nullable = false)
     private String senha;
 
+    @Column(nullable = false)
     private String documento;
 
+    @Column(nullable = false)
     private String telefone;
 
+    @Column(nullable = false)
     private String site;
 
     @Embedded
+    @Column(nullable = false)
     private Endereco endereco;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 

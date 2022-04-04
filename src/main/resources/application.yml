@@ -8,7 +8,7 @@ spring:
     name: adote-um-amanha
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -20,6 +20,6 @@ spring:
 security:
   jwt:
     secret: ${JWT_SECRET:adote-um-amanha-jwt}
-    expiration: ${JWT_EXPIRATION:86400000} # 1 dia em m
+    expiration: ${JWT_EXPIRATION:86400000} # 1 dia em sec
   public:
     path: "/public/**"

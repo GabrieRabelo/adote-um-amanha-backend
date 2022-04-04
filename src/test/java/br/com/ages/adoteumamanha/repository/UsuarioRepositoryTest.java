@@ -44,6 +44,10 @@ class UsuarioRepositoryTest {
                 .withDocumento("12312312312")
                 .withEndereco(endereco)
                 .withPerfil(Perfil.CASA)
+                .withNome("rabelo")
+                .withSite("rabelo.com")
+                .withTelefone("123123123")
+                .withSenha("password")
                 .build();
 
         usuarioRepository.save(usuarioParaSalvar);
@@ -74,6 +78,10 @@ class UsuarioRepositoryTest {
                 .withDocumento("12312312312")
                 .withEndereco(endereco)
                 .withPerfil(Perfil.CASA)
+                .withNome("rabelo")
+                .withSite("rabelo.com")
+                .withTelefone("123123123")
+                .withSenha("password")
                 .build();
 
         usuarioRepository.save(usuarioParaSalvar);
@@ -104,6 +112,10 @@ class UsuarioRepositoryTest {
                 .withDocumento("12312312312")
                 .withEndereco(endereco)
                 .withPerfil(Perfil.CASA)
+                .withNome("rabelo")
+                .withSite("rabelo.com")
+                .withTelefone("123123123")
+                .withSenha("password")
                 .build();
 
         usuarioRepository.save(usuarioParaSalvar);
