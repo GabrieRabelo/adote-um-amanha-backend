@@ -1,7 +1,7 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.PedidoEntity;
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Pedido;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -34,8 +34,8 @@ public class PedidoEntityMapper implements BiFunction<CadastrarPedidoRequest, Us
                 .build();
     }
 
-    private UsuarioEntity buildUsuario(final UserPrincipal userPrincipal) {
-        return UsuarioEntity.builder().withId(userPrincipal.getId()).build();
+    private Usuario buildUsuario(final UserPrincipal userPrincipal) {
+        return Usuario.builder().withId(userPrincipal.getId()).build();
     }
 
     private Pedido buildTipoDonativo(final UserPrincipal userPrincipal) {

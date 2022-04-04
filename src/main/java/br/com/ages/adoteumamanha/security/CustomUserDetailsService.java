@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.security;
 
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,18 +21,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public UserDetails loadUserById(final Long id) {
         log.info("Buscando usuário pelo id: {}", id);
-        UsuarioEntity usuarioEntity = getUser(() -> usuarioRepository.findById(id));
-        return UserPrincipal.create(usuarioEntity);
+        Usuario usuario = getUser(() -> usuarioRepository.findById(id));
+        return UserPrincipal.create(usuario);
     }
 
     @Override
     public UserDetails loadUserByUsername(final String username) {
         log.info("Buscando usuário pelo username: {}", username);
-        UsuarioEntity usuarioEntity = getUser(() -> usuarioRepository.findByEmail(username));
-        return UserPrincipal.create(usuarioEntity);
+        Usuario usuario = getUser(() -> usuarioRepository.findByEmail(username));
+        return UserPrincipal.create(usuario);
     }
 
-    private UsuarioEntity getUser(final Supplier<Optional<UsuarioEntity>> supplier) {
+    private Usuario getUser(final Supplier<Optional<Usuario>> supplier) {
 
         //TODO erro mensagem criar padrão como na api trab
         return supplier.get().orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
