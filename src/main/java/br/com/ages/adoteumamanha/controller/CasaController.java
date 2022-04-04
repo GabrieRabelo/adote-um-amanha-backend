@@ -1,5 +1,6 @@
 package br.com.ages.adoteumamanha.controller;
 
+import br.com.ages.adoteumamanha.controller.api.CasaControllerApi;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
 import br.com.ages.adoteumamanha.service.CasaService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class CasaController {
+public class CasaController implements CasaControllerApi {
 
     private final CasaService casaService;
 

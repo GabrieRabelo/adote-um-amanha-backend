@@ -48,6 +48,13 @@ public class Usuario implements Serializable {
     private String site;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride( name = "rua", column = @Column(name = "endereco_rua")),
+            @AttributeOverride( name = "bairro", column = @Column(name = "endereco_bairro")),
+            @AttributeOverride( name = "numero", column = @Column(name = "endereco_numero")),
+            @AttributeOverride( name = "complemento", column = @Column(name = "endereco_complemento")),
+            @AttributeOverride( name = "CEP", column = @Column(name = "endereco_CEP"))
+    })
     @Column(nullable = false)
     private Endereco endereco;
 
