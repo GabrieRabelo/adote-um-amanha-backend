@@ -14,8 +14,8 @@ public class ControllerHandler {
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErroResponse<String>> handlerApiException(ApiException apiException) {
         ErroResponse<String> response = new ErroResponse<>();
-        response.setStatusCode(apiException.getHttpStatus().value());
-        response.setData(apiException.getMessage());
+        response.setCodigoStatus(apiException.getHttpStatus().value());
+        response.setInformacao(apiException.getMessage());
 
         return ResponseEntity.status(apiException.getHttpStatus()).body(response);
     }
@@ -23,8 +23,8 @@ public class ControllerHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResponse<String>> handlerGenericException() {
         ErroResponse<String> response = new ErroResponse<>();
-        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        response.setData(Mensagem.ERRO_GENERICO.getDescricao());
+        response.setCodigoStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.setInformacao(Mensagem.ERRO_GENERICO.getDescricao());
 
         return ResponseEntity.status((HttpStatus.INTERNAL_SERVER_ERROR.value())).body(response);
     }

@@ -3,6 +3,7 @@ server:
   servlet:
     context-path: /api
 
+
 spring:
   application:
     name: adote-um-amanha
@@ -23,3 +24,5 @@ security:
     expiration: ${JWT_EXPIRATION:86400000} # 1 dia em sec
   public:
     path: "/public/**"
+
+

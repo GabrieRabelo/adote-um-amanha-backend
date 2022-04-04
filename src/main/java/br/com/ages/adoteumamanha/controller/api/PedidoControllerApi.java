@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.controller.api;
 
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,4 +25,15 @@ public interface PedidoControllerApi {
     })
     ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,
                                          @AuthenticationPrincipal final UserPrincipal userPrincipal);
+
+    @ApiOperation(value = "Serviço para listagem de necessidades",
+            notes = "Serviço responsável por listar as necessidades")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<NecessidadesResponse> listarNecessidades();
 }
