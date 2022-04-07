@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum Mensagem {
 
     ERRO_GENERICO("Erro no servidor."),
+    ACESSO_NAO_PERMITIDO("Credenciais de acesso inválida."),
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
     ASSUNTO_INVALIDO("Assunto inválido."),
