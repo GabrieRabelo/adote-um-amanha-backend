@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.mapper;
 
-import br.com.ages.adoteumamanha.domain.entity.PedidoEntity;
+import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.fixture.Fixture;
@@ -11,9 +11,9 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-public class PedidoEntityMapperTest {
+public class TipoPedidoMapperTest {
 
-    final PedidoEntityMapper MAPPER = new PedidoEntityMapper();
+    final PedidoMapper MAPPER = new PedidoMapper();
 
     private UserPrincipal userPrincipal;
     private CadastrarPedidoRequest request;
@@ -27,7 +27,7 @@ public class PedidoEntityMapperTest {
     public void mapper() {
         request = Fixture.make(CadastrarPedidoRequest.builder()).build();
 
-        final PedidoEntity entity = MAPPER.apply(request, userPrincipal);
+        final Pedido entity = MAPPER.apply(request, userPrincipal);
 
         Assert.assertEquals(request.getAssunto(), entity.getAssunto());
         Assert.assertEquals(request.getDescricao(), entity.getDescricao());

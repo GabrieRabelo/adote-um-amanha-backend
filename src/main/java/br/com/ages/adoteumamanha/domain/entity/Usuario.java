@@ -19,6 +19,7 @@ public class Usuario implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
     public static final String SEQUENCE_ID = "USUARIO_ID_SEQ";
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_ID, allocationSize = 1)
@@ -49,13 +50,13 @@ public class Usuario implements Serializable {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride( name = "rua", column = @Column(name = "endereco_rua")),
-            @AttributeOverride( name = "bairro", column = @Column(name = "endereco_bairro")),
-            @AttributeOverride( name = "numero", column = @Column(name = "endereco_numero")),
-            @AttributeOverride( name = "complemento", column = @Column(name = "endereco_complemento")),
-            @AttributeOverride( name = "cidade", column = @Column(name = "endereco_cidade")),
-            @AttributeOverride( name = "estado", column = @Column(name = "endereco_estado")),
-            @AttributeOverride( name = "CEP", column = @Column(name = "endereco_CEP"))
+            @AttributeOverride(name = "rua", column = @Column(name = "endereco_rua")),
+            @AttributeOverride(name = "bairro", column = @Column(name = "endereco_bairro")),
+            @AttributeOverride(name = "numero", column = @Column(name = "endereco_numero")),
+            @AttributeOverride(name = "complemento", column = @Column(name = "endereco_complemento")),
+            @AttributeOverride(name = "cidade", column = @Column(name = "endereco_cidade")),
+            @AttributeOverride(name = "estado", column = @Column(name = "endereco_estado")),
+            @AttributeOverride(name = "CEP", column = @Column(name = "endereco_CEP"))
     })
     @Column(nullable = false)
     private Endereco endereco;
