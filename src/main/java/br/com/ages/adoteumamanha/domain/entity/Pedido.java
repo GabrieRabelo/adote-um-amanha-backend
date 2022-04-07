@@ -1,9 +1,9 @@
 package br.com.ages.adoteumamanha.domain.entity;
 
 import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
-import br.com.ages.adoteumamanha.domain.enumeration.Pedido;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
+import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
 @Getter
-public class PedidoEntity implements Serializable {
+public class Pedido implements Serializable {
 
     public static final String SEQUENCE_NAME = "pedido_sequence";
     public static final String SEQUENCE_ID = "PEDIDO_ID_SEQ";
@@ -30,7 +30,7 @@ public class PedidoEntity implements Serializable {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Pedido pedido;
+    private TipoPedido tipoPedido;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
