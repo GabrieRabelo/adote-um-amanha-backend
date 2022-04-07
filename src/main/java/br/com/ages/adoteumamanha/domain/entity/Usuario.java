@@ -53,6 +53,8 @@ public class Usuario implements Serializable {
             @AttributeOverride( name = "bairro", column = @Column(name = "endereco_bairro")),
             @AttributeOverride( name = "numero", column = @Column(name = "endereco_numero")),
             @AttributeOverride( name = "complemento", column = @Column(name = "endereco_complemento")),
+            @AttributeOverride( name = "cidade", column = @Column(name = "endereco_cidade")),
+            @AttributeOverride( name = "estado", column = @Column(name = "endereco_estado")),
             @AttributeOverride( name = "CEP", column = @Column(name = "endereco_CEP"))
     })
     @Column(nullable = false)
