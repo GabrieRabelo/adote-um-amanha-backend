@@ -3,6 +3,7 @@ package br.com.ages.adoteumamanha.service;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.exception.ApiException;
@@ -25,12 +26,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
+import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.mockito.Mockito.*;
+import static org.springframework.data.domain.Sort.by;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PedidoServiceTest {
@@ -108,7 +112,7 @@ public class PedidoServiceTest {
         final Direcao direcao = ASC;
         final String ordenacao = "data";
 
-        final Pageable paging = PageRequest.of(pagina, tamanho);
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
         final Page<Pedido> pedidoEntityPage = mock(Page.class);
 
         when(repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging)).thenReturn(pedidoEntityPage);
@@ -131,4 +135,94 @@ public class PedidoServiceTest {
         verify(necessidadeResponseMapper).apply(pedido);
         verify(repository).findById(eq(id));
     }
+
+    @Test(expected = ApiException.class)
+    public void descricao_necessidade_nao_encontrada_erro() {
+
+        final Long id = 1L;
+
+        when(repository.findById(id)).thenReturn(empty());
+
+        service.descricaoNecessidade(id);
+
+        verifyNoInteractions(necessidadeResponseMapper);
+    }
+
+    @Test
+    public void deletar_pedido_ok() {
+
+        final Long idNecessidade = 1L;
+        final Long idUsuario = userPrincipal.getId();
+
+        final Usuario usuario = Fixture.make(Usuario.builder())
+                .withId(idUsuario)
+                .build();
+
+        final Pedido pedido = Fixture.make(Pedido.builder())
+                .withId(idNecessidade)
+                .withStatus(Status.PENDENTE)
+                .withUsuario(usuario)
+                .build();
+
+        when(repository.findById(idNecessidade)).thenReturn(of(pedido));
+
+        service.deletarPedido(idNecessidade, userPrincipal);
+
+        verify(repository).findById(eq(idNecessidade));
+        verify(repository).delete(eq(pedido));
+    }
+
+    @Test(expected = ApiException.class)
+    public void deletar_pedido_nao_contrado_erro() {
+
+        final Long idNecessidade = 1L;
+
+        final Pedido pedido = Fixture.make(Pedido.builder())
+                .withStatus(Status.FINALIZADA)
+                .build();
+
+        when(repository.findById(idNecessidade)).thenReturn(of(pedido));
+
+        service.deletarPedido(idNecessidade, userPrincipal);
+
+        verify(repository).findById(eq(idNecessidade));
+        verifyNoMoreInteractions(repository);
+    }
+
+
+    @Test(expected = ApiException.class)
+    public void deletar_pedido_usuario_diferente_erro() {
+
+        final Long id = 1L;
+
+        when(repository.findById(id)).thenReturn(empty());
+
+        service.descricaoNecessidade(id);
+
+        verifyNoInteractions(necessidadeResponseMapper);
+    }
+
+    @Test(expected = ApiException.class)
+    public void deletar_pedido_nao_pertence_usuario_erro() {
+
+        final Long idNecessidade = 1L;
+        final Long idUsuario = userPrincipal.getId();
+
+        final Usuario usuario = Fixture.make(Usuario.builder())
+                .withId(999L)
+                .build();
+
+        final Pedido pedido = Fixture.make(Pedido.builder())
+                .withId(idNecessidade)
+                .withStatus(Status.PENDENTE)
+                .withUsuario(usuario)
+                .build();
+
+        when(repository.findById(idNecessidade)).thenReturn(empty());
+
+        service.deletarPedido(idNecessidade, userPrincipal);
+
+        verifyNoInteractions(necessidadeResponseMapper);
+    }
+
 }

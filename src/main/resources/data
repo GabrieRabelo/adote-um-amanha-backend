@@ -1,8 +1,8 @@
 -- todas as senhas são 'admin'
 insert into usuario(id, ativo, email, nome, perfil, senha)
 values (1, true, 'admin@email.com', 'admin', 'ADMIN', '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC')
-
-insert into usuario(id, ativo, email, nome, perfil, senha)
+    insert
+into usuario(id, ativo, email, nome, perfil, senha)
 values (2, true, 'casa@email.com', 'casa', 'CASA', '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC')
 
 insert into usuario(id, ativo, email, nome, perfil, senha)

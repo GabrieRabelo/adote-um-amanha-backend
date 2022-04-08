@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 @RestController
@@ -25,6 +27,16 @@ public class PedidoController implements PedidoControllerApi {
                                                 @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
         pedidoService.cadastrar(request, userPrincipal);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/pedidos/{id}")
+    @RolesAllowed({"CASA", "DOADOR"})
+    public ResponseEntity<Void> deletarPedido(@PathVariable("id") final Long idNecessidade,
+                                              @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+
+        pedidoService.deletarPedido(idNecessidade, userPrincipal);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

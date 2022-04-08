@@ -55,4 +55,16 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 500, message = "Erro Interno")
     })
     ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id);
+
+    @ApiOperation(value = "Serviço para deletar um pedido especifica",
+            notes = "Serviço responsável por deletar um pedido com status pendente dado um id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<Void> deletarPedido(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
+
 }
