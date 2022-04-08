@@ -31,5 +31,7 @@ public class NecessidadeResponseMapperTest {
         Assert.assertEquals(response.getData(), LocalDate.from(pedido.getDataHora()));
         Assert.assertEquals(response.getIdCasa(), pedido.getUsuario().getId());
         Assert.assertEquals(response.getNomeCasa(), pedido.getUsuario().getNome());
+        Assert.assertEquals(response.getUrlVideo(), pedido.getUrlVideo());
+
     }
 }

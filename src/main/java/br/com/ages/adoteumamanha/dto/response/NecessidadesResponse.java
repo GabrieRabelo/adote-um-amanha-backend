@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.dto.response;
 
-import br.com.ages.adoteumamanha.domain.CustomPageable;
+import br.com.ages.adoteumamanha.domain.Pageable;
 import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
@@ -10,13 +10,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Builder(setterPrefix = "with")
-public final class NecessidadesResponse implements CustomPageable<NecessidadeResponse> {
+public final class NecessidadesResponse implements Pageable<NecessidadeResponse> {
 
     private static final long serialVersionUID = 8877642249248887304L;
 
@@ -48,6 +47,7 @@ public final class NecessidadesResponse implements CustomPageable<NecessidadeRes
 
         private final Long idCasa;
         private final String nomeCasa;
+        private final String urlVideo;
 
     }
 }

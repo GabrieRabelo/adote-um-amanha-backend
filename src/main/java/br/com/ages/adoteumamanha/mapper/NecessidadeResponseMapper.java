@@ -24,6 +24,7 @@ public class NecessidadeResponseMapper implements Function<Pedido, NecessidadeRe
                         .withSubcategoria(necessidade.getSubcategoria())
                         .withIdCasa(necessidade.getUsuario().getId())
                         .withNomeCasa(necessidade.getUsuario().getNome())
+                        .withUrlVideo(necessidade.getUrlVideo())
                         .build())
                 .orElse(null);
     }

@@ -1,5 +1,6 @@
 package br.com.ages.adoteumamanha.controller.api;
 
+import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -9,7 +10,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 @Api(tags = "Pedido")
 public interface PedidoControllerApi {
@@ -35,5 +40,19 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<NecessidadesResponse> listarNecessidades(final Integer page, final Integer size);
+    ResponseEntity<NecessidadesResponse> listarNecessidades(@RequestParam final Integer pagina,
+                                                            @RequestParam final Integer tamanho,
+                                                            @RequestParam final Direcao direcao,
+                                                            @RequestParam final String ordenacao);
+
+    @ApiOperation(value = "Serviço buscar uma necessidade especifica",
+            notes = "Serviço responsável por buscar a descrição de uma necessidade dado um id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id);
 }

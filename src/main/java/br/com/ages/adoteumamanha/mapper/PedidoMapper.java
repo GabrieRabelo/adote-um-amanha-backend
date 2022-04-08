@@ -27,6 +27,7 @@ public class PedidoMapper implements BiFunction<CadastrarPedidoRequest, UserPrin
                 .withDescricao(cadastrarPedidoRequest.getDescricao())
                 .withCategoria(cadastrarPedidoRequest.getCategoria())
                 .withSubcategoria(cadastrarPedidoRequest.getSubcategoria())
+                .withUrlVideo(cadastrarPedidoRequest.getUrlVideo())
                 .withStatus(PENDENTE)
                 .withDataHora(LocalDateTime.now())
                 .withTipoPedido(buildTipoDonativo(userPrincipal))
