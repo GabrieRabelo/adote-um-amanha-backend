@@ -10,6 +10,7 @@ public enum Mensagem {
     ERRO_GENERICO("Erro no servidor."),
     ACESSO_NAO_PERMITIDO("Credenciais de acesso inválida."),
     REQUEST_INVALIDO("Requisição inválida."),
+    NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
     SENHA_INVALIDA("Senha inválida."),
     ASSUNTO_INVALIDO("Assunto inválido."),
     DESCRICAO_INVALIDA("Descricão inválida."),

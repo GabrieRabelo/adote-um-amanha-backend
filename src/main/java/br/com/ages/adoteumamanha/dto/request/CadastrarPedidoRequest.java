@@ -20,4 +20,6 @@ public final class CadastrarPedidoRequest implements Serializable {
     private final Categoria categoria;
 
     private final Subcategoria subcategoria;
+
+    private final String urlVideo;
 }
