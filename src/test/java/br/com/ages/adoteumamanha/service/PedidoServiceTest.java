@@ -2,10 +2,12 @@ package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
+import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
+import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
@@ -26,6 +28,8 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
+import static java.util.Optional.of;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,10 +42,13 @@ public class PedidoServiceTest {
     private PedidoRepository repository;
 
     @Mock
-    private PedidoMapper pedidoMapper;
+    private NecessidadesResponseMapper necessidadesResponseMapper;
 
     @Mock
-    private NecessidadesResponseMapper necessidadesResponseMapper;
+    private NecessidadeResponseMapper necessidadeResponseMapper;
+
+    @Mock
+    private PedidoMapper pedidoMapper;
 
     @Mock
     private CadastrarPedidoRequestValidator validator;
@@ -62,14 +69,12 @@ public class PedidoServiceTest {
     @Test
     public void cadastrar_ok() {
         request = Fixture.make(CadastrarPedidoRequest.builder()).build();
-
         when(pedidoMapper.apply(request, userPrincipal)).thenCallRealMethod();
 
         service.cadastrar(request, userPrincipal);
 
         verify(validator).validate(request);
         verify(pedidoMapper).apply(request, userPrincipal);
-
         verify(repository).save(pedidoEntityArgumentCaptor.capture());
 
         final Pedido entity = pedidoEntityArgumentCaptor.getValue();
@@ -100,14 +105,30 @@ public class PedidoServiceTest {
 
         final Integer pagina = 0;
         final Integer tamanho = 5;
+        final Direcao direcao = ASC;
+        final String ordenacao = "data";
+
         final Pageable paging = PageRequest.of(pagina, tamanho);
         final Page<Pedido> pedidoEntityPage = mock(Page.class);
 
         when(repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging)).thenReturn(pedidoEntityPage);
-
-        service.listarNecessidades(pagina, tamanho);
+        service.listarNecessidades(pagina, tamanho, ordenacao, direcao);
 
         verify(necessidadesResponseMapper).apply(pedidoEntityPage);
         verify(repository).findAllByTipoPedido(eq(TipoPedido.NECESSIDADE), eq(paging));
+    }
+
+    @Test
+    public void descricao_necessidade_ok() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+
+        when(repository.findById(id)).thenReturn(of(pedido));
+
+        service.descricaoNecessidade(id);
+
+        verify(necessidadeResponseMapper).apply(pedido);
+        verify(repository).findById(eq(id));
     }
 }

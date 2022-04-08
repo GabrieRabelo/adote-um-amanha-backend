@@ -56,5 +56,8 @@ public class Pedido implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
+    @Column
+    private String urlVideo;
+
 }
 
