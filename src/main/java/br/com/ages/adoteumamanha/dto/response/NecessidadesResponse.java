@@ -43,7 +43,7 @@ public final class NecessidadesResponse implements CustomPageable<NecessidadeRes
         private final Subcategoria subcategoria;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-        private final LocalDateTime name;
+        private final LocalDateTime data;
         private final Status status;
 
         private final Long idCasa;
