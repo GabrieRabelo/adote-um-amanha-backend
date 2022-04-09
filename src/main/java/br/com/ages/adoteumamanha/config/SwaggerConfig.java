@@ -28,7 +28,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .securityContexts(List.of(securityContext()))
                 .securitySchemes(List.of(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis( RequestHandlerSelectors.basePackage( "br.com.ages.adoteumamanha.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

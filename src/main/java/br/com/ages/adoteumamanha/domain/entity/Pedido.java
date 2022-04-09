@@ -10,13 +10,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+
+@Getter
 @Setter
-@Table(name = "pedido")
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
-@Getter
+@Table
+@Entity
 public class Pedido implements Serializable {
 
     public static final String SEQUENCE_NAME = "pedido_sequence";
@@ -60,4 +61,3 @@ public class Pedido implements Serializable {
     private String urlVideo;
 
 }
-
