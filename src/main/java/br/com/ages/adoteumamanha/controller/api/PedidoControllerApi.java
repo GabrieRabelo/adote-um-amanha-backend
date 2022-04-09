@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.controller.api;
 
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -56,7 +57,7 @@ public interface PedidoControllerApi {
     })
     ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id);
 
-    @ApiOperation(value = "Serviço para deletar um pedido especifica",
+    @ApiOperation(value = "Serviço para deletar um pedido especifico",
             notes = "Serviço responsável por deletar um pedido com status pendente dado um id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Sucesso"),
@@ -66,5 +67,18 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 500, message = "Erro Interno")
     })
     ResponseEntity<Void> deletarPedido(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
+
+    @ApiOperation(value = "Serviço para atualizar um pedido especifico",
+            notes = "Serviço responsável por atualizar um pedido com status pendente dado um id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<NecessidadeResponse> atualizarPedido(@PathVariable final Long id,
+                                                        @RequestBody final AtualizarPedidoRequest request,
+                                                        @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
 }
