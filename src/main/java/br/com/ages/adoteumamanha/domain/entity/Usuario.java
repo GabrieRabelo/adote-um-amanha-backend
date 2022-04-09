@@ -14,7 +14,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = "email")
 @Builder(setterPrefix = "with")
 @Entity
-@Table(name = "usuario")
+@Table
 public class Usuario implements Serializable {
 
     public static final String SEQUENCE_NAME = "usuario_sequence";
@@ -50,14 +50,15 @@ public class Usuario implements Serializable {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "rua", column = @Column(name = "endereco_rua")),
-            @AttributeOverride(name = "bairro", column = @Column(name = "endereco_bairro")),
-            @AttributeOverride(name = "numero", column = @Column(name = "endereco_numero")),
-            @AttributeOverride(name = "complemento", column = @Column(name = "endereco_complemento")),
-            @AttributeOverride(name = "cidade", column = @Column(name = "endereco_cidade")),
             @AttributeOverride(name = "estado", column = @Column(name = "endereco_estado")),
-            @AttributeOverride(name = "CEP", column = @Column(name = "endereco_CEP"))
+            @AttributeOverride(name = "cidade", column = @Column(name = "endereco_cidade")),
+            @AttributeOverride(name = "bairro", column = @Column(name = "endereco_bairro")),
+            @AttributeOverride(name = "CEP", column = @Column(name = "endereco_CEP")),
+            @AttributeOverride(name = "rua", column = @Column(name = "endereco_rua")),
+            @AttributeOverride(name = "numero", column = @Column(name = "endereco_numero")),
+            @AttributeOverride(name = "complemento", column = @Column(name = "endereco_complemento"))
     })
+
     @Column(nullable = false)
     private Endereco endereco;
 
