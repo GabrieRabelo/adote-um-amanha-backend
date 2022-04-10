@@ -23,8 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 import static java.util.Objects.isNull;
@@ -56,11 +54,14 @@ public class PedidoService {
         repository.save(entity);
     }
 
+    //TODO Deixar o método generico passando também o tipo do pedido, assim irá consultar necessidade e doação.
     public NecessidadesResponse listarNecessidades(final Integer pagina, final Integer tamanho,
                                                    final String ordenacao, final Direcao direcao) {
 
+        log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}", pagina, tamanho, ordenacao, direcao);
         final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordenacao));
 
+        log.info("Buscando no banco pedidos paginados");
         final Page<Pedido> pedidoEntities = repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging);
 
         return necessidadesResponseMapper.apply(pedidoEntities);
@@ -68,51 +69,39 @@ public class PedidoService {
 
     public NecessidadeResponse descricaoNecessidade(final Long id) {
 
-        final Optional<Pedido> pedido = repository.findById(id);
+        final Pedido pedido = buscarPedidoPeloID(id);
 
-        if (isFalse(pedido.isPresent())) {
-            throw new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND);
-        }
-
-        return necessidadeResponseMapper.apply(pedido.get());
+        return necessidadeResponseMapper.apply(pedido);
     }
 
     public void deletarPedido(final Long id, final UserPrincipal userPrincipal) {
 
-        final Pedido pedido = repository.findById(id)
-                .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
+        final Pedido pedido = buscarPedidoPeloID(id);
 
-        if (isFalse(PENDENTE.equals(pedido.getStatus()))) {
-            throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
+        validaStatusPedido(pedido);
 
         final Long usuarioCriadorNecessidade = ofNullable(pedido.getUsuario()).map(Usuario::getId).orElse(null);
 
-        if (isFalse(userPrincipal.getId().equals(usuarioCriadorNecessidade))) {
-            throw new ApiException(Mensagem.PEDIDO_NAO_PODE_SER_DELETADO.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
+        validaUsuarioCriadorPedido(userPrincipal, usuarioCriadorNecessidade);
 
+        log.info("Deletando pedido com id: {}", pedido.getId());
         repository.delete(pedido);
     }
 
     public NecessidadeResponse atualizarPedido(final Long id, final AtualizarPedidoRequest request, final UserPrincipal userPrincipal) {
 
+        log.info("Validando se request não é nula");
         if (isNull(request)) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        final Pedido pedido = repository.findById(id)
-                .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
+        final Pedido pedido = buscarPedidoPeloID(id);
 
-        if (isFalse(PENDENTE.equals(pedido.getStatus()))) {
-            throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
+        validaStatusPedido(pedido);
 
         final Long usuarioCriadorNecessidade = ofNullable(pedido.getUsuario()).map(Usuario::getId).orElse(null);
 
-        if (isFalse(userPrincipal.getId().equals(usuarioCriadorNecessidade))) {
-            throw new ApiException(Mensagem.PEDIDO_NAO_PODE_SER_DELETADO.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
+        validaUsuarioCriadorPedido(userPrincipal, usuarioCriadorNecessidade);
 
         ofNullable(request).ifPresent(req -> {
             ofNullable(req.getAssunto()).ifPresent(assunto -> pedido.setAssunto(assunto));
@@ -120,6 +109,27 @@ public class PedidoService {
             ofNullable(req.getCategoria()).ifPresent(categoria -> pedido.setCategoria(categoria));
         });
 
+        log.info("Atualizando pedido com id: {}", pedido.getId());
         return necessidadeResponseMapper.apply(repository.save(pedido));
+    }
+
+    private Pedido buscarPedidoPeloID(Long id) {
+        log.info("Buscando no pedido com id: {}", id);
+        return repository.findById(id)
+                .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
+    }
+
+    private void validaUsuarioCriadorPedido(final UserPrincipal userPrincipal, final Long usuarioCriadorNecessidade) {
+        log.info("Validando se usuário logado é o criador do pedido. ID: {}", usuarioCriadorNecessidade);
+        if (isFalse(userPrincipal.getId().equals(usuarioCriadorNecessidade))) {
+            throw new ApiException(Mensagem.PEDIDO_NAO_PODE_SER_DELETADO.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void validaStatusPedido(final Pedido pedido) {
+        log.info("Validando status do pedido {}", pedido.getStatus());
+        if (isFalse(PENDENTE.equals(pedido.getStatus()))) {
+            throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
