@@ -2,6 +2,7 @@ package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
@@ -26,6 +29,25 @@ public class PedidoController implements PedidoControllerApi {
 
         pedidoService.cadastrar(request, userPrincipal);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/pedidos/{id}")
+    @RolesAllowed({"CASA", "DOADOR"})
+    public ResponseEntity<Void> deletarPedido(@PathVariable("id") final Long idNecessidade,
+                                              @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+
+        pedidoService.deletarPedido(idNecessidade, userPrincipal);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/pedidos/{id}")
+    @RolesAllowed({"CASA", "DOADOR"})
+    public ResponseEntity<NecessidadeResponse> atualizarPedido(@PathVariable("id") final Long idNecessidade,
+                                                               @RequestBody final AtualizarPedidoRequest request,
+                                                               @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+
+        return ResponseEntity.ok().body(pedidoService.atualizarPedido(idNecessidade, request, userPrincipal));
     }
 
     @GetMapping("/public/necessidades")

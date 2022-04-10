@@ -1,8 +1,10 @@
 package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
+import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
@@ -23,7 +25,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
+import static java.util.Objects.isNull;
+import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.BooleanUtils.isFalse;
 import static org.springframework.data.domain.Sort.Direction;
 import static org.springframework.data.domain.Sort.by;
@@ -52,9 +57,9 @@ public class PedidoService {
     }
 
     public NecessidadesResponse listarNecessidades(final Integer pagina, final Integer tamanho,
-                                                   final String ordernacao, final Direcao direcao) {
+                                                   final String ordenacao, final Direcao direcao) {
 
-        final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordernacao));
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordenacao));
 
         final Page<Pedido> pedidoEntities = repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging);
 
@@ -70,5 +75,51 @@ public class PedidoService {
         }
 
         return necessidadeResponseMapper.apply(pedido.get());
+    }
+
+    public void deletarPedido(final Long id, final UserPrincipal userPrincipal) {
+
+        final Pedido pedido = repository.findById(id)
+                .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
+
+        if (isFalse(PENDENTE.equals(pedido.getStatus()))) {
+            throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        final Long usuarioCriadorNecessidade = ofNullable(pedido.getUsuario()).map(Usuario::getId).orElse(null);
+
+        if (isFalse(userPrincipal.getId().equals(usuarioCriadorNecessidade))) {
+            throw new ApiException(Mensagem.PEDIDO_NAO_PODE_SER_DELETADO.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        repository.delete(pedido);
+    }
+
+    public NecessidadeResponse atualizarPedido(final Long id, final AtualizarPedidoRequest request, final UserPrincipal userPrincipal) {
+
+        if (isNull(request)) {
+            throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        final Pedido pedido = repository.findById(id)
+                .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
+
+        if (isFalse(PENDENTE.equals(pedido.getStatus()))) {
+            throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        final Long usuarioCriadorNecessidade = ofNullable(pedido.getUsuario()).map(Usuario::getId).orElse(null);
+
+        if (isFalse(userPrincipal.getId().equals(usuarioCriadorNecessidade))) {
+            throw new ApiException(Mensagem.PEDIDO_NAO_PODE_SER_DELETADO.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        ofNullable(request).ifPresent(req -> {
+            ofNullable(req.getAssunto()).ifPresent(assunto -> pedido.setAssunto(assunto));
+            ofNullable(req.getDescricao()).ifPresent(descricao -> pedido.setDescricao(descricao));
+            ofNullable(req.getCategoria()).ifPresent(categoria -> pedido.setCategoria(categoria));
+        });
+
+        return necessidadeResponseMapper.apply(repository.save(pedido));
     }
 }

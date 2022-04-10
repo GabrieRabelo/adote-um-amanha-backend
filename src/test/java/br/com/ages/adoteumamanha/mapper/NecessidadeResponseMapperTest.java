@@ -5,8 +5,6 @@ import br.com.ages.adoteumamanha.fixture.Fixture;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.LocalDate;
-
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 public class NecessidadeResponseMapperTest {
@@ -28,7 +26,7 @@ public class NecessidadeResponseMapperTest {
         Assert.assertEquals(response.getCategoria(), pedido.getCategoria());
         Assert.assertEquals(response.getSubcategoria(), pedido.getSubcategoria());
         Assert.assertEquals(response.getStatus(), pedido.getStatus());
-        Assert.assertEquals(response.getData(), LocalDate.from(pedido.getDataHora()));
+        Assert.assertEquals(response.getData(), pedido.getDataHora());
         Assert.assertEquals(response.getIdCasa(), pedido.getUsuario().getId());
         Assert.assertEquals(response.getNomeCasa(), pedido.getUsuario().getNome());
         Assert.assertEquals(response.getUrlVideo(), pedido.getUrlVideo());
