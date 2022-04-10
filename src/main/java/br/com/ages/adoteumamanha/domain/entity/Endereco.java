@@ -13,19 +13,14 @@ import java.io.Serializable;
 @Embeddable
 public class Endereco implements Serializable {
 
-    private String rua;
-
-    private String bairro;
-
-    private String cidade;
-
     private String estado;
-
+    private String cidade;
+    private String bairro;
+    private String CEP;
+    private String rua;
     private Integer numero;
-
     private String complemento;
 
-    private String CEP;
 }
 
 
