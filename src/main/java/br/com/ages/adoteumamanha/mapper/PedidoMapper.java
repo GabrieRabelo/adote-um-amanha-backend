@@ -40,7 +40,7 @@ public class PedidoMapper implements BiFunction<CadastrarPedidoRequest, UserPrin
     }
 
     private TipoPedido buildTipoDonativo(final UserPrincipal userPrincipal) {
-        Optional<? extends GrantedAuthority> permissoes = userPrincipal.getAuthorities().stream().findFirst();
+        final Optional<? extends GrantedAuthority> permissoes = userPrincipal.getAuthorities().stream().findFirst();
 
         if (CASA.getDescricao().equals(permissoes.get().getAuthority())) {
             return NECESSIDADE;

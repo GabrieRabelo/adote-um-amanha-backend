@@ -17,7 +17,7 @@ public class NecessidadeResponseMapper implements Function<Pedido, NecessidadeRe
                 .map(necessidade -> NecessidadeResponse.builder()
                         .withId(necessidade.getId())
                         .withAssunto(necessidade.getAssunto())
-                        .withDescricao(necessidade.getAssunto())
+                        .withDescricao(necessidade.getDescricao())
                         .withData(necessidade.getDataHora())
                         .withStatus(necessidade.getStatus())
                         .withCategoria(necessidade.getCategoria())
