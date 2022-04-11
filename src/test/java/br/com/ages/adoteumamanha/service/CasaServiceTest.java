@@ -2,57 +2,55 @@ package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
-import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
+import br.com.ages.adoteumamanha.exception.ApiException;
+import br.com.ages.adoteumamanha.fixture.Fixture;
+import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-class CasaServiceTest {
+@RunWith(MockitoJUnitRunner.class)
+public class CasaServiceTest {
 
-    private final UsuarioRepository usuarioRepository = mock(UsuarioRepository.class);
-    private final CasaService casaService = new CasaService(usuarioRepository);
+    @InjectMocks
+    private CasaService service;
 
-    @Test
-    void buscaCasaDescricao() {
+    @Mock
+    private UsuarioRepository repository;
 
-        long id = 1;
-        var usuario = Usuario.builder()
-                .withSite("batata.com")
-                .withEmail("usuario@gmail.com")
-                .withNome("jarbas")
-                .withTelefone("0")
-                .withPerfil(Perfil.CASA)
-                .build();
-        when(usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.of(usuario));
-
-        var casaDescricao = casaService.buscaCasaDescricao(id);
-
-        var casaEsperada = CasaDescricaoResponse.builder()
-                .withSite("batata.com")
-                .withEmail("usuario@gmail.com")
-                .withNome("jarbas")
-                .withTelefone("0")
-                .build();
-
-        assertThat(casaDescricao).isNotEmpty();
-        assertThat(casaDescricao.get()).isInstanceOf(CasaDescricaoResponse.class);
-        assertThat(casaDescricao.get()).usingRecursiveComparison().isEqualTo(casaEsperada);
-    }
+    @Mock
+    private CasaDescricaoResponseMapper mapper;
 
     @Test
-    void buscaCasaDescricaoComResultadoVazio() {
+    public void ok() {
 
         long id = 1;
-        when(usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.empty());
+        var usuario = Fixture.make(Usuario.builder()).build();
 
-        var casaDescricao = casaService.buscaCasaDescricao(id);
+        when(repository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.of(usuario));
+        when(mapper.apply(usuario)).thenCallRealMethod();
 
-        assertThat(casaDescricao).isEmpty();
+        service.buscaCasaDescricao(id);
+
+        verify(repository).findByIdAndPerfil(id, Perfil.CASA);
+        verify(mapper).apply(usuario);
     }
 
+    @Test(expected = ApiException.class)
+    public void casa_nao_encontrada_erro() {
+
+        final Long id = 1L;
+        when(repository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.empty());
+
+        service.buscaCasaDescricao(id);
+
+        verifyNoInteractions(mapper);
+    }
 }

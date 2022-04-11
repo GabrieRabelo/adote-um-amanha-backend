@@ -7,19 +7,19 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Mensagem {
 
-    ERRO_GENERICO("Erro no servidor."),
     ACESSO_NAO_PERMITIDO("Credenciais de acesso inválida."),
-    REQUEST_INVALIDO("Requisição inválida."),
+    ASSUNTO_INVALIDO("Assunto inválido."),
+    CASA_NAO_ENCONTRADA("Casa não encontrada"),
+    CATEGORIA_INVALIDA("Categoria inválida."),
+    DESCRICAO_INVALIDA("Descricão inválida."),
+    EMAIL_INVALIDO("E-mail inválido."),
+    ERRO_GENERICO("Erro no servidor."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
     PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deleta-lo."),
-    STATUS_NAO_PENDENTE("É possivel alterar pedidos que estejam como status como pendente ainda."),
+    REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
-    ASSUNTO_INVALIDO("Assunto inválido."),
-    DESCRICAO_INVALIDA("Descricão inválida."),
-    CATEGORIA_INVALIDA("Categoria inválida."),
-    SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
-    EMAIL_INVALIDO("E-mail inválido.");
-
+    STATUS_NAO_PENDENTE("É possivel alterar pedidos que estejam como status como pendente ainda."),
+    SUBCATEGORIA_INVALIDA("Subcategoria inválida.");
     private final String descricao;
 
 }
