@@ -1,22 +1,29 @@
 package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
-import br.com.ages.adoteumamanha.dto.converter.CasaConverter;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
+import br.com.ages.adoteumamanha.exception.ApiException;
+import br.com.ages.adoteumamanha.exception.Mensagem;
+import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CasaService {
 
     private final UsuarioRepository usuarioRepository;
+    private final CasaDescricaoResponseMapper casaDescricaoResponseMapper;
 
-    public Optional<CasaDescricaoResponse> buscaCasaDescricao(Long id) {
+    public CasaDescricaoResponse buscaCasaDescricao(final Long id) {
+
+        log.info("Buscando usuário pelo id: {}", id);
         return usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)
-                .map(CasaConverter::paraResponse);
+                .map(casaDescricaoResponseMapper::apply)
+                .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
     }
 }

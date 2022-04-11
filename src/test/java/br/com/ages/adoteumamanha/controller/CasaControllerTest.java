@@ -39,7 +39,7 @@ class CasaControllerTest {
 
         var casaDescricao = CasaDescricaoResponse.builder().build();
 
-        when(casaService.buscaCasaDescricao(1L)).thenReturn(Optional.of(casaDescricao));
+        when(casaService.buscaCasaDescricao(1L)).thenReturn(casaDescricao);
 
         var resultString = client.perform(MockMvcRequestBuilders.get("/casas/1"))
                 .andExpect(status().isOk())

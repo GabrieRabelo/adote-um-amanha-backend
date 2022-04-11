@@ -1,14 +1,15 @@
-package br.com.ages.adoteumamanha.dto.converter;
+package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CasaConverter {
+import java.util.function.Function;
 
-    public static CasaDescricaoResponse paraResponse(Usuario usuario) {
+@Component
+public class CasaDescricaoResponseMapper implements Function<Usuario, CasaDescricaoResponse> {
+
+    public CasaDescricaoResponse apply(final Usuario usuario) {
         return CasaDescricaoResponse.builder()
                 .withSite(usuario.getSite())
                 .withEndereco(usuario.getEndereco())
