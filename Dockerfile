@@ -9,6 +9,6 @@ RUN echo ${TZ} > /etc/timezone
     
 EXPOSE 80
 
-ADD /target/adote-um-amanha-0.0.1-SNAPSHOT.jar adote-uma-amanha-api.jar
+ADD /adote-um-amanha-0.0.1-SNAPSHOT.jar adote-uma-amanha-api.jar
 
 ENTRYPOINT ["java","-jar","adote-uma-amanha-api.jar", "--server.port=80"]
