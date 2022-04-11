@@ -24,15 +24,15 @@ values (4, true, 'admin@gmail.com', 'Cinara', 'ADMIN',
 
 -- Pedidos
 ---- Necessidades
-insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id)
+insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id, url_video)
 values (1, 'NECESSIDADE', 'BEM', 'ALIMENTACAO', 'PENDENTE', 'Leite em pó desnatado',
-        'J.P. tem tolerancia a lactose e precisa de um tipo específico de leite', '2022-04-08 04:05:06', 1);
+        'J.P. tem tolerancia a lactose e precisa de um tipo específico de leite', '2022-04-08 04:05:06', 1, 'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 
-insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id)
+insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id, url_video)
 values (2, 'NECESSIDADE', 'SERVIÇO', 'SAUDE', 'FINALIZADA', 'Consulta psicológica',
-        'A. C. precisa de sessões terapeuticas para superar traumas', '2022-04-01 04:05:06', 1);
+        'A. C. precisa de sessões terapeuticas para superar traumas', '2022-04-01 04:05:06', 1, 'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 
-insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id)
+insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id, url_video)
 values (3, 'NECESSIDADE', 'SERVIÇO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
         'A. J. está com problemas ao ingerir certos alimentos, por isso precisa de atendimento nutricional',
-        '2022-04-01 04:05:06', 1);
+        '2022-04-01 04:05:06', 1, 'https://www.youtube.com/watch?v=0gBgyxXJ1GY');

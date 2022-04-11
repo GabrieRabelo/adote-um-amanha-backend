@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
@@ -30,7 +31,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 500, message = "Erro Interno")
     })
     ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,
-                                         @AuthenticationPrincipal final UserPrincipal userPrincipal);
+                                         @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para listagem de necessidades",
             notes = "Serviço responsável por listar as necessidades")
