@@ -107,6 +107,8 @@ public class PedidoService {
             ofNullable(req.getAssunto()).ifPresent(assunto -> pedido.setAssunto(assunto));
             ofNullable(req.getDescricao()).ifPresent(descricao -> pedido.setDescricao(descricao));
             ofNullable(req.getCategoria()).ifPresent(categoria -> pedido.setCategoria(categoria));
+            ofNullable(req.getSubcategoria()).ifPresent(subcategoria -> pedido.setSubcategoria(subcategoria));
+            ofNullable(req.getUrlVideo()).ifPresent(url -> pedido.setUrlVideo(url));
         });
 
         log.info("Atualizando pedido com id: {}", pedido.getId());
