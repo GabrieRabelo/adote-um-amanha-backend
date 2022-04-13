@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.security;
 
-import br.com.ages.adoteumamanha.domain.entity.UsuarioEntity;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,11 +41,11 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserPrincipal create(final UsuarioEntity usuarioEntity) {
-        final List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuarioEntity.getPerfil().getRole()));
+    public static UserPrincipal create(final Usuario usuario) {
+        final List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPerfil().getDescricao()));
 
-        return new UserPrincipal(usuarioEntity.getIdUsuario(), usuarioEntity.getNome(), usuarioEntity.getEmail(), usuarioEntity.getSenha(),
-                usuarioEntity.getAtivo(), authorities);
+        return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
+                usuario.getAtivo(), authorities);
     }
 
     @Override

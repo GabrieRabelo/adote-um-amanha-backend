@@ -12,7 +12,7 @@ public enum Perfil {
     CASA("ROLE_CASA"),
     DOADOR("ROLE_DOADOR");
 
-    private final String role;
+    private final String descricao;
 
 }
 
