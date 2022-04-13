@@ -247,6 +247,8 @@ public class PedidoServiceTest {
         pedido.setAssunto(request.getAssunto());
         pedido.setDescricao(request.getDescricao());
         pedido.setCategoria(request.getCategoria());
+        pedido.setSubcategoria(request.getSubcategoria());
+        pedido.setUrlVideo(request.getUrlVideo());
 
         when(repository.findById(idNecessidade)).thenReturn(of(pedido));
         when(repository.save(any())).thenReturn(pedidoAtualizado);
@@ -261,6 +263,8 @@ public class PedidoServiceTest {
         assertEquals(resultado.getAssunto(), pedidoEntityArgumentCaptor.getValue().getAssunto());
         assertEquals(resultado.getDescricao(), pedidoEntityArgumentCaptor.getValue().getDescricao());
         assertEquals(resultado.getSubcategoria(), pedidoEntityArgumentCaptor.getValue().getSubcategoria());
+        assertEquals(resultado.getCategoria(), pedidoEntityArgumentCaptor.getValue().getCategoria());
+        assertEquals(resultado.getUrlVideo(), pedidoEntityArgumentCaptor.getValue().getUrlVideo());
     }
 
     @Test(expected = ApiException.class)

@@ -41,7 +41,7 @@ class CasaControllerTest {
 
         when(casaService.buscaCasaDescricao(1L)).thenReturn(casaDescricao);
 
-        var resultString = client.perform(MockMvcRequestBuilders.get("/casas/1"))
+        var resultString = client.perform(MockMvcRequestBuilders.get("/public/casas/1"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()

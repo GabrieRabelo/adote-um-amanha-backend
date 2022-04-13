@@ -15,11 +15,11 @@ public enum Mensagem {
     EMAIL_INVALIDO("E-mail inválido."),
     ERRO_GENERICO("Erro no servidor."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
-    PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deleta-lo."),
+    PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deletá-lo."),
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
-    STATUS_NAO_PENDENTE("É possivel alterar pedidos que estejam como status como pendente ainda."),
+    STATUS_NAO_PENDENTE("Só é possível alterar pedidos que estejam com status pendente."),
     SUBCATEGORIA_INVALIDA("Subcategoria inválida.");
-    private final String descricao;
 
+    private final String descricao;
 }
