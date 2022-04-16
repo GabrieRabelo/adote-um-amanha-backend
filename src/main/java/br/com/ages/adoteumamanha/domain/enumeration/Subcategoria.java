@@ -8,7 +8,6 @@ public enum Subcategoria {
     SAUDE,
     PROFISSIONALIZACAO,
     EDUCACAO,
-    ALIMENTACAO,
     OUTROS
 
 }

@@ -25,10 +25,6 @@ values (9996, true, 'admin@gmail.com', 'Cinara', 'ADMIN',
 -- Pedidos
 ---- Necessidades
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id, url_video)
-values (9999, 'NECESSIDADE', 'BEM', 'ALIMENTACAO', 'PENDENTE', 'Leite em pó desnatado',
-        'J.P. tem tolerancia a lactose e precisa de um tipo específico de leite', '2022-04-08 04:05:06', 9999, 'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
-
-insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id, url_video)
 values (9998, 'NECESSIDADE', 'SERVIÇO', 'SAUDE', 'FINALIZADA', 'Consulta psicológica',
         'A. C. precisa de sessões terapeuticas para superar traumas', '2022-04-01 04:05:06', 9999, 'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 
