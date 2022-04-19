@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.controller.api;
 
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
@@ -45,7 +46,8 @@ public interface PedidoControllerApi {
     ResponseEntity<NecessidadesResponse> listarNecessidades(@RequestParam final Integer pagina,
                                                             @RequestParam final Integer tamanho,
                                                             @RequestParam final Direcao direcao,
-                                                            @RequestParam final String ordenacao);
+                                                            @RequestParam final String ordenacao,
+                                                            @RequestParam final Status status);
 
     @ApiOperation(value = "Serviço buscar uma necessidade especifica",
             notes = "Serviço responsável por buscar a descrição de uma necessidade dado um id")

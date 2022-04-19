@@ -31,6 +31,7 @@ import org.springframework.data.domain.Sort;
 import java.time.LocalDate;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 import static java.util.Optional.*;
 import static org.junit.Assert.assertEquals;
@@ -112,12 +113,13 @@ public class PedidoServiceTest {
         final Integer tamanho = 5;
         final Direcao direcao = ASC;
         final String ordenacao = "data";
+        final Status status = PENDENTE;
 
-        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao, status.name()));
         final Page<Pedido> pedidoEntityPage = mock(Page.class);
 
         when(repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging)).thenReturn(pedidoEntityPage);
-        service.listarNecessidades(pagina, tamanho, ordenacao, direcao);
+        service.listarNecessidades(pagina, tamanho, ordenacao, direcao, status);
 
         verify(necessidadesResponseMapper).apply(pedidoEntityPage);
         verify(repository).findAllByTipoPedido(eq(TipoPedido.NECESSIDADE), eq(paging));
