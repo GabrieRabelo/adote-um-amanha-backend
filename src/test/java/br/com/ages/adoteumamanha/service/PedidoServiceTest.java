@@ -113,9 +113,9 @@ public class PedidoServiceTest {
         final Integer tamanho = 5;
         final Direcao direcao = ASC;
         final String ordenacao = "data";
-        final Status status = PENDENTE;
+        final String status = "ANY";
 
-        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao, status.name()));
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
         final Page<Pedido> pedidoEntityPage = mock(Page.class);
 
         when(repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging)).thenReturn(pedidoEntityPage);

@@ -47,7 +47,7 @@ public interface PedidoControllerApi {
                                                             @RequestParam final Integer tamanho,
                                                             @RequestParam final Direcao direcao,
                                                             @RequestParam final String ordenacao,
-                                                            @RequestParam final Status status);
+                                                            @RequestParam final String status);
 
     @ApiOperation(value = "Serviço buscar uma necessidade especifica",
             notes = "Serviço responsável por buscar a descrição de uma necessidade dado um id")
