@@ -1,15 +1,15 @@
 package br.com.ages.adoteumamanha.service;
 
-import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
-import br.com.ages.adoteumamanha.exception.ApiException;
-import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
+import br.com.ages.adoteumamanha.exception.ApiException;
+import br.com.ages.adoteumamanha.exception.Mensagem;
+import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
