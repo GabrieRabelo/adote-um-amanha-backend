@@ -4,7 +4,6 @@ import br.com.ages.adoteumamanha.domain.entity.Endereco;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
-import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,6 @@ import static br.com.ages.adoteumamanha.domain.enumeration.Subcategoria.SAUDE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.DESC;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.domain.Sort.by;
 
 @ExtendWith(SpringExtension.class)
