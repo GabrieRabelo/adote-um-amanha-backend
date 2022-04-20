@@ -56,7 +56,7 @@ public class PedidoController implements PedidoControllerApi {
                                                                    @RequestParam(defaultValue = "5") final Integer tamanho,
                                                                    @RequestParam(defaultValue = "DESC") final Direcao direcao,
                                                                    @RequestParam(defaultValue = "dataHora") final String ordenacao,
-                                                                   @RequestParam(defaultValue = "ANY") final String status) {
+                                                                   @RequestParam(required = false) final Status status) {
 
         return ResponseEntity.ok().body(pedidoService.listarNecessidades(pagina, tamanho, ordenacao, direcao, status));
     }
