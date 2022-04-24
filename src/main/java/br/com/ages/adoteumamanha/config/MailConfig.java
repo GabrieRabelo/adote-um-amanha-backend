@@ -3,23 +3,52 @@ package br.com.ages.adoteumamanha.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.ClientOptions;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:mail.properties")
 public class MailConfig {
 
-    @Value("${API_KEY:}")
-    private String apiKey;
+    @Value("${mail.smtp.host}")
+    private String host;
 
-    @Value("${API_SECRET:}")
-    private String apiSecret;
+    @Value("${mail.smtp.port}")
+    private int port;
+
+    @Value("${mail.smtp.username}")
+    private String username;
+
+    @Value("${mail.smtp.password}")
+    private String password;
+
+    @Value("${mail.smtp.debug}")
+    private String debug;
 
     @Bean
-    public MailjetClient getMailJetSender() {
-        return new MailjetClient(apiKey, apiSecret,
-            new ClientOptions("v3.1")
-        );
-    }
+    public JavaMailSender javaMailSender()  {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
+        Properties props = javaMailSender.getJavaMailProperties();
+
+        javaMailSender.setHost(host);
+        javaMailSender.setPort(port);
+        javaMailSender.setUsername(username);
+        javaMailSender.setPassword(password);
+
+        javaMailSender.setDefaultEncoding("UTF-8");
+
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.test-connection", false);
+        props.put("mail.debug", debug);
+
+        javaMailSender.setJavaMailProperties(props);
+
+        return javaMailSender;
+    }
 }
