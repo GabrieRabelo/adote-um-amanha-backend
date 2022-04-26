@@ -19,7 +19,8 @@ public enum Mensagem {
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
     STATUS_NAO_PENDENTE("Só é possível alterar pedidos que estejam com status pendente."),
-    SUBCATEGORIA_INVALIDA("Subcategoria inválida.");
+    SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
+    USUARIO_NAO_ENCONTRADO("Usuário não encontrado");
 
     private final String descricao;
 }
