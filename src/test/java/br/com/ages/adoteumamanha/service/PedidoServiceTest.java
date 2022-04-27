@@ -31,6 +31,7 @@ import org.springframework.data.domain.Sort;
 import java.time.LocalDate;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 import static java.util.Optional.*;
 import static org.junit.Assert.assertEquals;
@@ -106,7 +107,7 @@ public class PedidoServiceTest {
     }
 
     @Test
-    public void listar_necessidade_ok() {
+    public void listar_necessidade_sem_filtros() {
 
         final Integer pagina = 0;
         final Integer tamanho = 5;
@@ -117,10 +118,29 @@ public class PedidoServiceTest {
         final Page<Pedido> pedidoEntityPage = mock(Page.class);
 
         when(repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging)).thenReturn(pedidoEntityPage);
-        service.listarNecessidades(pagina, tamanho, ordenacao, direcao);
+        service.listarNecessidades(pagina, tamanho, ordenacao, direcao, null);
 
         verify(necessidadesResponseMapper).apply(pedidoEntityPage);
         verify(repository).findAllByTipoPedido(eq(TipoPedido.NECESSIDADE), eq(paging));
+    }
+
+    @Test
+    public void listar_necessidade_apenas_pendentes() {
+
+        final Integer pagina = 0;
+        final Integer tamanho = 5;
+        final Direcao direcao = ASC;
+        final String ordenacao = "data";
+        final Status status = PENDENTE;
+
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
+        final Page<Pedido> pedidoEntityPage = mock(Page.class);
+
+        when(repository.findAllByTipoPedidoAndStatus(TipoPedido.NECESSIDADE, status, paging)).thenReturn(pedidoEntityPage);
+        service.listarNecessidades(pagina, tamanho, ordenacao, direcao, status);
+
+        verify(necessidadesResponseMapper).apply(pedidoEntityPage);
+        verify(repository).findAllByTipoPedidoAndStatus(eq(TipoPedido.NECESSIDADE), eq(PENDENTE), eq(paging));
     }
 
     @Test

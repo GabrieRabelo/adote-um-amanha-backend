@@ -2,6 +2,7 @@ package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
@@ -54,9 +55,10 @@ public class PedidoController implements PedidoControllerApi {
     public ResponseEntity<NecessidadesResponse> listarNecessidades(@RequestParam(defaultValue = "0") final Integer pagina,
                                                                    @RequestParam(defaultValue = "5") final Integer tamanho,
                                                                    @RequestParam(defaultValue = "DESC") final Direcao direcao,
-                                                                   @RequestParam(defaultValue = "dataHora") final String ordenacao) {
+                                                                   @RequestParam(defaultValue = "dataHora") final String ordenacao,
+                                                                   @RequestParam(required = false) final Status status) {
 
-        return ResponseEntity.ok().body(pedidoService.listarNecessidades(pagina, tamanho, ordenacao, direcao));
+        return ResponseEntity.ok().body(pedidoService.listarNecessidades(pagina, tamanho, ordenacao, direcao, status));
     }
 
     @GetMapping("/public/necessidades/{id}")

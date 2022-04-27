@@ -3,6 +3,7 @@ package br.com.ages.adoteumamanha.service;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
@@ -17,6 +18,7 @@ import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,14 +58,17 @@ public class PedidoService {
 
     //TODO Deixar o método generico passando também o tipo do pedido, assim irá consultar necessidade e doação.
     public NecessidadesResponse listarNecessidades(final Integer pagina, final Integer tamanho,
-                                                   final String ordenacao, final Direcao direcao) {
+                                                   final String ordenacao, final Direcao direcao, final Status status) {
 
-        log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}", pagina, tamanho, ordenacao, direcao);
+        log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}, status {}", pagina, tamanho, ordenacao, direcao, status);
         final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordenacao));
 
         log.info("Buscando no banco pedidos paginados");
-        final Page<Pedido> pedidoEntities = repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging);
-
+        if(status == null){
+            final Page<Pedido> pedidoEntities = repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging);
+            return necessidadesResponseMapper.apply(pedidoEntities);
+        }
+        final Page<Pedido> pedidoEntities = repository.findAllByTipoPedidoAndStatus(TipoPedido.NECESSIDADE, status, paging);
         return necessidadesResponseMapper.apply(pedidoEntities);
     }
 
