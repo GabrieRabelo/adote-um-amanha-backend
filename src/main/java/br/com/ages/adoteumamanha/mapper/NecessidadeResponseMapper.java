@@ -1,7 +1,7 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
-import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
+import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

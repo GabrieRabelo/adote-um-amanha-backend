@@ -1,11 +1,10 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
+import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.fixture.Fixture;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 public class NecessidadeResponseMapperTest {
 

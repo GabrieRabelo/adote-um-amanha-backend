@@ -5,7 +5,9 @@ import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
+import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.PedidoService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 
-import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,10 +63,17 @@ public class PedidoController implements PedidoControllerApi {
     }
 
     @GetMapping("/public/necessidades/{id}")
-    public ResponseEntity<NecessidadeResponse> descricaoNecessidade(
-            @PathVariable("id") final Long idNecessidade) {
+    public ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id) {
 
-        return ResponseEntity.ok().body(pedidoService.descricaoNecessidade(idNecessidade));
+        return ResponseEntity.ok().body(pedidoService.descricaoNecessidade(id));
+    }
+
+    @GetMapping("/doacoes/{id}")
+    @RolesAllowed({"DOADOR", "ADMIN"})
+    public ResponseEntity<DoacaoResponse> descricaoDoacao(@PathVariable final Long id,
+                                                          @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+
+        return ResponseEntity.ok().body(pedidoService.descricaoDoacao(id, userPrincipal));
     }
 }
 

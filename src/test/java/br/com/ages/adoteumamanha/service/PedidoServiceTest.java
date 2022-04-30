@@ -3,12 +3,15 @@ package br.com.ages.adoteumamanha.service;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
+import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
@@ -22,19 +25,22 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
-import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 import static java.util.Optional.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.data.domain.Sort.by;
 
@@ -52,6 +58,9 @@ public class PedidoServiceTest {
 
     @Mock
     private NecessidadeResponseMapper necessidadeResponseMapper;
+
+    @Mock
+    private DoacaoResponseMapper doacaoResponseMapper;
 
     @Mock
     private PedidoMapper pedidoMapper;
@@ -149,12 +158,84 @@ public class PedidoServiceTest {
         final Long id = 1L;
         final Pedido pedido = Fixture.make(Pedido.builder()).build();
 
-        when(repository.findById(id)).thenReturn(of(pedido));
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.NECESSIDADE)).thenReturn(of(pedido));
 
         service.descricaoNecessidade(id);
 
         verify(necessidadeResponseMapper).apply(pedido);
-        verify(repository).findById(eq(id));
+        verify(repository).findByIdAndTipoPedido(any(), any());
+    }
+
+    @Test
+    public void descricao_doacao_ok() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+        final Usuario usuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        pedido.setUsuario(usuario);
+        final UserPrincipal userPrincipal = UserPrincipal.create(usuario);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
+
+        service.descricaoDoacao(id, userPrincipal);
+
+        verify(doacaoResponseMapper).apply(pedido);
+        verify(repository).findByIdAndTipoPedido(any(), any());
+    }
+
+    @Test
+    public void descricao_doacao_ok_admin() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+        final Usuario doador = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        final Usuario admin = Fixture.make(Usuario.builder()).withPerfil(Perfil.ADMIN).build();
+        pedido.setUsuario(doador);
+        final UserPrincipal adminPrincipal = UserPrincipal.create(admin);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
+
+        service.descricaoDoacao(id, adminPrincipal);
+
+        verify(doacaoResponseMapper).apply(pedido);
+        verify(repository).findByIdAndTipoPedido(any(), any());
+    }
+
+    @Test
+    public void descricao_doacao_nao_encontrada_erro() {
+
+        final Long id = 1L;
+        final Usuario usuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        final UserPrincipal userPrincipal = UserPrincipal.create(usuario);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(empty());
+
+        assertThatCode(() -> service.descricaoDoacao(id, userPrincipal))
+                .isInstanceOf(ApiException.class)
+                .hasMessageContaining("Doação não encontrada");
+
+        verify(repository).findByIdAndTipoPedido(any(), any());
+        verifyNoInteractions(doacaoResponseMapper);
+    }
+
+    @Test
+    public void descricao_doacao_nao_autorizado_erro() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+        final Usuario usuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        final Usuario outroUsuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        pedido.setUsuario(usuario);
+        final UserPrincipal userPrincipal = UserPrincipal.create(outroUsuario);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
+
+        assertThatCode(() -> service.descricaoDoacao(id, userPrincipal))
+                .isInstanceOf(ApiException.class)
+                .hasMessageContaining("Doação não pertence ao usuário conectado");
+
+        verify(repository).findByIdAndTipoPedido(any(), any());
+        verifyNoInteractions(doacaoResponseMapper);
     }
 
     @Test(expected = ApiException.class)
@@ -162,7 +243,7 @@ public class PedidoServiceTest {
 
         final Long id = 1L;
 
-        when(repository.findById(id)).thenReturn(empty());
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.NECESSIDADE)).thenReturn(empty());
 
         service.descricaoNecessidade(id);
 
@@ -185,12 +266,12 @@ public class PedidoServiceTest {
                 .withUsuario(usuario)
                 .build();
 
-        when(repository.findById(idNecessidade)).thenReturn(of(pedido));
+        when(repository.findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE)).thenReturn(of(pedido));
 
         service.deletarPedido(idNecessidade, userPrincipal);
 
-        verify(repository).findById(eq(idNecessidade));
-        verify(repository).delete(eq(pedido));
+        verify(repository).findByIdAndTipoPedido(any(), any());
+        verify(repository).delete(any());
     }
 
     @Test(expected = ApiException.class)
@@ -198,7 +279,7 @@ public class PedidoServiceTest {
 
         final Long idNecessidade = 1L;
 
-        doThrow(ApiException.class).when(repository).findById(idNecessidade);
+        doThrow(ApiException.class).when(repository).findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE);
 
         service.deletarPedido(idNecessidade, userPrincipal);
 
@@ -214,11 +295,11 @@ public class PedidoServiceTest {
                 .withStatus(Status.FINALIZADA)
                 .build();
 
-        when(repository.findById(idNecessidade)).thenReturn(of(pedido));
+        when(repository.findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE)).thenReturn(of(pedido));
 
         service.deletarPedido(idNecessidade, userPrincipal);
 
-        verify(repository).findById(eq(idNecessidade));
+        verify(repository).findByIdAndTipoPedido(any(), any());
         verifyNoMoreInteractions(repository);
     }
 
@@ -238,7 +319,7 @@ public class PedidoServiceTest {
                 .withUsuario(usuario)
                 .build();
 
-        when(repository.findById(idNecessidade)).thenReturn(ofNullable(pedido));
+        when(repository.findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE)).thenReturn(ofNullable(pedido));
 
         service.deletarPedido(idNecessidade, userPrincipal);
 
@@ -270,13 +351,13 @@ public class PedidoServiceTest {
         pedido.setSubcategoria(request.getSubcategoria());
         pedido.setUrlVideo(request.getUrlVideo());
 
-        when(repository.findById(idNecessidade)).thenReturn(of(pedido));
+        when(repository.findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE)).thenReturn(of(pedido));
         when(repository.save(any())).thenReturn(pedidoAtualizado);
         when(necessidadeResponseMapper.apply(any())).thenCallRealMethod();
 
         final NecessidadeResponse resultado = service.atualizarPedido(idNecessidade, request, userPrincipal);
 
-        verify(repository).findById(eq(idNecessidade));
+        verify(repository).findByIdAndTipoPedido(any(), any());
         verify(repository).save(pedidoEntityArgumentCaptor.capture());
         verify(necessidadeResponseMapper).apply(pedidoEntityArgumentCaptor.getValue());
 
@@ -303,7 +384,7 @@ public class PedidoServiceTest {
         final Long idNecessidade = 1L;
         final AtualizarPedidoRequest request = Fixture.make(AtualizarPedidoRequest.builder().build());
 
-        doThrow(ApiException.class).when(repository).findById(idNecessidade);
+        doThrow(ApiException.class).when(repository).findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE);
 
         service.atualizarPedido(idNecessidade, request, userPrincipal);
 
@@ -321,11 +402,11 @@ public class PedidoServiceTest {
                 .withStatus(Status.FINALIZADA)
                 .build();
 
-        when(repository.findById(idNecessidade)).thenReturn(of(pedido));
+        when(repository.findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE)).thenReturn(of(pedido));
 
         service.atualizarPedido(idNecessidade, request, userPrincipal);
 
-        verify(repository).findById(eq(idNecessidade));
+        verify(repository).findByIdAndTipoPedido(any(), any());
         verifyNoMoreInteractions(repository);
         verifyNoInteractions(necessidadeResponseMapper);
     }
@@ -347,7 +428,7 @@ public class PedidoServiceTest {
                 .withUsuario(usuario)
                 .build();
 
-        when(repository.findById(idNecessidade)).thenReturn(ofNullable(pedido));
+        when(repository.findByIdAndTipoPedido(idNecessidade, TipoPedido.NECESSIDADE)).thenReturn(ofNullable(pedido));
 
         service.atualizarPedido(idNecessidade, request, userPrincipal);
 

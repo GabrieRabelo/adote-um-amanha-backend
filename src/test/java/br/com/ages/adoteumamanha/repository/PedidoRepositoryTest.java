@@ -36,9 +36,13 @@ class PedidoRepositoryTest {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @BeforeEach
     void setUp() {
         pedidoRepository.deleteAll();
+        usuarioRepository.deleteAll();
     }
 
     @Test
@@ -63,6 +67,8 @@ class PedidoRepositoryTest {
                 .withTelefone("123123123")
                 .withSenha("password")
                 .build();
+
+        usuarioRepository.save(usuario);
 
         Pedido pedidoParaSalvar = Pedido.builder()
                 .withTipoPedido(NECESSIDADE)
@@ -111,6 +117,8 @@ class PedidoRepositoryTest {
                 .withTelefone("123123123")
                 .withSenha("password")
                 .build();
+
+        usuarioRepository.save(usuario);
 
         Pedido pedidoParaSalvar = Pedido.builder()
                 .withTipoPedido(NECESSIDADE)
