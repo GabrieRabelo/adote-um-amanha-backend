@@ -8,9 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     Page<Pedido> findAllByTipoPedido(final TipoPedido tipoPedido, final Pageable pageable);
 
     Page<Pedido> findAllByTipoPedidoAndStatus(final TipoPedido necessidade, final Status status, final Pageable pageable);
+
+    Optional<Pedido> findByIdAndTipoPedido(Long id, TipoPedido tipoPedido);
 }

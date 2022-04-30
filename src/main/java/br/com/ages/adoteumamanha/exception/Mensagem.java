@@ -15,6 +15,8 @@ public enum Mensagem {
     EMAIL_INVALIDO("E-mail inválido."),
     ERRO_GENERICO("Erro no servidor."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
+    DOACAO_NAO_ENCONTRADA("Doação não encontrada"),
+    ACESSO_DOACAO_NAO_PERMITIDA("Doação não pertence ao usuário conectado"),
     PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deletá-lo."),
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
