@@ -24,7 +24,7 @@ public class DoacaoResponse implements Serializable {
     private Categoria categoria;
     private Subcategoria subcategoria;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime data;
     private Status status;
 
