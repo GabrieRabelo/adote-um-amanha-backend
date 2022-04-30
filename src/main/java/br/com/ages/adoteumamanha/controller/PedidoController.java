@@ -69,11 +69,11 @@ public class PedidoController implements PedidoControllerApi {
     }
 
     @GetMapping("/doacoes/{id}")
-    @RolesAllowed({"DOADOR"})
+    @RolesAllowed({"DOADOR", "ADMIN"})
     public ResponseEntity<DoacaoResponse> descricaoDoacao(@PathVariable final Long id,
                                                           @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        return ResponseEntity.ok().body(pedidoService.descricaoDoacao(id, userPrincipal.getId()));
+        return ResponseEntity.ok().body(pedidoService.descricaoDoacao(id, userPrincipal));
     }
 }
 

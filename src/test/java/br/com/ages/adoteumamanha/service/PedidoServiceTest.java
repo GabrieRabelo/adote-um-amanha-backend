@@ -3,11 +3,11 @@ package br.com.ages.adoteumamanha.service;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
-import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
@@ -171,12 +171,31 @@ public class PedidoServiceTest {
 
         final Long id = 1L;
         final Pedido pedido = Fixture.make(Pedido.builder()).build();
-        final Usuario usuario = Fixture.make(Usuario.builder()).build();
+        final Usuario usuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
         pedido.setUsuario(usuario);
+        final UserPrincipal userPrincipal = UserPrincipal.create(usuario);
 
         when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
 
-        service.descricaoDoacao(id, pedido.getUsuario().getId());
+        service.descricaoDoacao(id, userPrincipal);
+
+        verify(doacaoResponseMapper).apply(pedido);
+        verify(repository).findByIdAndTipoPedido(any(), any());
+    }
+
+    @Test
+    public void descricao_doacao_ok_admin() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+        final Usuario doador = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        final Usuario admin = Fixture.make(Usuario.builder()).withPerfil(Perfil.ADMIN).build();
+        pedido.setUsuario(doador);
+        final UserPrincipal adminPrincipal = UserPrincipal.create(admin);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
+
+        service.descricaoDoacao(id, adminPrincipal);
 
         verify(doacaoResponseMapper).apply(pedido);
         verify(repository).findByIdAndTipoPedido(any(), any());
@@ -186,10 +205,12 @@ public class PedidoServiceTest {
     public void descricao_doacao_nao_encontrada_erro() {
 
         final Long id = 1L;
+        final Usuario usuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        final UserPrincipal userPrincipal = UserPrincipal.create(usuario);
 
         when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(empty());
 
-        assertThatCode(() -> service.descricaoDoacao(id, id))
+        assertThatCode(() -> service.descricaoDoacao(id, userPrincipal))
                 .isInstanceOf(ApiException.class)
                 .hasMessageContaining("Doação não encontrada");
 
@@ -202,12 +223,14 @@ public class PedidoServiceTest {
 
         final Long id = 1L;
         final Pedido pedido = Fixture.make(Pedido.builder()).build();
-        final Usuario usuario = Fixture.make(Usuario.builder()).build();
+        final Usuario usuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
+        final Usuario outroUsuario = Fixture.make(Usuario.builder()).withPerfil(Perfil.DOADOR).build();
         pedido.setUsuario(usuario);
+        final UserPrincipal userPrincipal = UserPrincipal.create(outroUsuario);
 
         when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
 
-        assertThatCode(() -> service.descricaoDoacao(id, id))
+        assertThatCode(() -> service.descricaoDoacao(id, userPrincipal))
                 .isInstanceOf(ApiException.class)
                 .hasMessageContaining("Doação não pertence ao usuário conectado");
 

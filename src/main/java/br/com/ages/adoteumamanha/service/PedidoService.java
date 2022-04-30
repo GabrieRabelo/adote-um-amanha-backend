@@ -86,10 +86,10 @@ public class PedidoService {
         return necessidadeResponseMapper.apply(pedido);
     }
 
-    public DoacaoResponse descricaoDoacao(final Long id, final Long idUsuario) {
+    public DoacaoResponse descricaoDoacao(final Long id, final UserPrincipal usuario) {
         final Pedido doacao = buscarDoacaoPorId(id);
 
-        if(!Objects.equals(doacao.getUsuario().getId(), idUsuario)) {
+        if(!Objects.equals(doacao.getUsuario().getId(), usuario.getId()) && !usuario.isAdmin()) {
             throw new ApiException(Mensagem.ACESSO_DOACAO_NAO_PERMITIDA.getDescricao(), HttpStatus.UNAUTHORIZED);
         }
 
