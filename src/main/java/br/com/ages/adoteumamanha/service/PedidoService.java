@@ -7,26 +7,32 @@ import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
+import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
+import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
-import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
+import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
+import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
 import static java.util.Objects.isNull;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.BooleanUtils.isFalse;
@@ -41,6 +47,7 @@ public class PedidoService {
     private final PedidoRepository repository;
     private final NecessidadesResponseMapper necessidadesResponseMapper;
     private final NecessidadeResponseMapper necessidadeResponseMapper;
+    private final DoacaoResponseMapper doacaoResponseMapper;
     private final PedidoMapper pedidoMapper;
 
     private final CadastrarPedidoRequestValidator validator;
@@ -74,14 +81,24 @@ public class PedidoService {
 
     public NecessidadeResponse descricaoNecessidade(final Long id) {
 
-        final Pedido pedido = buscarPedidoPeloID(id);
+        final Pedido pedido = buscarNecessidadePorId(id);
 
         return necessidadeResponseMapper.apply(pedido);
     }
 
+    public DoacaoResponse descricaoDoacao(final Long id, final Long idUsuario) {
+        final Pedido doacao = buscarDoacaoPorId(id);
+
+        if(!Objects.equals(doacao.getUsuario().getId(), idUsuario)) {
+            throw new ApiException(Mensagem.ACESSO_DOACAO_NAO_PERMITIDA.toString(), HttpStatus.UNAUTHORIZED);
+        }
+
+        return doacaoResponseMapper.apply(doacao);
+    }
+
     public void deletarPedido(final Long id, final UserPrincipal userPrincipal) {
 
-        final Pedido pedido = buscarPedidoPeloID(id);
+        final Pedido pedido = buscarNecessidadePorId(id);
 
         validaStatusPedido(pedido);
 
@@ -100,7 +117,7 @@ public class PedidoService {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        final Pedido pedido = buscarPedidoPeloID(id);
+        final Pedido pedido = buscarNecessidadePorId(id);
 
         validaStatusPedido(pedido);
 
@@ -108,22 +125,28 @@ public class PedidoService {
 
         validaUsuarioCriadorPedido(userPrincipal, usuarioCriadorNecessidade);
 
-        ofNullable(request).ifPresent(req -> {
-            ofNullable(req.getAssunto()).ifPresent(assunto -> pedido.setAssunto(assunto));
-            ofNullable(req.getDescricao()).ifPresent(descricao -> pedido.setDescricao(descricao));
-            ofNullable(req.getCategoria()).ifPresent(categoria -> pedido.setCategoria(categoria));
-            ofNullable(req.getSubcategoria()).ifPresent(subcategoria -> pedido.setSubcategoria(subcategoria));
-            ofNullable(req.getUrlVideo()).ifPresent(url -> pedido.setUrlVideo(url));
+        Optional.of(request).ifPresent(req -> {
+            ofNullable(req.getAssunto()).ifPresent(pedido::setAssunto);
+            ofNullable(req.getDescricao()).ifPresent(pedido::setDescricao);
+            ofNullable(req.getCategoria()).ifPresent(pedido::setCategoria);
+            ofNullable(req.getSubcategoria()).ifPresent(pedido::setSubcategoria);
+            ofNullable(req.getUrlVideo()).ifPresent(pedido::setUrlVideo);
         });
 
         log.info("Atualizando pedido com id: {}", pedido.getId());
         return necessidadeResponseMapper.apply(repository.save(pedido));
     }
 
-    private Pedido buscarPedidoPeloID(Long id) {
+    private Pedido buscarNecessidadePorId(Long id) {
         log.info("Buscando no pedido com id: {}", id);
-        return repository.findById(id)
+        return repository.findByIdAndTipoPedido(id, NECESSIDADE)
                 .orElseThrow(() -> new ApiException(Mensagem.NECESSIDADE_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
+    }
+
+    private Pedido buscarDoacaoPorId(Long id) {
+        log.info("Buscando no pedido com id: {}", id);
+        return repository.findByIdAndTipoPedido(id, DOACAO)
+                .orElseThrow(() -> new ApiException(Mensagem.DOACAO_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
     }
 
     private void validaUsuarioCriadorPedido(final UserPrincipal userPrincipal, final Long usuarioCriadorNecessidade) {
