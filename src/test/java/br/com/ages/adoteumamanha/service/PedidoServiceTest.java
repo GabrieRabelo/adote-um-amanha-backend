@@ -7,9 +7,11 @@ import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
+import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
@@ -23,18 +25,22 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static java.util.Optional.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.data.domain.Sort.by;
 
@@ -52,6 +58,9 @@ public class PedidoServiceTest {
 
     @Mock
     private NecessidadeResponseMapper necessidadeResponseMapper;
+
+    @Mock
+    private DoacaoResponseMapper doacaoResponseMapper;
 
     @Mock
     private PedidoMapper pedidoMapper;
@@ -157,6 +166,55 @@ public class PedidoServiceTest {
         verify(repository).findByIdAndTipoPedido(any(), any());
     }
 
+    @Test
+    public void descricao_doacao_ok() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+        final Usuario usuario = Fixture.make(Usuario.builder()).build();
+        pedido.setUsuario(usuario);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
+
+        service.descricaoDoacao(id, pedido.getUsuario().getId());
+
+        verify(doacaoResponseMapper).apply(pedido);
+        verify(repository).findByIdAndTipoPedido(any(), any());
+    }
+
+    @Test
+    public void descricao_doacao_nao_encontrada_erro() {
+
+        final Long id = 1L;
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(empty());
+
+        assertThatCode(() -> service.descricaoDoacao(id, id))
+                .isInstanceOf(ApiException.class)
+                .hasMessageContaining("Doação não encontrada");
+
+        verify(repository).findByIdAndTipoPedido(any(), any());
+        verifyNoInteractions(doacaoResponseMapper);
+    }
+
+    @Test
+    public void descricao_doacao_nao_autorizado_erro() {
+
+        final Long id = 1L;
+        final Pedido pedido = Fixture.make(Pedido.builder()).build();
+        final Usuario usuario = Fixture.make(Usuario.builder()).build();
+        pedido.setUsuario(usuario);
+
+        when(repository.findByIdAndTipoPedido(id, TipoPedido.DOACAO)).thenReturn(of(pedido));
+
+        assertThatCode(() -> service.descricaoDoacao(id, id))
+                .isInstanceOf(ApiException.class)
+                .hasMessageContaining("Doação não pertence ao usuário conectado");
+
+        verify(repository).findByIdAndTipoPedido(any(), any());
+        verifyNoInteractions(doacaoResponseMapper);
+    }
+
     @Test(expected = ApiException.class)
     public void descricao_necessidade_nao_encontrada_erro() {
 
@@ -189,7 +247,7 @@ public class PedidoServiceTest {
 
         service.deletarPedido(idNecessidade, userPrincipal);
 
-        verify(repository).findByIdAndTipoPedido(any(),any());
+        verify(repository).findByIdAndTipoPedido(any(), any());
         verify(repository).delete(any());
     }
 

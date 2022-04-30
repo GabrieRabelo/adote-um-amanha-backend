@@ -90,7 +90,7 @@ public class PedidoService {
         final Pedido doacao = buscarDoacaoPorId(id);
 
         if(!Objects.equals(doacao.getUsuario().getId(), idUsuario)) {
-            throw new ApiException(Mensagem.ACESSO_DOACAO_NAO_PERMITIDA.toString(), HttpStatus.UNAUTHORIZED);
+            throw new ApiException(Mensagem.ACESSO_DOACAO_NAO_PERMITIDA.getDescricao(), HttpStatus.UNAUTHORIZED);
         }
 
         return doacaoResponseMapper.apply(doacao);
