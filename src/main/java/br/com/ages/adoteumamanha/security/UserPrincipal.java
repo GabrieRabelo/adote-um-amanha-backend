@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.security;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -87,7 +88,7 @@ public class UserPrincipal implements UserDetails {
 
     public boolean isAdmin() {
         return authorities.stream()
-                .anyMatch(it -> Objects.equals(it.getAuthority(), "ROLE_ADMIN"));
+                .anyMatch(it -> Objects.equals(it.getAuthority(), Perfil.ADMIN.getDescricao()));
     }
 
 }
