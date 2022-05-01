@@ -162,4 +162,16 @@ public class PedidoService {
             throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    public NecessidadesResponse listarPedidosPorUsuario(final Integer pagina, final Integer tamanho,
+                                                        final Direcao direcao, final String ordenacao, final Status status,
+                                                        final UserPrincipal userPrincipal) {
+
+        log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}, status {}", pagina, tamanho, ordenacao, direcao, status);
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordenacao));
+
+        log.info("Buscando no banco pedidos paginados");
+        final Page<Pedido> pedidoEntities = repository.findAllByUsuarioIdAndStatus(userPrincipal.getId(), status, paging);
+        return necessidadesResponseMapper.apply(pedidoEntities);
+    }
 }

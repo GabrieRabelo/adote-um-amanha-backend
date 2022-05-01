@@ -11,10 +11,7 @@ import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
-import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
-import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
-import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
-import br.com.ages.adoteumamanha.mapper.PedidoMapper;
+import br.com.ages.adoteumamanha.mapper.*;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
@@ -25,13 +22,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 
@@ -71,6 +66,9 @@ public class PedidoServiceTest {
     private CadastrarPedidoRequest request;
 
     private UserPrincipal userPrincipal;
+
+    @Mock
+    private PedidoCurtoResponseMapper pedidoCurtoResponseMapper;
 
     @Captor
     private ArgumentCaptor<Pedido> pedidoEntityArgumentCaptor;
@@ -436,4 +434,21 @@ public class PedidoServiceTest {
         verifyNoInteractions(necessidadeResponseMapper);
     }
 
+    @Test
+    public void listar_pedidos_por_usuario_ok() {
+        final Integer pagina = 0;
+        final Integer tamanho = 5;
+        final Direcao direcao = ASC;
+        final String ordenacao = "data";
+        final Status status = PENDENTE;;
+
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
+        final Page<Pedido> pedidoEntityPage = mock(Page.class);
+
+        when(repository.findAllByUsuarioIdAndStatus(userPrincipal.getId(), status, paging)).thenReturn(pedidoEntityPage);
+        service.listarPedidosPorUsuario(pagina, tamanho, direcao, ordenacao, status, userPrincipal);
+
+        verify(necessidadesResponseMapper).apply(pedidoEntityPage);
+        verify(repository).findAllByUsuarioIdAndStatus(any(),any(),any());
+    }
 }

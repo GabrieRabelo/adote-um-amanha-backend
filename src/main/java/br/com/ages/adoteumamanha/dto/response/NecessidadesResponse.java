@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Builder(setterPrefix = "with")
-public final class NecessidadesResponse implements Pageable<NecessidadeResponse>, Serializable {
+public final class NecessidadesResponse implements Pageable<PedidoCurtoResponse>, Serializable {
 
     private static final long serialVersionUID = 8877642249248887304L;
 
@@ -21,7 +21,7 @@ public final class NecessidadesResponse implements Pageable<NecessidadeResponse>
     private final Boolean primeiraPagina;
     private final Integer numeroDeElementos;
     private final Boolean paginaVazia;
-    private final List<NecessidadeResponse> conteudo;
+    private final List<PedidoCurtoResponse> conteudo;
 
 }
 

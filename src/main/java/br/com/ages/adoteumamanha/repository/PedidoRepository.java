@@ -17,4 +17,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     Page<Pedido> findAllByTipoPedidoAndStatus(final TipoPedido necessidade, final Status status, final Pageable pageable);
 
     Optional<Pedido> findByIdAndTipoPedido(Long id, TipoPedido tipoPedido);
+
+    Page<Pedido> findAllByUsuarioIdAndStatus(Long id, Status status, final Pageable pageable);
 }

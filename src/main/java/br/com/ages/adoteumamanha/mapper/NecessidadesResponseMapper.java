@@ -1,8 +1,8 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
-import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
+import br.com.ages.adoteumamanha.dto.response.PedidoCurtoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class NecessidadesResponseMapper implements Function<Page<Pedido>, NecessidadesResponse> {
 
-    final NecessidadeResponseMapper necessidadeResponseMapper = new NecessidadeResponseMapper();
+    final PedidoCurtoResponseMapper pedidoCurtoResponseMapper = new PedidoCurtoResponseMapper();
 
     @Override
     public NecessidadesResponse apply(final Page<Pedido> pedidos) {
@@ -33,11 +33,11 @@ public class NecessidadesResponseMapper implements Function<Page<Pedido>, Necess
                 .build();
     }
 
-    public List<NecessidadeResponse> mapContentToList(final Page<Pedido> pedidos) {
+    public List<PedidoCurtoResponse> mapContentToList(final Page<Pedido> pedidos) {
         return Optional.of(pedidos.getContent())
                 .orElseGet(Collections::emptyList)
                 .stream()
-                .map(necessidadeResponseMapper)
+                .map(pedidoCurtoResponseMapper)
                 .collect(Collectors.toList());
     }
 }
