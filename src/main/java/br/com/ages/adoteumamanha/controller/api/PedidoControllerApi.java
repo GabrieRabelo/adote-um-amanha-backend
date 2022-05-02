@@ -1,7 +1,9 @@
 package br.com.ages.adoteumamanha.controller.api;
 
+import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
+import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
@@ -17,6 +19,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Api(tags = "Pedido")
 public interface PedidoControllerApi {
@@ -46,7 +50,11 @@ public interface PedidoControllerApi {
                                                             @RequestParam final Integer tamanho,
                                                             @RequestParam final Direcao direcao,
                                                             @RequestParam final String ordenacao,
-                                                            @RequestParam final Status status);
+                                                            @RequestParam final List<Categoria> categorias,
+                                                            @RequestParam final List<Subcategoria> subcategorias,
+                                                            @RequestParam final List<Status> status,
+                                                            @RequestParam final Integer mesesDeCorte,
+                                                            @RequestParam final String textoBusca);
 
     @ApiOperation(value = "Serviço buscar uma necessidade especifica",
             notes = "Serviço responsável por buscar a descrição de uma necessidade dado um id")

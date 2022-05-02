@@ -2,10 +2,7 @@ package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
-import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
-import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
-import br.com.ages.adoteumamanha.domain.enumeration.Status;
-import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
+import br.com.ages.adoteumamanha.domain.enumeration.*;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
@@ -25,22 +22,19 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.ASC;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static java.util.Optional.*;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.data.domain.Sort.by;
 
@@ -75,6 +69,8 @@ public class PedidoServiceTest {
     @Captor
     private ArgumentCaptor<Pedido> pedidoEntityArgumentCaptor;
 
+    @Captor
+    private ArgumentCaptor<LocalDateTime> dataCorteCaptor;
 
     @Before
     public void setup() {
@@ -121,16 +117,27 @@ public class PedidoServiceTest {
         final Integer pagina = 0;
         final Integer tamanho = 5;
         final Direcao direcao = ASC;
-        final String ordenacao = "data";
+        final String ordenacao = "dataHora";
 
         final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
-        final Page<Pedido> pedidoEntityPage = mock(Page.class);
+        List<Pedido> pedidos = Arrays.asList(Fixture.make(Pedido.builder()).build());
+        Page<Pedido> pagedResponse = new PageImpl(pedidos);
 
-        when(repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging)).thenReturn(pedidoEntityPage);
-        service.listarNecessidades(pagina, tamanho, ordenacao, direcao, null);
+        when(repository.findAllPedidosPorFiltros(
+                null,
+                null,
+                null,
+                null,
+                null,
+                TipoPedido.NECESSIDADE,
+                paging)).thenReturn(pagedResponse);
 
-        verify(necessidadesResponseMapper).apply(pedidoEntityPage);
-        verify(repository).findAllByTipoPedido(eq(TipoPedido.NECESSIDADE), eq(paging));
+        service.listarPedidos(pagina, tamanho, ordenacao, direcao, null, null, null, null, null);
+
+        verify(repository).findAllPedidosPorFiltros(eq(null), eq(null), eq(null),
+                eq(null), eq(null), eq(TipoPedido.NECESSIDADE), eq(paging));
+
+        verify(necessidadesResponseMapper).apply(eq(pagedResponse));
     }
 
     @Test
@@ -143,13 +150,31 @@ public class PedidoServiceTest {
         final Status status = PENDENTE;
 
         final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
-        final Page<Pedido> pedidoEntityPage = mock(Page.class);
+        final List<Pedido> pedidos = Arrays.asList(Fixture.make(Pedido.builder()).build());
 
-        when(repository.findAllByTipoPedidoAndStatus(TipoPedido.NECESSIDADE, status, paging)).thenReturn(pedidoEntityPage);
-        service.listarNecessidades(pagina, tamanho, ordenacao, direcao, status);
+        final List<Categoria> categorias = Arrays.asList(Categoria.BEM);
+        final List<Subcategoria> subcategorias = Arrays.asList(Subcategoria.SAUDE);
+        final List<Status> statuses = Arrays.asList(PENDENTE);
+        final Integer mesesCorte = 6;
+        final String texto = "Texto";
 
-        verify(necessidadesResponseMapper).apply(pedidoEntityPage);
-        verify(repository).findAllByTipoPedidoAndStatus(eq(TipoPedido.NECESSIDADE), eq(PENDENTE), eq(paging));
+        final Page<Pedido> pagedResponse = new PageImpl(pedidos);
+
+        when(repository.findAllPedidosPorFiltros(
+                any(List.class),
+                any(List.class),
+                any(List.class),
+                any(LocalDateTime.class),
+                any(String.class),
+                any(TipoPedido.class),
+                any(Pageable.class)))
+                .thenReturn(pagedResponse);
+
+        service.listarPedidos(pagina, tamanho, ordenacao, direcao, categorias, subcategorias, statuses, mesesCorte, texto);
+
+        verify(necessidadesResponseMapper).apply(eq(pagedResponse));
+        verify(repository).findAllPedidosPorFiltros(eq(categorias), eq(subcategorias), eq(statuses),
+                dataCorteCaptor.capture(), eq(texto), eq(TipoPedido.NECESSIDADE), eq(paging));
     }
 
     @Test
