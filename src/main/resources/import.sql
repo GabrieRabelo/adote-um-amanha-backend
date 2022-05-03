@@ -1,4 +1,9 @@
 -- Usuários
+insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, site, endereco_estado,
+                    endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)
+values (1, true, 'teste@email.com', 'Joe testes', 'DOADOR',
+        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '000.000.000-00', '5135174877',
+        '','RS', 'Porto Alegre', 'Mario Quintana', '91260-370', 'R. Deodoro', 250);
 ---- Casas
 insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, site, endereco_estado,
                     endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)

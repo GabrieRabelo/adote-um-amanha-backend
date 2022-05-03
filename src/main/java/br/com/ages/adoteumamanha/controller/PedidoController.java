@@ -1,13 +1,19 @@
 package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
+import br.com.ages.adoteumamanha.domain.entity.Match;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
+import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
+import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
+import br.com.ages.adoteumamanha.service.MatchService;
 import br.com.ages.adoteumamanha.service.PedidoService;
+import br.com.ages.adoteumamanha.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 
+import java.time.LocalDateTime;
+
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 @RestController
@@ -23,12 +31,19 @@ import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.Necess
 public class PedidoController implements PedidoControllerApi {
 
     private final PedidoService pedidoService;
+    private final MatchService matchService;
 
     @PostMapping("/pedidos")
     public ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,
+                                                @RequestBody final Long idNecessidade,
                                                 @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        pedidoService.cadastrar(request, userPrincipal);
+        TipoPedido tipoPedido = pedidoService.cadastrar(request, userPrincipal);
+        if(tipoPedido == TipoPedido.DOACAO && idNecessidade != null){
+            // Cadastrar Match de doação com Necessidade
+            matchService.cadastrar(userPrincipal.getId(), idNecessidade, LocalDateTime.now(), "Match automático");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

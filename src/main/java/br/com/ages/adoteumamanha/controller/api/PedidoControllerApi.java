@@ -31,6 +31,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 500, message = "Erro Interno")
     })
     ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,
+                                         @RequestBody final Long idNecessidade,
                                          @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para listagem de necessidades",
