@@ -37,12 +37,7 @@ public class PedidoController implements PedidoControllerApi {
                                                 @RequestBody final Long idNecessidade,
                                                 @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        TipoPedido tipoPedido = pedidoService.cadastrar(request, userPrincipal);
-        if(tipoPedido == TipoPedido.DOACAO && idNecessidade != null){
-            // Cadastrar Match de doação com Necessidade
-            matchDoadorService.cadastrar(userPrincipal.getId(), idNecessidade, LocalDateTime.now(), "Match automático");
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        pedidoService.cadastrar(request, userPrincipal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

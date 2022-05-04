@@ -45,7 +45,7 @@ public class PedidoService {
 
     private final CadastrarPedidoRequestValidator validator;
 
-    public TipoPedido cadastrar(final CadastrarPedidoRequest request, final UserPrincipal userPrincipal) {
+    public void cadastrar(final CadastrarPedidoRequest request, final UserPrincipal userPrincipal) {
 
         log.info("Validando request de cadastro de pedido");
         validator.validate(request);
@@ -54,7 +54,6 @@ public class PedidoService {
 
         log.info("Cadastrando pedido para o usuario com id: {}", userPrincipal.getId());
         repository.save(entity);
-        return entity.getTipoPedido();
     }
 
     //TODO Deixar o método generico passando também o tipo do pedido, assim irá consultar necessidade e doação.

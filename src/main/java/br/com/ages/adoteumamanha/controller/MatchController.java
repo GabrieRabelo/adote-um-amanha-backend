@@ -5,9 +5,11 @@ import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.LoginResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.MatchDoadorService;
+import br.com.ages.adoteumamanha.service.PedidoService;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +34,13 @@ public class MatchController implements MatchControllerApi {
     public ResponseEntity<LoginResponse> cadastrar(@PathVariable("id") final Long idNecessidade,
                                                    @RequestBody final CadastrarPedidoRequest request,
                                                    @AuthenticationPrincipal final UserPrincipal userPrincipal) {
-        matchDoadorService.cadastrar(userPrincipal, idNecessidade, request);
-        return ResponseEntity.ok().body(service.authenticate(request));
+        try {
+            matchDoadorService.cadastrar(userPrincipal, idNecessidade, request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // ADM
