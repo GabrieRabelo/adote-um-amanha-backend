@@ -31,14 +31,14 @@ public class ControllerHandler {
         return ResponseEntity.status((HttpStatus.FORBIDDEN.value())).body(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErroResponse<String>> handlerGenericException() {
-        ErroResponse<String> response = new ErroResponse<>();
-        response.setCodigoStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        response.setInformacao(Mensagem.ERRO_GENERICO.getDescricao());
-
-        return ResponseEntity.status((HttpStatus.INTERNAL_SERVER_ERROR.value())).body(response);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErroResponse<String>> handlerGenericException() {
+//        ErroResponse<String> response = new ErroResponse<>();
+//        response.setCodigoStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+//        response.setInformacao(Mensagem.ERRO_GENERICO.getDescricao());
+//
+//        return ResponseEntity.status((HttpStatus.INTERNAL_SERVER_ERROR.value())).body(response);
+//    }
 
 }
 

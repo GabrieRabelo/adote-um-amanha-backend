@@ -19,7 +19,14 @@ public enum Mensagem {
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
     STATUS_NAO_PENDENTE("Só é possível alterar pedidos que estejam com status pendente."),
-    SUBCATEGORIA_INVALIDA("Subcategoria inválida.");
+    SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
+    NOME_INVALIDO("Nome inválido"),
+    DOCUMENTO_INVALIDO("CPF/CNPJ inválido"),
+    CEP_INVALIDO("CEP inválido"),
+    BAIRRO_INVALIDO("Bairro inválido"),
+    RUA_INVALIDA("Rua inválida"),
+    NUMERO_RUA_INVALIDO("Número inválido"),
+    TELEFONE_INVALIDO("Telefone inválido");
 
     private final String descricao;
 }
