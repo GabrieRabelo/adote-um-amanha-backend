@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.security;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Slf4j
@@ -82,6 +84,11 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isAccountNonExpired();
+    }
+
+    public boolean isAdmin() {
+        return authorities.stream()
+                .anyMatch(it -> Objects.equals(it.getAuthority(), Perfil.ADMIN.getDescricao()));
     }
 
 }

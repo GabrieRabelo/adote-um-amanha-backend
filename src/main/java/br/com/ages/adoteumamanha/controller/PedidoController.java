@@ -2,9 +2,12 @@ package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
+import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.PedidoService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 
-import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,16 +56,24 @@ public class PedidoController implements PedidoControllerApi {
     public ResponseEntity<NecessidadesResponse> listarNecessidades(@RequestParam(defaultValue = "0") final Integer pagina,
                                                                    @RequestParam(defaultValue = "5") final Integer tamanho,
                                                                    @RequestParam(defaultValue = "DESC") final Direcao direcao,
-                                                                   @RequestParam(defaultValue = "dataHora") final String ordenacao) {
+                                                                   @RequestParam(defaultValue = "dataHora") final String ordenacao,
+                                                                   @RequestParam(required = false) final Status status) {
 
-        return ResponseEntity.ok().body(pedidoService.listarNecessidades(pagina, tamanho, ordenacao, direcao));
+        return ResponseEntity.ok().body(pedidoService.listarNecessidades(pagina, tamanho, ordenacao, direcao, status));
     }
 
     @GetMapping("/public/necessidades/{id}")
-    public ResponseEntity<NecessidadeResponse> descricaoNecessidade(
-            @PathVariable("id") final Long idNecessidade) {
+    public ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id) {
 
-        return ResponseEntity.ok().body(pedidoService.descricaoNecessidade(idNecessidade));
+        return ResponseEntity.ok().body(pedidoService.descricaoNecessidade(id));
+    }
+
+    @GetMapping("/doacoes/{id}")
+    @RolesAllowed({"DOADOR", "ADMIN"})
+    public ResponseEntity<DoacaoResponse> descricaoDoacao(@PathVariable final Long id,
+                                                          @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+
+        return ResponseEntity.ok().body(pedidoService.descricaoDoacao(id, userPrincipal));
     }
 }
 
