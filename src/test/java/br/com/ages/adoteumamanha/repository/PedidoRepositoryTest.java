@@ -4,27 +4,31 @@ import br.com.ages.adoteumamanha.domain.entity.Endereco;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
+import br.com.ages.adoteumamanha.fixture.Fixture;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Collections;
 import java.util.Optional;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Categoria.SERVIÇO;
+import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.DESC;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.Subcategoria.SAUDE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
-import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.DESC;
+import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.domain.Sort.by;
 
@@ -136,7 +140,14 @@ class PedidoRepositoryTest {
         Pageable paging = PageRequest.of(0, 5, by(Sort.Direction.valueOf(DESC.name()), "dataHora"));
 
         //Act
-        Page<Pedido> pedidoPages = pedidoRepository.findAllByTipoPedidoAndStatus(NECESSIDADE, PENDENTE, paging);
+        Page<Pedido> pedidoPages = pedidoRepository.findAllPedidosPorFiltros(emptyList(),
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now().minusMonths(6),
+                "Assunto",
+                NECESSIDADE,
+                paging);
+
         Optional<Pedido> pedidoOpt = pedidoPages.stream().findFirst();
         //Assert
         assertThat(pedidoOpt).isPresent();
