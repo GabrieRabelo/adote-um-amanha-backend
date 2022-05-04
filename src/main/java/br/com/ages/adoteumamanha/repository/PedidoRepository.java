@@ -38,4 +38,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
                                           final Pageable pageable);
 
     Optional<Pedido> findByIdAndTipoPedido(Long id, TipoPedido tipoPedido);
+
+    Page<Pedido> findAllByUsuarioIdAndStatus(Long id, Status status, final Pageable pageable);
 }

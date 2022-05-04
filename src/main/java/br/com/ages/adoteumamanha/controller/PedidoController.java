@@ -84,5 +84,17 @@ public class PedidoController implements PedidoControllerApi {
 
         return ResponseEntity.ok().body(pedidoService.descricaoDoacao(id, userPrincipal));
     }
+
+    @GetMapping("/pedidos")
+    @RolesAllowed({"DOADOR", "CASA"})
+    public ResponseEntity<NecessidadesResponse> listarPedidos(@RequestParam(defaultValue = "0") final Integer pagina,
+                                                              @RequestParam(defaultValue = "5") final Integer tamanho,
+                                                              @RequestParam(defaultValue = "DESC") final Direcao direcao,
+                                                              @RequestParam(defaultValue = "dataHora") final String ordenacao,
+                                                              @RequestParam(defaultValue = "PENDENTE") final Status status,
+                                                              @AuthenticationPrincipal final UserPrincipal userPrincipal){
+
+        return ResponseEntity.ok().body(pedidoService.listarPedidosPorUsuario(pagina,tamanho,direcao,ordenacao,status,userPrincipal));
+    }
 }
 

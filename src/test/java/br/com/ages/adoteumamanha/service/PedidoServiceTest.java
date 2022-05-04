@@ -8,10 +8,7 @@ import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
-import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
-import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
-import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
-import br.com.ages.adoteumamanha.mapper.PedidoMapper;
+import br.com.ages.adoteumamanha.mapper.*;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
@@ -65,6 +62,9 @@ public class PedidoServiceTest {
     private CadastrarPedidoRequest request;
 
     private UserPrincipal userPrincipal;
+
+    @Mock
+    private PedidoCurtoResponseMapper pedidoCurtoResponseMapper;
 
     @Captor
     private ArgumentCaptor<Pedido> pedidoEntityArgumentCaptor;
@@ -132,7 +132,7 @@ public class PedidoServiceTest {
                 TipoPedido.NECESSIDADE,
                 paging)).thenReturn(pagedResponse);
 
-        service.listarPedidos(pagina, tamanho, ordenacao, direcao, null, null, null, null, null);
+        service.listarPedidos(pagina, tamanho, ordenacao, direcao, null, null, null, null, null, null);
 
         verify(repository).findAllPedidosPorFiltros(eq(null), eq(null), eq(null),
                 eq(null), eq(null), eq(TipoPedido.NECESSIDADE), eq(paging));
@@ -157,6 +157,7 @@ public class PedidoServiceTest {
         final List<Status> statuses = Arrays.asList(PENDENTE);
         final Integer mesesCorte = 6;
         final String texto = "Texto";
+        final TipoPedido tipoPedido = TipoPedido.NECESSIDADE;
 
         final Page<Pedido> pagedResponse = new PageImpl(pedidos);
 
@@ -170,7 +171,7 @@ public class PedidoServiceTest {
                 any(Pageable.class)))
                 .thenReturn(pagedResponse);
 
-        service.listarPedidos(pagina, tamanho, ordenacao, direcao, categorias, subcategorias, statuses, mesesCorte, texto);
+        service.listarPedidos(pagina, tamanho, ordenacao, direcao, categorias, subcategorias, statuses, mesesCorte, texto, tipoPedido);
 
         verify(necessidadesResponseMapper).apply(eq(pagedResponse));
         verify(repository).findAllPedidosPorFiltros(eq(categorias), eq(subcategorias), eq(statuses),
@@ -461,4 +462,21 @@ public class PedidoServiceTest {
         verifyNoInteractions(necessidadeResponseMapper);
     }
 
+    @Test
+    public void listar_pedidos_por_usuario_ok() {
+        final Integer pagina = 0;
+        final Integer tamanho = 5;
+        final Direcao direcao = ASC;
+        final String ordenacao = "data";
+        final Status status = PENDENTE;;
+
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
+        final Page<Pedido> pedidoEntityPage = mock(Page.class);
+
+        when(repository.findAllByUsuarioIdAndStatus(userPrincipal.getId(), status, paging)).thenReturn(pedidoEntityPage);
+        service.listarPedidosPorUsuario(pagina, tamanho, direcao, ordenacao, status, userPrincipal);
+
+        verify(necessidadesResponseMapper).apply(pedidoEntityPage);
+        verify(repository).findAllByUsuarioIdAndStatus(any(),any(),any());
+    }
 }
