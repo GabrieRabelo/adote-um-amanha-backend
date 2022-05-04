@@ -30,6 +30,7 @@ public class MatchDoadorService {
     public void cadastrar(final UserPrincipal doador, final Long idNecessidade, CadastrarPedidoRequest request) throws Exception {
 
         final Pedido doacao = pedidoMapper.apply(request, doador);
+        pedidoRepository.save(doacao);
         final Pedido necesidade = pedidoRepository.getById(idNecessidade);
 
         // Validar doacao e necessidade se sao dos tipos corretos

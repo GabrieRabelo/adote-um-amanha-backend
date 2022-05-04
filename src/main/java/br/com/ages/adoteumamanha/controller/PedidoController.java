@@ -34,12 +34,12 @@ public class PedidoController implements PedidoControllerApi {
 
     @PostMapping("/pedidos")
     public ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,
-                                                @RequestBody final Long idNecessidade,
                                                 @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
         pedidoService.cadastrar(request, userPrincipal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @DeleteMapping("/pedidos/{id}")
     @RolesAllowed({"CASA", "DOADOR"})

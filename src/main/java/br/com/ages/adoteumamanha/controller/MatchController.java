@@ -22,7 +22,6 @@ import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/match")
 public class MatchController implements MatchControllerApi {
 
     private final MatchDoadorService matchDoadorService;
@@ -30,8 +29,8 @@ public class MatchController implements MatchControllerApi {
     // Se for usuário comum:
     // 1 - cadastrar doacao desse usuário (isso é feito automatico, não chamar service)
     // 2 - criar match automatico com doacao recem cadastrada e necessidade com status PENDENTE
-    @PostMapping("/{idNecessidade}}")
-    public ResponseEntity<LoginResponse> cadastrar(@PathVariable("id") final Long idNecessidade,
+    @PostMapping("/match/{idNecessidade}")
+    public ResponseEntity<Void> cadastrar(@PathVariable("idNecessidade") final Long idNecessidade,
                                                    @RequestBody final CadastrarPedidoRequest request,
                                                    @AuthenticationPrincipal final UserPrincipal userPrincipal) {
         try {
