@@ -2,9 +2,7 @@ package br.com.ages.adoteumamanha.service;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
-import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
-import br.com.ages.adoteumamanha.domain.enumeration.Status;
-import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
+import br.com.ages.adoteumamanha.domain.enumeration.*;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
@@ -12,21 +10,21 @@ import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
+import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadeResponseMapper;
 import br.com.ages.adoteumamanha.mapper.NecessidadesResponseMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
-import br.com.ages.adoteumamanha.mapper.DoacaoResponseMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,7 +34,6 @@ import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDAD
 import static java.util.Objects.isNull;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.BooleanUtils.isFalse;
-import static org.springframework.data.domain.Sort.Direction;
 import static org.springframework.data.domain.Sort.by;
 
 @Slf4j
@@ -63,33 +60,37 @@ public class PedidoService {
         repository.save(entity);
     }
 
-    //TODO Deixar o método generico passando também o tipo do pedido, assim irá consultar necessidade e doação.
-    public NecessidadesResponse listarNecessidades(final Integer pagina, final Integer tamanho,
-                                                   final String ordenacao, final Direcao direcao, final Status status) {
+    public NecessidadesResponse listarPedidos(final Integer pagina,
+                                              final Integer tamanho, final String ordenacao,
+                                              final Direcao direcao,
+                                              final List<Categoria> categorias,
+                                              final List<Subcategoria> subcategorias,
+                                              final List<Status> status,
+                                              final Integer mesesCorte,
+                                              final String textoBusca,
+                                              final TipoPedido tipoPedido) {
 
-        log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}, status {}", pagina, tamanho, ordenacao, direcao, status);
-        final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordenacao));
+        final LocalDateTime mesesDeCorte = ofNullable(mesesCorte).map(meses -> LocalDateTime.now().minusMonths(meses)).orElse(null);
 
+        log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}", pagina, tamanho, ordenacao, direcao);
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
+
+        log.info("categorias {}, subcategorias {}, status {}, dataCorte {}, texto de busca {}", categorias, subcategorias, status, mesesDeCorte, textoBusca);
         log.info("Buscando no banco pedidos paginados");
-        if(status == null){
-            final Page<Pedido> pedidoEntities = repository.findAllByTipoPedido(TipoPedido.NECESSIDADE, paging);
-            return necessidadesResponseMapper.apply(pedidoEntities);
-        }
-        final Page<Pedido> pedidoEntities = repository.findAllByTipoPedidoAndStatus(TipoPedido.NECESSIDADE, status, paging);
+        final Page<Pedido> pedidoEntities = repository.findAllPedidosPorFiltros(categorias, subcategorias, status, mesesDeCorte, textoBusca, tipoPedido, paging);
+
         return necessidadesResponseMapper.apply(pedidoEntities);
     }
 
     public NecessidadeResponse descricaoNecessidade(final Long id) {
-
         final Pedido pedido = buscarNecessidadePorId(id);
-
         return necessidadeResponseMapper.apply(pedido);
     }
 
     public DoacaoResponse descricaoDoacao(final Long id, final UserPrincipal usuario) {
         final Pedido doacao = buscarDoacaoPorId(id);
 
-        if(!Objects.equals(doacao.getUsuario().getId(), usuario.getId()) && !usuario.isAdmin()) {
+        if (!Objects.equals(doacao.getUsuario().getId(), usuario.getId()) && !usuario.isAdmin()) {
             throw new ApiException(Mensagem.ACESSO_DOACAO_NAO_PERMITIDA.getDescricao(), HttpStatus.UNAUTHORIZED);
         }
 
@@ -162,13 +163,12 @@ public class PedidoService {
             throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
         }
     }
-
     public NecessidadesResponse listarPedidosPorUsuario(final Integer pagina, final Integer tamanho,
                                                         final Direcao direcao, final String ordenacao, final Status status,
                                                         final UserPrincipal userPrincipal) {
 
         log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}, status {}", pagina, tamanho, ordenacao, direcao, status);
-        final Pageable paging = PageRequest.of(pagina, tamanho, by(Direction.valueOf(direcao.name()), ordenacao));
+        final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
 
         log.info("Buscando no banco pedidos paginados");
         final Page<Pedido> pedidoEntities = repository.findAllByUsuarioIdAndStatus(userPrincipal.getId(), status, paging);

@@ -1,13 +1,12 @@
 package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
-import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
-import br.com.ages.adoteumamanha.domain.enumeration.Status;
+import br.com.ages.adoteumamanha.domain.enumeration.*;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
-import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.PedidoService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +16,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
+
+import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.*;
 
 
 @RestController
@@ -57,10 +59,17 @@ public class PedidoController implements PedidoControllerApi {
                                                                    @RequestParam(defaultValue = "5") final Integer tamanho,
                                                                    @RequestParam(defaultValue = "DESC") final Direcao direcao,
                                                                    @RequestParam(defaultValue = "dataHora") final String ordenacao,
-                                                                   @RequestParam(required = false) final Status status) {
+                                                                   @RequestParam(required = false) final List<Categoria> categorias,
+                                                                   @RequestParam(required = false) final List<Subcategoria> subcategorias,
+                                                                   @RequestParam(required = false) final List<Status> status,
+                                                                   @RequestParam(required = false) final Integer mesesCorte,
+                                                                   @RequestParam(required = false) final String textoBusca){
 
-        return ResponseEntity.ok().body(pedidoService.listarNecessidades(pagina, tamanho, ordenacao, direcao, status));
+
+        return ResponseEntity.ok().body(pedidoService.listarPedidos(pagina, tamanho, ordenacao, direcao,
+                categorias, subcategorias, status, mesesCorte, textoBusca, NECESSIDADE));
     }
+
 
     @GetMapping("/public/necessidades/{id}")
     public ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id) {
