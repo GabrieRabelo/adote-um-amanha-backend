@@ -15,11 +15,16 @@ public enum Mensagem {
     EMAIL_INVALIDO("E-mail inválido."),
     ERRO_GENERICO("Erro no servidor."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
+    DOACAO_NAO_ENCONTRADA("Doação não encontrada"),
+    VINCULACAO_DOACAO_DOACAO_MATCH("Não pode vincular uma doação com outra doação"),
     PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deletá-lo."),
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
     STATUS_NAO_PENDENTE("Só é possível alterar pedidos que estejam com status pendente."),
     SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
+    MATCH_INVALIDO("Match inválido."),
+    DOACAO_MATCH_INVALIDO("Doação do match inválido."),
+    NECESSIDADE_MATCH_INVALIDO("Necessidade do match inválida."),
     USUARIO_NAO_ENCONTRADO("Usuário não encontrado");
 
     private final String descricao;
