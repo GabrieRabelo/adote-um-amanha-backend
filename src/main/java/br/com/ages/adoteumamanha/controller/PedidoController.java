@@ -27,10 +27,6 @@ import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.Necess
 public class PedidoController implements PedidoControllerApi {
 
     private final PedidoService pedidoService;
-    private final MatchDoadorService matchDoadorService;
-
-    // match/idnecessidade/ doacao vinculada
-    // pedidos/ doacao avulça
 
     @PostMapping("/pedidos")
     public ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,

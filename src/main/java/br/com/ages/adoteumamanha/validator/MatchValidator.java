@@ -25,11 +25,11 @@ public class MatchValidator {
             throw new ApiException(Mensagem.MATCH_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        if (isNull(match.getDoacao()) || DOACAO.equals(match.getNecessidade().getTipoPedido())) {
+        if (isNull(match.getDoacao()) || isFalse(DOACAO.equals(match.getDoacao().getTipoPedido()))) {
             throw new ApiException(Mensagem.DOACAO_MATCH_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        if (isNull(match.getNecessidade()) || NECESSIDADE.equals(match.getNecessidade().getTipoPedido())) {
+        if (isNull(match.getNecessidade()) || isFalse(NECESSIDADE.equals(match.getNecessidade().getTipoPedido()))) {
             throw new ApiException(Mensagem.NECESSIDADE_MATCH_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 

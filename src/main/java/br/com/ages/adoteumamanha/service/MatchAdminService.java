@@ -33,7 +33,6 @@ public class MatchAdminService {
 
     public void cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
 
-        //TODO logs e testes unitarios
         if(isNull(idDoacao) || isNull(idNecessidade)) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }

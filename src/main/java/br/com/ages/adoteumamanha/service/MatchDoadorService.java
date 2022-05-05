@@ -34,7 +34,6 @@ public class MatchDoadorService {
 
     public void cadastrar(final UserPrincipal doador, final Long idNecessidade, final CadastrarPedidoRequest request) {
 
-        //TODO logs e testes unitarios
         log.info("Validando request de cadastro de pedido");
         validator.validate(request);
 
