@@ -1,7 +1,7 @@
-package br.com.ages.adoteumamanha.service;
+package br.com.ages.adoteumamanha.service.usuarios;
 
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
-import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
+import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
@@ -16,22 +16,20 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UsuarioService {
+public class BuscarUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final CasaDescricaoResponseMapper casaDescricaoResponseMapper;
     private final UsuarioResponseMapper usuarioResponseMapper;
 
-    public CasaDescricaoResponse buscaCasaDescricao(final Long id) {
-
-        log.info("Buscando usuário pelo id: {}", id);
+    public CasaResponse buscarCasaPorId(final Long id) {
+        log.info("Buscando casa pelo id: {}", id);
         return usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)
                 .map(casaDescricaoResponseMapper)
                 .orElseThrow(() -> new ApiException(Mensagem.CASA_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
     }
 
-    public UsuarioResponse buscaUsuario(final Long id) {
-
+    public UsuarioResponse buscarUsuario(final Long id) {
         log.info("Buscando usuário pelo id: {}", id);
         return usuarioRepository.findById(id)
                 .map(usuarioResponseMapper)

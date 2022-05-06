@@ -18,26 +18,32 @@ import java.util.Optional;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
-    Page<Pedido> findAllByTipoPedido(final TipoPedido tipoPedido, final Pageable pageable);
 
     @Query(value = "SELECT p FROM Pedido p " +
             " WHERE ((coalesce(:categorias) is null  or (p.categoria in (:categorias)))" +
             " and (coalesce(:subcategorias) is null  or (p.subcategoria in (:subcategorias)))" +
             " and (coalesce(:status) is null or (p.status in (:status)))" +
             " and (coalesce(:data) is null or (p.dataHora >= (:data)))" +
+            " and (coalesce(:idUsuarioLogado) is null or (p.usuario.id = (:idUsuarioLogado)))" +
             " and (p.tipoPedido = :tipoPedido)" +
-            " and (coalesce(:texto) is null or ((lower(p.assunto) like(concat('%', lower(:texto), '%')))" +
+            " and (coalesce(:texto) is null or (((lower(p.assunto) like(concat('%', lower(:texto), '%')))" +
             " or (lower(p.descricao) like(concat('%', lower(:texto), '%')))" +
-            " or (lower(p.usuario.nome) like(concat('%', lower(:texto), '%'))))))")
+            " or (lower(p.usuario.nome) like(concat('%', lower(:texto), '%')))))))")
     Page<Pedido> findAllPedidosPorFiltros(@Param("categorias") final List<Categoria> categorias,
                                           @Param("subcategorias") final List<Subcategoria> subcategorias,
                                           @Param("status") final List<Status> status,
                                           @Param("data") final LocalDateTime data,
                                           @Param("texto") final String textoBusca,
                                           @Param("tipoPedido") final TipoPedido tipoPedido,
+                                          @Param("idUsuarioLogado") final Long idUsuarioLogado,
                                           final Pageable pageable);
 
-    Optional<Pedido> findByIdAndTipoPedido(Long id, TipoPedido tipoPedido);
+    @Query(value = "SELECT p FROM Pedido p " +
+            " WHERE ((coalesce(:tipos) is null  or (p.tipoPedido in (:tipos)))" +
+            "and (coalesce(:idUsuario) is null  or (p.usuario.id = :idUsuario))" +
+            "and p.id = :idPedido)")
+    Optional<Pedido> findByIdPedidoAndTipoPedidoAndIdUsuario(@Param("idPedido") final Long idPedido,
+                                                             @Param("tipos") final List<TipoPedido> tipoPedidos,
+                                                             @Param("idUsuario") final Long idUsuario);
 
-    Page<Pedido> findAllByUsuarioIdAndStatus(Long id, Status status, final Pageable pageable);
 }

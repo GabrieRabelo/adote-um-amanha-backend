@@ -1,8 +1,8 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
-import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
-import br.com.ages.adoteumamanha.dto.response.PedidoCurtoResponse;
+import br.com.ages.adoteumamanha.dto.response.PedidosResponse;
+import br.com.ages.adoteumamanha.dto.response.ResumoPedidoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +13,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class NecessidadesResponseMapper implements Function<Page<Pedido>, NecessidadesResponse> {
+public class PedidosResponseMapper implements Function<Page<Pedido>, PedidosResponse> {
 
     final PedidoCurtoResponseMapper pedidoCurtoResponseMapper = new PedidoCurtoResponseMapper();
 
     @Override
-    public NecessidadesResponse apply(final Page<Pedido> pedidos) {
+    public PedidosResponse apply(final Page<Pedido> pedidos) {
 
-        return NecessidadesResponse.builder()
+        return PedidosResponse.builder()
                 .withConteudo(mapContentToList(pedidos))
                 .withNumeroDaPagina(pedidos.getNumber())
                 .withNumeroDeElementos(pedidos.getNumberOfElements())
@@ -33,13 +33,14 @@ public class NecessidadesResponseMapper implements Function<Page<Pedido>, Necess
                 .build();
     }
 
-    public List<PedidoCurtoResponse> mapContentToList(final Page<Pedido> pedidos) {
+    public List<ResumoPedidoResponse> mapContentToList(final Page<Pedido> pedidos) {
         return Optional.of(pedidos.getContent())
                 .orElseGet(Collections::emptyList)
                 .stream()
                 .map(pedidoCurtoResponseMapper)
                 .collect(Collectors.toList());
     }
+
 }
 
 

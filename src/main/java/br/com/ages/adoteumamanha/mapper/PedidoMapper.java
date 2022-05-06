@@ -5,11 +5,9 @@ import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.function.BiFunction;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
@@ -30,7 +28,7 @@ public class PedidoMapper implements BiFunction<CadastrarPedidoRequest, UserPrin
                 .withUrlVideo(cadastrarPedidoRequest.getUrlVideo())
                 .withStatus(PENDENTE)
                 .withDataHora(LocalDateTime.now())
-                .withTipoPedido(buildTipoDonativo(userPrincipal))
+                .withTipoPedido(buildTipoPedido(userPrincipal))
                 .withUsuario(buildUsuario(userPrincipal))
                 .build();
     }
@@ -39,13 +37,13 @@ public class PedidoMapper implements BiFunction<CadastrarPedidoRequest, UserPrin
         return Usuario.builder().withId(userPrincipal.getId()).build();
     }
 
-    private TipoPedido buildTipoDonativo(final UserPrincipal userPrincipal) {
-        final Optional<? extends GrantedAuthority> permissoes = userPrincipal.getAuthorities().stream().findFirst();
+    private TipoPedido buildTipoPedido(final UserPrincipal userPrincipal) {
 
-        if (CASA.getDescricao().equals(permissoes.get().getAuthority())) {
+        if (CASA.equals(userPrincipal.getPerfil())) {
             return NECESSIDADE;
         }
 
         return DOACAO;
     }
+
 }

@@ -8,6 +8,7 @@ import br.com.ages.adoteumamanha.fixture.Fixture;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.UsuarioResponseMapper;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
+import br.com.ages.adoteumamanha.service.usuarios.BuscarUsuarioService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,10 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UsuarioServiceTest {
+public class BuscarUsuarioServiceTest {
 
     @InjectMocks
-    private UsuarioService service;
+    private BuscarUsuarioService service;
 
     @Mock
     private UsuarioRepository repository;
@@ -43,7 +44,7 @@ public class UsuarioServiceTest {
         when(repository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.of(usuario));
         when(casaDescricaoResponseMapper.apply(usuario)).thenCallRealMethod();
 
-        service.buscaCasaDescricao(id);
+        service.buscarCasaPorId(id);
 
         verify(repository).findByIdAndPerfil(id, Perfil.CASA);
         verify(casaDescricaoResponseMapper).apply(usuario);
@@ -55,7 +56,7 @@ public class UsuarioServiceTest {
         final Long id = 1L;
         when(repository.findByIdAndPerfil(id, Perfil.CASA)).thenReturn(Optional.empty());
 
-        service.buscaCasaDescricao(id);
+        service.buscarCasaPorId(id);
 
         verifyNoInteractions(casaDescricaoResponseMapper);
     }
@@ -69,7 +70,7 @@ public class UsuarioServiceTest {
         when(repository.findById(id)).thenReturn(Optional.of(usuario));
         when(usuarioResponseMapper.apply(usuario)).thenCallRealMethod();
 
-        var result = service.buscaUsuario(id);
+        var result = service.buscarUsuario(id);
 
         var expectedResult = UsuarioResponse.builder()
                 .withNome(usuario.getNome())

@@ -1,10 +1,10 @@
 package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.UsuarioControllerApi;
-import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
+import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
-import br.com.ages.adoteumamanha.service.UsuarioService;
+import br.com.ages.adoteumamanha.service.usuarios.BuscarUsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,17 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UsuarioController implements UsuarioControllerApi {
 
-    private final UsuarioService usuarioService;
+    private final BuscarUsuarioService buscarUsuarioService;
 
     @GetMapping(value = "/public/casas/{id}")
-    public ResponseEntity<CasaDescricaoResponse> buscaCasaPorId(@PathVariable final Long id) {
-
-        return ResponseEntity.ok(usuarioService.buscaCasaDescricao(id));
+    public ResponseEntity<CasaResponse> buscaCasaPorId(@PathVariable final Long id) {
+        return ResponseEntity.ok(buscarUsuarioService.buscarCasaPorId(id));
     }
 
     @GetMapping(value = "/usuario")
     public ResponseEntity<UsuarioResponse> buscaUsuarioAutenticado(@AuthenticationPrincipal final UserPrincipal userPrincipal) {
-        return ResponseEntity.ok(usuarioService.buscaUsuario(userPrincipal.getId()));
+        return ResponseEntity.ok(buscarUsuarioService.buscarUsuario(userPrincipal.getId()));
     }
 
 }

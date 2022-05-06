@@ -7,16 +7,19 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Mensagem {
 
+    ACESSO_DOACAO_NAO_PERMITIDA("Doação não pertence ao usuário conectado"),
     ACESSO_NAO_PERMITIDO("Credenciais de acesso inválida."),
     ASSUNTO_INVALIDO("Assunto inválido."),
+    CASA_ACESSO_DOACAO("Perfil de casa não pode acessar doação"),
     CASA_NAO_ENCONTRADA("Casa não encontrada"),
     CATEGORIA_INVALIDA("Categoria inválida."),
     DESCRICAO_INVALIDA("Descricão inválida."),
+    DOACAO_NAO_ENCONTRADA("Doação não encontrada"),
     EMAIL_INVALIDO("E-mail inválido."),
     ERRO_GENERICO("Erro no servidor."),
+    ITEM_NAO_ENCONTRADO("Item não encontrado"),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
-    DOACAO_NAO_ENCONTRADA("Doação não encontrada"),
-    ACESSO_DOACAO_NAO_PERMITIDA("Doação não pertence ao usuário conectado"),
+    OPERACAO_NAO_PERMITIDA("Operação não permitida."),
     PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deletá-lo."),
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),

@@ -1,6 +1,6 @@
 package br.com.ages.adoteumamanha.controller.api;
 
-import br.com.ages.adoteumamanha.dto.response.CasaDescricaoResponse;
+import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
@@ -22,7 +22,7 @@ public interface UsuarioControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<CasaDescricaoResponse> buscaCasaPorId(@PathVariable Long id);
+    ResponseEntity<CasaResponse> buscaCasaPorId(@PathVariable Long id);
 
     @ApiOperation(value = "Serviço para buscar detalhes de um usuário para gerenciar telas",
             notes = "Serviço para buscar detalhes de um usuário para gerenciar telas")

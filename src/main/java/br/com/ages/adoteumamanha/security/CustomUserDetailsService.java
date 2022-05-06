@@ -1,9 +1,12 @@
 package br.com.ages.adoteumamanha.security;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
+import br.com.ages.adoteumamanha.exception.ApiException;
+import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,9 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private Usuario getUser(final Supplier<Optional<Usuario>> supplier) {
-
-        //TODO erro mensagem criar padrão como na api trab
-        return supplier.get().orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+        return supplier.get().orElseThrow(() -> new ApiException(Mensagem.USUARIO_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND));
     }
 
 }

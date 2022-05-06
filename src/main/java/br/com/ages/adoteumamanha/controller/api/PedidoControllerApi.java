@@ -6,9 +6,8 @@ import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
-import br.com.ages.adoteumamanha.dto.response.DoacaoResponse;
-import br.com.ages.adoteumamanha.dto.response.NecessidadeResponse;
-import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
+import br.com.ages.adoteumamanha.dto.response.DescricaoPedidoResponse;
+import br.com.ages.adoteumamanha.dto.response.PedidosResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,8 +33,8 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<Void> cadastrarPedido(@RequestBody final CadastrarPedidoRequest request,
-                                         @AuthenticationPrincipal final UserPrincipal userPrincipal);
+    ResponseEntity<Void> cadastrar(@RequestBody final CadastrarPedidoRequest request,
+                                   @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para listagem de necessidades",
             notes = "Serviço responsável por listar as necessidades")
@@ -46,15 +45,15 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<NecessidadesResponse> listarNecessidades(@RequestParam final Integer pagina,
-                                                            @RequestParam final Integer tamanho,
-                                                            @RequestParam final Direcao direcao,
-                                                            @RequestParam final String ordenacao,
-                                                            @RequestParam final List<Categoria> categorias,
-                                                            @RequestParam final List<Subcategoria> subcategorias,
-                                                            @RequestParam final List<Status> status,
-                                                            @RequestParam final Integer mesesDeCorte,
-                                                            @RequestParam final String textoBusca);
+    ResponseEntity<PedidosResponse> buscarNecessidades(@RequestParam final Integer pagina,
+                                                       @RequestParam final Integer tamanho,
+                                                       @RequestParam final Direcao direcao,
+                                                       @RequestParam final String ordenacao,
+                                                       @RequestParam final List<Categoria> categorias,
+                                                       @RequestParam final List<Subcategoria> subcategorias,
+                                                       @RequestParam final List<Status> status,
+                                                       @RequestParam final Integer mesesDeCorte,
+                                                       @RequestParam final String textoBusca);
 
     @ApiOperation(value = "Serviço buscar uma necessidade especifica",
             notes = "Serviço responsável por buscar a descrição de uma necessidade dado um id")
@@ -65,7 +64,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<NecessidadeResponse> descricaoNecessidade(@PathVariable final Long id);
+    ResponseEntity<DescricaoPedidoResponse> buscarDescricaoNecessidade(@PathVariable final Long id);
 
     @ApiOperation(value = "Serviço buscar uma doacao especifica",
             notes = "Serviço responsável por buscar a descrição de uma doacao dado um id")
@@ -76,7 +75,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<DoacaoResponse> descricaoDoacao(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
+    ResponseEntity<DescricaoPedidoResponse> buscarDescricaoPedido(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
     @ApiOperation(value = "Serviço para deletar um pedido especifico",
             notes = "Serviço responsável por deletar um pedido com status pendente dado um id")
     @ApiResponses({
@@ -86,7 +85,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<Void> deletarPedido(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
+    ResponseEntity<Void> deletar(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para atualizar um pedido especifico",
             notes = "Serviço responsável por atualizar um pedido com status pendente dado um id")
@@ -97,7 +96,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<NecessidadeResponse> atualizarPedido(@PathVariable final Long id,
-                                                        @RequestBody final AtualizarPedidoRequest request,
-                                                        @AuthenticationPrincipal final UserPrincipal userPrincipal);
+    ResponseEntity<Void> atualizar(@PathVariable final Long id,
+                                                  @RequestBody final AtualizarPedidoRequest request,
+                                                  @AuthenticationPrincipal final UserPrincipal userPrincipal);
 }

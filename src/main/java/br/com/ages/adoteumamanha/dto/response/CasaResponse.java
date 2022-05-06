@@ -1,20 +1,16 @@
 package br.com.ages.adoteumamanha.dto.response;
 
 import br.com.ages.adoteumamanha.domain.entity.Endereco;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Builder(setterPrefix = "with")
-public class CasaDescricaoResponse implements Serializable {
+public class CasaResponse implements Serializable {
 
-    private static final long serialVersionUID = -6967544315226924960L;
+    private static final long serialVersionUID = 84109019533928162L;
 
     private String nome;
     private String telefone;
