@@ -1,8 +1,6 @@
 package br.com.ages.adoteumamanha.controller.api;
 
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
-import br.com.ages.adoteumamanha.dto.request.LoginRequest;
-import br.com.ages.adoteumamanha.dto.response.LoginResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

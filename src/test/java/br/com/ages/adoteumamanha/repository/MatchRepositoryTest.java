@@ -1,6 +1,5 @@
 package br.com.ages.adoteumamanha.repository;
 
-import br.com.ages.adoteumamanha.domain.entity.Endereco;
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;

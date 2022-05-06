@@ -3,12 +3,10 @@ package br.com.ages.adoteumamanha.controller;
 import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
 import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
-import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.NecessidadesResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
-import br.com.ages.adoteumamanha.service.MatchDoadorService;
 import br.com.ages.adoteumamanha.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +15,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
-
-import java.time.LocalDateTime;
 
 import static br.com.ages.adoteumamanha.dto.response.NecessidadesResponse.NecessidadeResponse;
 

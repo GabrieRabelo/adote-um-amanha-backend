@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
@@ -21,10 +21,10 @@ import java.time.Month;
 import java.util.Optional;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Categoria.SERVIÇO;
+import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.DESC;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.Subcategoria.SAUDE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
-import static br.com.ages.adoteumamanha.domain.enumeration.Direcao.DESC;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.domain.Sort.by;
 
