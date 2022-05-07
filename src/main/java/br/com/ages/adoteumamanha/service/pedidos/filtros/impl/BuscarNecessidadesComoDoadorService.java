@@ -26,7 +26,7 @@ public class BuscarNecessidadesComoDoadorService implements BuscarPedidosImpleme
     }
 
     @Override
-    public TipoPedido getTipoPedidos() {
+    public TipoPedido getTipoPedido() {
         return NECESSIDADE;
     }
 
@@ -42,8 +42,8 @@ public class BuscarNecessidadesComoDoadorService implements BuscarPedidosImpleme
                                   final String textoBusca,
                                   final Long idUsuarioLogado) {
 
-        log.info("Buscando {} para {}", getTipoPedidos(), getPerfil());
+        log.info("Buscando {} para {}", getTipoPedido(), getPerfil());
         return service.buscar(pagina, tamanho, ordenacao, direcao,
-                categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedidos(), null);
+                categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedido(), null);
     }
 }

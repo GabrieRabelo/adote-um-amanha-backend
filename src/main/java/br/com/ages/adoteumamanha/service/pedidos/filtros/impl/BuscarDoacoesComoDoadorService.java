@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.*;
-import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.*;
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
+import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 
 @Slf4j
 @Service
@@ -26,7 +26,7 @@ public class BuscarDoacoesComoDoadorService implements BuscarPedidosImplementaca
     }
 
     @Override
-    public TipoPedido getTipoPedidos() {
+    public TipoPedido getTipoPedido() {
         return DOACAO;
     }
 
@@ -42,8 +42,8 @@ public class BuscarDoacoesComoDoadorService implements BuscarPedidosImplementaca
                                   final String textoBusca,
                                   final Long idUsuarioLogado) {
 
-        log.info("Buscando {} para {}", getTipoPedidos(), getPerfil());
+        log.info("Buscando {} para {}", getTipoPedido(), getPerfil());
         return service.buscar(pagina, tamanho, ordenacao, direcao,
-                categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedidos(), idUsuarioLogado);
+                categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedido(), idUsuarioLogado);
     }
 }

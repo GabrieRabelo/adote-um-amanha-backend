@@ -17,7 +17,6 @@ public class CadastrarPedidoService {
 
     private final PedidoMapper pedidoMapper;
     private final PedidoRepository repository;
-
     private final CadastrarPedidoRequestValidator validator;
 
     public void cadastrar(final CadastrarPedidoRequest request, final UserPrincipal userPrincipal) {

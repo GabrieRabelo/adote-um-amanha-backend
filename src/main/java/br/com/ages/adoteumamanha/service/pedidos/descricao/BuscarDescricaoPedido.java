@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.service.pedidos.descricao;
 
-import br.com.ages.adoteumamanha.domain.enumeration.*;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
+import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.response.DescricaoPedidoResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 

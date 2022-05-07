@@ -23,7 +23,7 @@ public class BuscarPedidosComFiltrosStrategy {
         log.info("Proucando a service com a implementação para {} e de tipo de pedido {}", perfil, tipoPedido);
         return services.stream()
                 .filter(service -> perfil.equals(service.getPerfil()))
-                .filter(service -> service.getTipoPedidos().equals(tipoPedido))
+                .filter(service -> service.getTipoPedido().equals(tipoPedido))
                 .findFirst()
                 .orElseThrow(() -> new ApiException(Mensagem.OPERACAO_NAO_PERMITIDA.getDescricao(), HttpStatus.BAD_REQUEST));
 

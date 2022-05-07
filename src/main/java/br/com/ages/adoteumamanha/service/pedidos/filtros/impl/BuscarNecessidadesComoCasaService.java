@@ -21,10 +21,14 @@ public class BuscarNecessidadesComoCasaService implements BuscarPedidosImplement
     private final BuscarPedidosComFiltrosService service;
 
     @Override
-    public Perfil getPerfil() { return CASA; }
+    public Perfil getPerfil() {
+        return CASA;
+    }
 
     @Override
-    public TipoPedido getTipoPedidos() { return NECESSIDADE; }
+    public TipoPedido getTipoPedido() {
+        return NECESSIDADE;
+    }
 
     @Override
     public PedidosResponse buscar(final Integer pagina,
@@ -37,8 +41,8 @@ public class BuscarNecessidadesComoCasaService implements BuscarPedidosImplement
                                   final Integer mesesCorte,
                                   final String textoBusca,
                                   final Long idUsuarioLogado) {
-        log.info("Buscando {} para {}", getTipoPedidos(), getPerfil());
+        log.info("Buscando {} para {}", getTipoPedido(), getPerfil());
         return service.buscar(pagina, tamanho, ordenacao, direcao,
-                categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedidos(), idUsuarioLogado);
+                categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedido(), idUsuarioLogado);
     }
 }

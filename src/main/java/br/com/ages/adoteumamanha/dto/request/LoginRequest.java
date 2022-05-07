@@ -1,7 +1,6 @@
 package br.com.ages.adoteumamanha.dto.request;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serializable;

@@ -59,4 +59,5 @@ public class AtualizarPedidoService {
         log.info("Atualizando pedido com id: {}", pedido.getId());
         repository.save(pedido);
     }
+
 }

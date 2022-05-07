@@ -1,5 +1,6 @@
 package br.com.ages.adoteumamanha.controller;
 
+import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
 import br.com.ages.adoteumamanha.domain.enumeration.*;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
@@ -28,7 +29,7 @@ import static java.util.Collections.singletonList;
 
 @RestController
 @RequiredArgsConstructor
-public class PedidoController {
+public class PedidoController implements PedidoControllerApi {
 
     private final AtualizarPedidoService atualizarPedidoService;
     private final CadastrarPedidoService cadastrarPedidoService;
@@ -83,7 +84,7 @@ public class PedidoController {
 
     @GetMapping("/pedidos")
     @RolesAllowed({"DOADOR", "ADMIN", "CASA"})
-    public ResponseEntity<PedidosResponse> buscarDoacoes(@RequestParam(defaultValue = "0") final Integer pagina,
+    public ResponseEntity<PedidosResponse> buscarPedidos(@RequestParam(defaultValue = "0") final Integer pagina,
                                                          @RequestParam(defaultValue = "5") final Integer tamanho,
                                                          @RequestParam(defaultValue = "DESC") final Direcao direcao,
                                                          @RequestParam(defaultValue = "dataHora") final String ordenacao,

@@ -19,12 +19,12 @@ public class UsuarioController implements UsuarioControllerApi {
     private final BuscarUsuarioService buscarUsuarioService;
 
     @GetMapping(value = "/public/casas/{id}")
-    public ResponseEntity<CasaResponse> buscaCasaPorId(@PathVariable final Long id) {
+    public ResponseEntity<CasaResponse> buscarCasaPorId(@PathVariable final Long id) {
         return ResponseEntity.ok(buscarUsuarioService.buscarCasaPorId(id));
     }
 
     @GetMapping(value = "/usuario")
-    public ResponseEntity<UsuarioResponse> buscaUsuarioAutenticado(@AuthenticationPrincipal final UserPrincipal userPrincipal) {
+    public ResponseEntity<UsuarioResponse> buscarUsuarioAutenticado(@AuthenticationPrincipal final UserPrincipal userPrincipal) {
         return ResponseEntity.ok(buscarUsuarioService.buscarUsuario(userPrincipal.getId()));
     }
 

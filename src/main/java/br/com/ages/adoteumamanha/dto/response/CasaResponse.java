@@ -1,8 +1,8 @@
 package br.com.ages.adoteumamanha.dto.response;
 
 import br.com.ages.adoteumamanha.domain.entity.Endereco;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.io.Serializable;
 

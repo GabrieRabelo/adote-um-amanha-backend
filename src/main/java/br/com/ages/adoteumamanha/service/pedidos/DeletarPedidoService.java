@@ -4,7 +4,6 @@ import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
-import br.com.ages.adoteumamanha.service.pedidos.BuscarPedidoService;
 import br.com.ages.adoteumamanha.validator.StatusPedidoValidator;
 import br.com.ages.adoteumamanha.validator.UsuarioCriadorPedidoValidator;
 import lombok.RequiredArgsConstructor;

@@ -22,7 +22,7 @@ public interface UsuarioControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<CasaResponse> buscaCasaPorId(@PathVariable Long id);
+    ResponseEntity<CasaResponse> buscarCasaPorId(@PathVariable Long id);
 
     @ApiOperation(value = "Serviço para buscar detalhes de um usuário para gerenciar telas",
             notes = "Serviço para buscar detalhes de um usuário para gerenciar telas")
@@ -33,5 +33,5 @@ public interface UsuarioControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<UsuarioResponse> buscaUsuarioAutenticado(UserPrincipal userPrincipal);
+    ResponseEntity<UsuarioResponse> buscarUsuarioAutenticado(UserPrincipal userPrincipal);
 }

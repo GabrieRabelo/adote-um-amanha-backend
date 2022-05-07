@@ -2,10 +2,7 @@ package br.com.ages.adoteumamanha.dto.response;
 
 import br.com.ages.adoteumamanha.domain.Pageable;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.List;

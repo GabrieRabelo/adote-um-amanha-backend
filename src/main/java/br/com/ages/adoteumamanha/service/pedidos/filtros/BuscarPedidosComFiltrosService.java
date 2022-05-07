@@ -25,7 +25,7 @@ import static org.springframework.data.domain.Sort.by;
 public class BuscarPedidosComFiltrosService {
 
     private final PedidoRepository repository;
-    private final PedidosResponseMapper descricaoPedidoResponseMapper;
+    private final PedidosResponseMapper pedidosResponseMapper;
 
     public PedidosResponse buscar(final Integer pagina,
                                   final Integer tamanho, final String ordenacao,
@@ -48,6 +48,6 @@ public class BuscarPedidosComFiltrosService {
         final Page<Pedido> pedidoEntities = repository.findAllPedidosPorFiltros(categorias, subcategorias, status, mesesDeCorte,
                 textoBusca, tipoPedido, idUsuarioLogado, paging);
 
-        return descricaoPedidoResponseMapper.apply(pedidoEntities);
+        return pedidosResponseMapper.apply(pedidoEntities);
     }
 }

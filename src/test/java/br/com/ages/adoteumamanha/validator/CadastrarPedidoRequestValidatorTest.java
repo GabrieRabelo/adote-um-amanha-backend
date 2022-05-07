@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CadastrarTipoPedidoRequestValidatorTest {
+public class CadastrarPedidoRequestValidatorTest {
 
     @InjectMocks
     private CadastrarPedidoRequestValidator validator;

@@ -10,7 +10,7 @@ public interface BuscarPedidosImplementacaoFiltros {
 
     Perfil getPerfil();
 
-    TipoPedido getTipoPedidos();
+    TipoPedido getTipoPedido();
 
     PedidosResponse buscar(final Integer pagina,
                            final Integer tamanho, final String ordenacao,

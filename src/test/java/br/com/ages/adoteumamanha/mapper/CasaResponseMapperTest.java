@@ -2,12 +2,10 @@ package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
-import br.com.ages.adoteumamanha.fixture.Fixture;
-import org.junit.Assert;
 import org.junit.Test;
 
-import static br.com.ages.adoteumamanha.fixture.Fixture.*;
-import static org.junit.Assert.*;
+import static br.com.ages.adoteumamanha.fixture.Fixture.make;
+import static org.junit.Assert.assertEquals;
 
 public class CasaResponseMapperTest {
 

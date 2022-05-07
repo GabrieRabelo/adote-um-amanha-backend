@@ -3,7 +3,6 @@ package br.com.ages.adoteumamanha.dto.request;
 import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serializable;
