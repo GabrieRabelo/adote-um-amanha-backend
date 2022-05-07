@@ -14,10 +14,13 @@ public enum Mensagem {
     CASA_NAO_ENCONTRADA("Casa não encontrada"),
     CATEGORIA_INVALIDA("Categoria inválida."),
     DESCRICAO_INVALIDA("Descricão inválida."),
+    DOACAO_MATCH_INVALIDO("Doação do match inválido."),
     DOACAO_NAO_ENCONTRADA("Doação não encontrada"),
     EMAIL_INVALIDO("E-mail inválido."),
     ERRO_GENERICO("Erro no servidor."),
     ITEM_NAO_ENCONTRADO("Item não encontrado"),
+    MATCH_INVALIDO("Match inválido."),
+    NECESSIDADE_MATCH_INVALIDO("Necessidade do match inválida."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
     OPERACAO_NAO_PERMITIDA("Operação não permitida."),
     PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deletá-lo."),
@@ -25,7 +28,8 @@ public enum Mensagem {
     SENHA_INVALIDA("Senha inválida."),
     STATUS_NAO_PENDENTE("Só é possível alterar pedidos que estejam com status pendente."),
     SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
-    USUARIO_NAO_ENCONTRADO("Usuário não encontrado");
+    USUARIO_NAO_ENCONTRADO("Usuário não encontrado"),
+    VINCULACAO_DOACAO_DOACAO_MATCH("Não pode vincular uma doação com outra doação");
 
     private final String descricao;
 }
