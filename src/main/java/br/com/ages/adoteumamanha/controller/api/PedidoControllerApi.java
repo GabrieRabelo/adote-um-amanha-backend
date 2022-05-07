@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 500, message = "Erro Interno")
     })
     ResponseEntity<Void> cadastrar(@RequestBody final CadastrarPedidoRequest request,
-                                   @AuthenticationPrincipal final UserPrincipal userPrincipal);
+                                   @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para atualizar um pedido especifico",
             notes = "Serviço responsável por atualizar um pedido com status pendente dado um id")
@@ -44,7 +45,7 @@ public interface PedidoControllerApi {
     })
     ResponseEntity<Void> atualizar(@PathVariable final Long id,
                                    @RequestBody final AtualizarPedidoRequest request,
-                                   @AuthenticationPrincipal final UserPrincipal userPrincipal);
+                                   @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para deletar um pedido especifico",
             notes = "Serviço responsável por deletar um pedido com status pendente dado um id")
@@ -55,7 +56,8 @@ public interface PedidoControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<Void> deletar(@PathVariable final Long id, @AuthenticationPrincipal final UserPrincipal userPrincipal);
+    ResponseEntity<Void> deletar(@PathVariable final Long id,
+                                 @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
 
     @ApiOperation(value = "Serviço para listagem de necessidades",
@@ -96,7 +98,7 @@ public interface PedidoControllerApi {
                                                   @RequestParam(required = false) final List<Status> status,
                                                   @RequestParam(required = false) final Integer mesesCorte,
                                                   @RequestParam(required = false) final TipoPedido tipoPedido,
-                                                  @AuthenticationPrincipal UserPrincipal userPrincipal);
+                                                  @ApiIgnore @AuthenticationPrincipal UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço buscar uma necessidade especifica",
             notes = "Serviço responsável por buscar a descrição de uma necessidade dado um id")
@@ -120,7 +122,6 @@ public interface PedidoControllerApi {
     })
     ResponseEntity<DescricaoPedidoResponse> buscarDescricaoPedido(@PathVariable final Long id,
                                                                   @RequestParam final TipoPedido tipoPedido,
-                                                                  @AuthenticationPrincipal final UserPrincipal userPrincipal);
-
+                                                                  @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
 }
