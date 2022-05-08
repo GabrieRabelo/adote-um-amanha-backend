@@ -41,6 +41,7 @@ public class BuscarNecessidadesComoCasaService implements BuscarPedidosImplement
                                   final Integer mesesCorte,
                                   final String textoBusca,
                                   final Long idUsuarioLogado) {
+
         log.info("Buscando {} para {}", getTipoPedido(), getPerfil());
         return service.buscar(pagina, tamanho, ordenacao, direcao,
                 categorias, subcategorias, status, mesesCorte, textoBusca, getTipoPedido(), idUsuarioLogado);

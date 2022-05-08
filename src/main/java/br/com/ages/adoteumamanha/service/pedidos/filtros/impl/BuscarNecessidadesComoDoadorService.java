@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.FINALIZADA;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
 
 @Slf4j
@@ -41,6 +42,9 @@ public class BuscarNecessidadesComoDoadorService implements BuscarPedidosImpleme
                                   final Integer mesesCorte,
                                   final String textoBusca,
                                   final Long idUsuarioLogado) {
+
+        log.info("Remove o status {} da consulta de necessidade pelo doador", FINALIZADA);
+        status.remove(FINALIZADA);
 
         log.info("Buscando {} para {}", getTipoPedido(), getPerfil());
         return service.buscar(pagina, tamanho, ordenacao, direcao,

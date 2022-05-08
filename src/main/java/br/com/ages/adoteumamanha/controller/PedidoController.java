@@ -25,6 +25,7 @@ import java.util.List;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 
@@ -79,7 +80,7 @@ public class PedidoController implements PedidoControllerApi {
                                                               @RequestParam(required = false) final Integer mesesCorte) {
 
         return ResponseEntity.ok().body(buscarPedidosComFiltrosService.buscar(pagina, tamanho, ordenacao, direcao,
-                categorias, subcategorias, singletonList(PENDENTE), mesesCorte, textoBusca, NECESSIDADE, null));
+                categorias, subcategorias, asList(PENDENTE), mesesCorte, textoBusca, NECESSIDADE, null));
     }
 
     @GetMapping("/pedidos")
