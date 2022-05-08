@@ -16,7 +16,7 @@ public class VinculacaoDoacaoNecessidadeMatchValidator {
 
     public void validate(final TipoPedido tipoPedido) {
         if (isFalse(NECESSIDADE.equals(tipoPedido))) {
-            throw new ApiException(Mensagem.VINCULACAO_DOACAO_DOACAO_MATCH.getDescricao(), HttpStatus.BAD_REQUEST);
+            throw new ApiException(Mensagem.VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH.getDescricao(), HttpStatus.BAD_REQUEST);
         }
     }
 }

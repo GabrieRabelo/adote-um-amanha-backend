@@ -62,7 +62,7 @@ public class BuscarPedidoServiceTest {
         final Long idPedido = 1L;
         final List<TipoPedido> tipoPedidos = List.of(TipoPedido.values());
         when(repository.findByIdPedidoAndTipoPedidoAndIdUsuario(idPedido, tipoPedidos, userPrincipal.getId())).thenReturn(of(Pedido.builder().build()));
-        service.buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal);
+        service.buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal.getId());
 
         verify(repository).findByIdPedidoAndTipoPedidoAndIdUsuario(idPedido, tipoPedidos, userPrincipal.getId());
     }

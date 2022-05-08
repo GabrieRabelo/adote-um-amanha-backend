@@ -1,10 +1,12 @@
 package br.com.ages.adoteumamanha.validator;
 
-import br.com.ages.adoteumamanha.exception.ApiException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import static br.com.ages.adoteumamanha.exception.Mensagem.EMAIL_INVALIDO;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmailValidatorTest {
@@ -22,9 +24,14 @@ public class EmailValidatorTest {
         validator.validate("email@email.com.br");
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void emailInvalido() {
-        validator.validate("email@email");
+
+        try {
+            validator.validate("email@email");
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(EMAIL_INVALIDO.getDescricao()));
+        }
     }
 
 }

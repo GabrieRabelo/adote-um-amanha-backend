@@ -6,7 +6,6 @@ import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.fixture.Fixture;
 import br.com.ages.adoteumamanha.mapper.MatchMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
-import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.pedidos.BuscarPedidoService;
 import br.com.ages.adoteumamanha.validator.MatchValidator;
@@ -19,6 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.ADMIN;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.FINALIZADA;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
 import static org.junit.Assert.assertEquals;
@@ -32,9 +33,6 @@ public class MatchAdminServiceTest {
 
     @Mock
     private BuscarPedidoService buscarPedidoService;
-
-    @Mock
-    private PedidoRepository pedidoRepository;
 
     @Mock
     private MatchValidator matchValidator;
@@ -52,7 +50,9 @@ public class MatchAdminServiceTest {
 
     @Before
     public void setup() {
-        userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder()).build());
+        userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder())
+                .withPerfil(ADMIN)
+                .build());
     }
 
     @Test
@@ -85,6 +85,8 @@ public class MatchAdminServiceTest {
         assertEquals(NECESSIDADE, matchArgumentCaptor.getValue().getNecessidade().getTipoPedido());
         assertEquals(idNecessidade, matchArgumentCaptor.getValue().getNecessidade().getId());
         assertEquals(idDoacao, matchArgumentCaptor.getValue().getDoacao().getId());
-
+        assertEquals(FINALIZADA, matchArgumentCaptor.getValue().getNecessidade().getStatus());
+        assertEquals(FINALIZADA, matchArgumentCaptor.getValue().getNecessidade().getStatus());
+        assertEquals(FINALIZADA, matchArgumentCaptor.getValue().getStatus());
     }
 }

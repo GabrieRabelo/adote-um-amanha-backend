@@ -43,11 +43,11 @@ public class BuscarDescricaoPedidoServiceTest {
 
         final Pedido pedido = make(Pedido.builder()).build();
 
-        when(buscarPedidoService.buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal)).thenReturn(pedido);
+        when(buscarPedidoService.buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal.getId())).thenReturn(pedido);
 
-        service.buscar(idPedido, tipoPedidos, userPrincipal);
+        service.buscar(idPedido, tipoPedidos, userPrincipal.getId());
 
-        verify(buscarPedidoService).buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal);
+        verify(buscarPedidoService).buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal.getId());
         verify(mapper).apply(any(Pedido.class));
 
     }

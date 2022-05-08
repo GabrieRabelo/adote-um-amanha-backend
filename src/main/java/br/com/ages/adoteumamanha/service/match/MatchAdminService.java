@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.FINALIZADA;
 import static java.util.Objects.isNull;
 
 @Slf4j
@@ -43,6 +44,10 @@ public class MatchAdminService {
 
         log.info("validando se o match foi mapeado corretamente");
         matchValidator.validate(match);
+
+        log.info("Atualizando os status da necessidade e doação para {}", FINALIZADA);
+        necesidade.setStatus(FINALIZADA);
+        doacao.setStatus(FINALIZADA);
 
         log.info("Cadastrando match da necessidade id: {} com necessidade id {} pelo administrador", idDoacao, idNecessidade);
         repository.save(match);

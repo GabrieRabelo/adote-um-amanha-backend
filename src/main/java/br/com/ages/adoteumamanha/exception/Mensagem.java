@@ -13,6 +13,7 @@ public enum Mensagem {
     CASA_ACESSO_DOACAO("Perfil de casa não pode acessar doação"),
     CASA_NAO_ENCONTRADA("Casa não encontrada"),
     CATEGORIA_INVALIDA("Categoria inválida."),
+    CATEGORIA_MATCH_DIFERENTE("Categoria do match devem ser iguais."),
     DESCRICAO_INVALIDA("Descricão inválida."),
     DOACAO_MATCH_INVALIDO("Doação do match inválido."),
     DOACAO_NAO_ENCONTRADA("Doação não encontrada"),
@@ -23,13 +24,14 @@ public enum Mensagem {
     NECESSIDADE_MATCH_INVALIDO("Necessidade do match inválida."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
     OPERACAO_NAO_PERMITIDA("Operação não permitida."),
-    PEDIDO_NAO_PODE_SER_DELETADO("Apenas o usuário criador do pedido poderá deletá-lo."),
     REQUEST_INVALIDO("Requisição inválida."),
     SENHA_INVALIDA("Senha inválida."),
     STATUS_NAO_PENDENTE("Só é possível alterar pedidos que estejam com status pendente."),
     SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
+    SUBCATGEORIA_MATCH_DIFERENTE("Subcategoria do match devem ser iguais."),
     USUARIO_NAO_ENCONTRADO("Usuário não encontrado"),
-    VINCULACAO_DOACAO_DOACAO_MATCH("Não pode vincular uma doação com outra doação");
+    USUARIO_NAO_PODE_DELETAR_PEDIDO("Apenas o usuário criador do pedido poderá deletá-lo."),
+    VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH("Não pode vincular uma doação com outra doação");
 
     private final String descricao;
 }

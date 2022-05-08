@@ -41,9 +41,9 @@ public class BuscarDescricaoNecessidadeComoCasaServiceTest {
 
         final Long idPedido = 1L;
         final UserPrincipal userPrincipal = UserPrincipal.create(make(Usuario.builder()).build());
-        service.executar(idPedido, userPrincipal);
+        service.executar(idPedido, userPrincipal.getId());
 
-        verify(buscarDescricaoPedidoService).buscar(idPedido, service.getTipoPedidos(), userPrincipal);
+        verify(buscarDescricaoPedidoService).buscar(idPedido, service.getTipoPedidos(), userPrincipal.getId());
 
     }
 

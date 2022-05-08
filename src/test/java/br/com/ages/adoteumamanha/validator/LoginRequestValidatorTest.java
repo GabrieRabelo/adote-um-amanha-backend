@@ -1,7 +1,6 @@
 package br.com.ages.adoteumamanha.validator;
 
 import br.com.ages.adoteumamanha.dto.request.LoginRequest;
-import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.fixture.Fixture;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.*;
+import static br.com.ages.adoteumamanha.exception.Mensagem.EMAIL_INVALIDO;
+import static br.com.ages.adoteumamanha.exception.Mensagem.SENHA_INVALIDA;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginRequestValidatorTest {
@@ -31,37 +34,35 @@ public class LoginRequestValidatorTest {
         verify(emailValidator).validate(request.getEmail());
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void emailInvalido() {
         request = Fixture.make(LoginRequest.builder())
                 .withEmail(null)
                 .build();
 
-        validator.validate(request);
+        try {
+            validator.validate(request);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(EMAIL_INVALIDO.getDescricao()));
+            verifyNoInteractions(emailValidator);
+        }
 
-        verifyNoInteractions(emailValidator);
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void senhaInvalida() {
         request = Fixture.make(LoginRequest.builder())
+                .withEmail("marcelo@mail.com")
                 .withSenha(null)
                 .build();
 
-        validator.validate(request);
+        try {
+            validator.validate(request);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(SENHA_INVALIDA.getDescricao()));
+            verifyNoInteractions(emailValidator);
+        }
 
-        verifyNoInteractions(emailValidator);
-    }
-
-    @Test(expected = ApiException.class)
-    public void emailValidatorError() {
-        request = Fixture.make(LoginRequest.builder()).build();
-
-        doThrow(ApiException.class).when(emailValidator).validate(request.getEmail());
-
-        validator.validate(request);
-
-        verify(emailValidator).validate(request.getEmail());
     }
 
 }

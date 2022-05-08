@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.ADMIN;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.FINALIZADA;
-import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE;
 import static java.util.Objects.isNull;
 
 @Component
@@ -47,6 +47,6 @@ public class MatchMapper implements TriFunction<UserPrincipal, Pedido, Pedido, M
         if (ADMIN.equals(userPrincipal.getPerfil())) {
             return FINALIZADA;
         }
-        return PENDENTE;
+        return MATCH_PENDENTE;
     }
 }

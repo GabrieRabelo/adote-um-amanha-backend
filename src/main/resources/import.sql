@@ -59,11 +59,11 @@ values (9997, 'NECESSIDADE', 'SERVICO', 'SAUDE', 'PENDENTE', 'Consulta Nutricion
 
 --Doacoes
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id)
-values (9995, 'DOACAO', 'SERVIÇO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
+values (9995, 'DOACAO', 'SERVICO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
         'A. J. está com problemas ao ingerir certos alimentos, por isso precisa de atendimento nutricional',
         '2022-04-01 04:05:06', 9995);
 
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id)
-values (9994, 'DOACAO', 'SERVIÇO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
+values (9994, 'DOACAO', 'SERVICO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
         'A. J. está com problemas ao ingerir certos alimentos, por isso precisa de atendimento nutricional',
         '2022-04-01 04:05:06', 9994);

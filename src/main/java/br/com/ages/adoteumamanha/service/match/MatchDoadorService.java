@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -45,6 +47,10 @@ public class MatchDoadorService {
 
         log.info("validando se o match foi mapeado corretamente");
         matchValidator.validate(match);
+
+        log.info("Atualizando os status da necessidade e doação para {}", MATCH_PENDENTE);
+        necesidade.setStatus(MATCH_PENDENTE);
+        doacao.setStatus(MATCH_PENDENTE);
 
         log.info("Cadastrando novo match, do usuario com id: {}, para a necessidade da casa com id {}", doador.getId(), idNecessidade);
         repository.save(match);

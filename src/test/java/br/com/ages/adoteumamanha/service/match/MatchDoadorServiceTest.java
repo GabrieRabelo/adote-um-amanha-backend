@@ -22,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
 import static org.junit.Assert.assertEquals;
@@ -98,6 +99,9 @@ public class MatchDoadorServiceTest {
 
         assertEquals(DOACAO, matchArgumentCaptor.getValue().getDoacao().getTipoPedido());
         assertEquals(NECESSIDADE, matchArgumentCaptor.getValue().getNecessidade().getTipoPedido());
+        assertEquals(MATCH_PENDENTE, matchArgumentCaptor.getValue().getNecessidade().getStatus());
+        assertEquals(MATCH_PENDENTE, matchArgumentCaptor.getValue().getNecessidade().getStatus());
+        assertEquals(MATCH_PENDENTE, matchArgumentCaptor.getValue().getStatus());
 
     }
 }

@@ -1,6 +1,5 @@
 package br.com.ages.adoteumamanha.service.usuarios;
 
-import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
@@ -13,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.*;
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
 
 @Slf4j
 @Service

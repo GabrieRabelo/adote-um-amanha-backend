@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum Status {
 
     PENDENTE,
+    MATCH_PENDENTE,
     FINALIZADA
 
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
 import static java.util.Collections.singletonList;
 
@@ -78,7 +79,7 @@ public class PedidoController implements PedidoControllerApi {
                                                               @RequestParam(required = false) final Integer mesesCorte) {
 
         return ResponseEntity.ok().body(buscarPedidosComFiltrosService.buscar(pagina, tamanho, ordenacao, direcao,
-                categorias, subcategorias, List.of(Status.PENDENTE), mesesCorte, textoBusca, NECESSIDADE, null));
+                categorias, subcategorias, singletonList(PENDENTE), mesesCorte, textoBusca, NECESSIDADE, null));
     }
 
     @GetMapping("/pedidos")
@@ -111,7 +112,7 @@ public class PedidoController implements PedidoControllerApi {
                                                                          @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
         return ResponseEntity.ok().body(buscarDescricaoPedidoStrategy.run(userPrincipal.getPerfil(), tipoPedido)
-                .executar(id, userPrincipal));
+                .executar(id, userPrincipal.getId()));
     }
 
 }

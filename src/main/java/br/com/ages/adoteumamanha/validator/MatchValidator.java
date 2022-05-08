@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
+import static com.google.common.base.Objects.equal;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.BooleanUtils.isFalse;
 
@@ -28,6 +29,13 @@ public class MatchValidator {
             throw new ApiException(Mensagem.NECESSIDADE_MATCH_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
+        if (isFalse(equal(match.getDoacao().getCategoria(), match.getNecessidade().getCategoria()))) {
+            throw new ApiException(Mensagem.CATEGORIA_MATCH_DIFERENTE.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        if (isFalse(equal(match.getDoacao().getSubcategoria(), match.getNecessidade().getSubcategoria()))) {
+            throw new ApiException(Mensagem.SUBCATGEORIA_MATCH_DIFERENTE.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
 
