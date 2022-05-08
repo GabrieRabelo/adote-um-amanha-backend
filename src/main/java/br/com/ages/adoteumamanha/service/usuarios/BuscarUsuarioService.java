@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.*;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class BuscarUsuarioService {
 
     public CasaResponse buscarCasaPorId(final Long id) {
         log.info("Buscando casa pelo id: {}", id);
-        return usuarioRepository.findByIdAndPerfil(id, Perfil.CASA)
+        return usuarioRepository.findByIdAndPerfil(id, CASA)
                 .map(casaDescricaoResponseMapper)
                 .orElseThrow(() -> new ApiException(Mensagem.CASA_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
     }

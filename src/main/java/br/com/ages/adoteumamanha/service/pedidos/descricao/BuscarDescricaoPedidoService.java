@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Optional.ofNullable;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,8 +24,10 @@ public class BuscarDescricaoPedidoService {
 
     public DescricaoPedidoResponse buscar(final Long idPedido, final List<TipoPedido> tipoPedidos, final UserPrincipal userPrincipal) {
 
-        log.info("Buscando pedido com id {} do tipo {} para o usuario {}", idPedido, tipoPedidos, userPrincipal.getId());
-        final Pedido pedido = buscarPedidoService.buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, userPrincipal);
+        final Long idUsuarioLogado = ofNullable(userPrincipal).map(up -> up.getId()).orElse(null);
+
+        log.info("Buscando pedido com id {} do tipo {} para o usuario {}", idPedido, tipoPedidos, idUsuarioLogado);
+        final Pedido pedido = buscarPedidoService.buscarPorIdPedidoTipoPedidosUsuario(idPedido, tipoPedidos, null);
         return mapper.apply(pedido);
     }
 

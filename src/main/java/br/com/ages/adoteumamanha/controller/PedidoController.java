@@ -93,7 +93,7 @@ public class PedidoController implements PedidoControllerApi {
                                                          @RequestParam(required = false) final List<Subcategoria> subcategorias,
                                                          @RequestParam(required = false) final List<Status> status,
                                                          @RequestParam(required = false) final Integer mesesCorte,
-                                                         @RequestParam(required = false) final TipoPedido tipoPedido,
+                                                         @RequestParam final TipoPedido tipoPedido,
                                                          @AuthenticationPrincipal UserPrincipal userPrincipal) {
 
         return ResponseEntity.ok().body(buscarPedidosComFiltrosStrategy.run(userPrincipal.getPerfil(), tipoPedido)
