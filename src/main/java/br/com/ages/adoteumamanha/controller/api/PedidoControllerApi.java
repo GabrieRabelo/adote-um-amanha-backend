@@ -25,7 +25,7 @@ public interface PedidoControllerApi {
     @ApiOperation(value = "Serviço para cadastro de um novo pedido",
             notes = "Serviço responsável por cadastrar uma necessidade ou doação")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 201, message = "Pedido criado com sucesso"),
             @ApiResponse(code = 400, message = "Solicitação Inválida"),
             @ApiResponse(code = 401, message = "Token de acesso inválido"),
             @ApiResponse(code = 403, message = "Acesso proibido"),

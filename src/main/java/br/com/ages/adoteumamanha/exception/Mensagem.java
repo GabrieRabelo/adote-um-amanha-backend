@@ -30,6 +30,15 @@ public enum Mensagem {
     SUBCATEGORIA_INVALIDA("Subcategoria inválida."),
     SUBCATGEORIA_MATCH_DIFERENTE("Subcategoria do match devem ser iguais."),
     USUARIO_NAO_ENCONTRADO("Usuário não encontrado"),
+    NOME_INVALIDO("Nome inválido"),
+    DOCUMENTO_INVALIDO("CPF/CNPJ inválido"),
+    CEP_INVALIDO("CEP inválido"),
+    BAIRRO_INVALIDO("Bairro inválido"),
+    RUA_INVALIDA("Rua inválida"),
+    NUMERO_CASA_INVALIDO("Número inválido"),
+    ESTADO_INVALIDO("Estado inválido"),
+    CIDADE_INVALIDA("Cidade inválida"),
+    TELEFONE_INVALIDO("Telefone inválido"),
     USUARIO_NAO_PODE_DELETAR_PEDIDO("Apenas o usuário criador do pedido poderá deletá-lo."),
     VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH("Não pode vincular uma doação com outra doação");
 

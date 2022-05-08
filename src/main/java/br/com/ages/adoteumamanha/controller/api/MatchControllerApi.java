@@ -18,7 +18,7 @@ public interface MatchControllerApi {
     @ApiOperation(value = "Serviço para cadastro de um novo match automático",
             notes = "Serviço responsável por cadastrar um match automático pelo doador")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 201, message = "Doação vinculada realizada com sucesso"),
             @ApiResponse(code = 400, message = "Solicitação Inválida"),
             @ApiResponse(code = 401, message = "Token de acesso inválido"),
             @ApiResponse(code = 403, message = "Acesso proibido"),
@@ -31,7 +31,7 @@ public interface MatchControllerApi {
     @ApiOperation(value = "Serviço para cadastro de um novo match manual",
             notes = "Serviço responsável por cadastrar um match pelo administrador do sistema")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 201, message = "Match realizado com sucesso"),
             @ApiResponse(code = 400, message = "Solicitação Inválida"),
             @ApiResponse(code = 401, message = "Token de acesso inválido"),
             @ApiResponse(code = 403, message = "Acesso proibido"),

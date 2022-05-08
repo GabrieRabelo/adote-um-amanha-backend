@@ -9,13 +9,13 @@ values (9999, true, 'admin@mail.com', 'admin', 'ADMIN',
 insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, site, endereco_estado,
                     endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)
 values (9998, true, 'lar_esperanca@email.com', 'Lar Esperança', 'CASA',
-        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '92.965.417/0002-98', '5135174877',
+        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '92.965.417/0002-96', '5135174877',
         'www.laresperanca.com', 'RS', 'Porto Alegre', 'Mario Quintana', '91260-370', 'R. Deodoro', 250);
 
 insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, site, endereco_estado,
                     endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)
 values (9997, true, 'cmjp@casadomenino.org.br', 'Casa do Menino Jesus', 'CASA',
-        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '92.965.417/0002-98', '5135174877',
+        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '92.965.417/0002-97', '5135174877',
         'www.casadomenino.org.br', 'RS', 'Porto Alegre', 'Partenon', '91530-350', 'R. Nelsom Zang', 420);
 
 insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, site, endereco_estado,
@@ -34,7 +34,7 @@ values (9995, true, 'rabelo@gmail.com', 'Gabriel', 'DOADOR',
 insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, endereco_estado,
                     endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)
 values (9994, true, 'vini@gmail.com', 'Vinicius', 'DOADOR',
-        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '123.456.789-12', '102',
+        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '123.456.789-13', '102',
         'RS', 'Porto Alegre', 'Santana', '90620-110', 'R. São Manoel', 1909);
 
 -- Pedidos

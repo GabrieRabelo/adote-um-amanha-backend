@@ -28,7 +28,7 @@ public class MatchController implements MatchControllerApi {
                                             @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
         matchDoadorService.cadastrar(userPrincipal, idNecessidade, request);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/{idNecessidade}/vincula/{idDoacao}")
@@ -38,7 +38,7 @@ public class MatchController implements MatchControllerApi {
                                            @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
         matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
