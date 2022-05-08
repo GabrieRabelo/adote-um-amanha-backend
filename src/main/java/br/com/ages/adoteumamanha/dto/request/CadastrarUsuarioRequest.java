@@ -20,7 +20,7 @@ public final class CadastrarUsuarioRequest implements Serializable {
 
     private final String rua;
 
-    private final String numeroRua;
+    private final String numero;
 
     private final String complemento;
 

@@ -35,7 +35,7 @@ class UsuarioRepositoryTest {
                 .withBairro("Partenon")
                 .withCEP("91530034")
                 .withComplemento("")
-                .withNumero(1)
+                .withNumero("1")
                 .build();
 
         Usuario usuarioParaSalvar = Usuario.builder()
@@ -69,7 +69,7 @@ class UsuarioRepositoryTest {
                 .withBairro("Partenon")
                 .withCEP("91530034")
                 .withComplemento("")
-                .withNumero(1)
+                .withNumero("1")
                 .build();
 
         Usuario usuarioParaSalvar = Usuario.builder()
@@ -103,7 +103,7 @@ class UsuarioRepositoryTest {
                 .withBairro("Partenon")
                 .withCEP("91530034")
                 .withComplemento("")
-                .withNumero(1)
+                .withNumero("1")
                 .build();
 
         Usuario usuarioParaSalvar = Usuario.builder()

@@ -40,7 +40,7 @@ public class CadastrarUsuarioRequestValidator {
             throw new ApiException(Mensagem.RUA_INVALIDA.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        if (isEmpty(request.getNumeroRua())) {
+        if (isEmpty(request.getNumero())) {
             throw new ApiException(Mensagem.NUMERO_RUA_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 

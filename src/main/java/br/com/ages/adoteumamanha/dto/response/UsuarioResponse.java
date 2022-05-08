@@ -20,3 +20,5 @@ public class UsuarioResponse implements Serializable {
     private Perfil perfil;
 
 }
+
+

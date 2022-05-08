@@ -53,7 +53,7 @@ class PedidoRepositoryTest {
                 .withBairro("Partenon")
                 .withCEP("91530034")
                 .withComplemento("")
-                .withNumero(1)
+                .withNumero("1")
                 .build();
 
         Usuario usuario = Usuario.builder()
@@ -103,7 +103,7 @@ class PedidoRepositoryTest {
                 .withBairro("Partenon")
                 .withCEP("91530034")
                 .withComplemento("")
-                .withNumero(1)
+                .withNumero("1")
                 .build();
 
         Usuario usuario = Usuario.builder()
