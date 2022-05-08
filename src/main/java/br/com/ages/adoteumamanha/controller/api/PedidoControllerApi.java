@@ -76,7 +76,6 @@ public interface PedidoControllerApi {
                                                        @RequestParam(defaultValue = "", required = false) final String textoBusca,
                                                        @RequestParam(required = false) final List<Categoria> categorias,
                                                        @RequestParam(required = false) final List<Subcategoria> subcategorias,
-                                                       @RequestParam(required = false) final List<Status> status,
                                                        @RequestParam(required = false) final Integer mesesCorte);
 
     @ApiOperation(value = "Serviço para listagem de pedidos",

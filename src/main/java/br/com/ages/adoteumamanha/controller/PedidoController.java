@@ -75,11 +75,10 @@ public class PedidoController implements PedidoControllerApi {
                                                               @RequestParam(defaultValue = "", required = false) final String textoBusca,
                                                               @RequestParam(required = false) final List<Categoria> categorias,
                                                               @RequestParam(required = false) final List<Subcategoria> subcategorias,
-                                                              @RequestParam(required = false) final List<Status> status,
                                                               @RequestParam(required = false) final Integer mesesCorte) {
 
         return ResponseEntity.ok().body(buscarPedidosComFiltrosService.buscar(pagina, tamanho, ordenacao, direcao,
-                categorias, subcategorias, status, mesesCorte, textoBusca, NECESSIDADE, null));
+                categorias, subcategorias, List.of(Status.PENDENTE), mesesCorte, textoBusca, NECESSIDADE, null));
     }
 
     @GetMapping("/pedidos")
