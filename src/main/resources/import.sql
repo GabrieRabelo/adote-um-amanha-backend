@@ -47,13 +47,13 @@ values (9999, 'NECESSIDADE', 'BEM', 'ALIMENTACAO', 'PENDENTE', 'Leite em pó des
 
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
                    url_video)
-values (9998, 'NECESSIDADE', 'SERVIÇO', 'SAUDE', 'FINALIZADA', 'Consulta psicológica',
+values (9998, 'NECESSIDADE', 'SERVICO', 'SAUDE', 'FINALIZADA', 'Consulta psicológica',
         'A. C. precisa de sessões terapeuticas para superar traumas', '2022-04-01 04:05:06', 9998,
         'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
                    url_video)
-values (9997, 'NECESSIDADE', 'SERVIÇO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
+values (9997, 'NECESSIDADE', 'SERVICO', 'SAUDE', 'PENDENTE', 'Consulta Nutricional',
         'A. J. está com problemas ao ingerir certos alimentos, por isso precisa de atendimento nutricional',
         '2022-04-01 04:05:06', 9998, 'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 
