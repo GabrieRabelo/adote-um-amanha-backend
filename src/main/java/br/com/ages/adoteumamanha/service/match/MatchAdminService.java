@@ -43,7 +43,7 @@ public class MatchAdminService {
         final Match match = matchMapper.apply(userPrincipal, doacao, necesidade);
 
         log.info("validando se o match foi mapeado corretamente");
-        matchValidator.validate(match);
+        matchValidator.validar(match);
 
         log.info("Atualizando os status da necessidade e doação para {}", FINALIZADA);
         necesidade.setStatus(FINALIZADA);

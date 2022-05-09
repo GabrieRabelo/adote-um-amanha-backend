@@ -16,19 +16,19 @@ public class EmailValidatorTest {
 
     @Test
     public void emailValido() {
-        validator.validate("email@email.com");
+        validator.validar("email@email.com");
     }
 
     @Test
     public void emailBRValido() {
-        validator.validate("email@email.com.br");
+        validator.validar("email@email.com.br");
     }
 
     @Test
     public void emailInvalido() {
 
         try {
-            validator.validate("email@email");
+            validator.validar("email@email");
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(EMAIL_INVALIDO.getDescricao()));
         }

@@ -15,7 +15,7 @@ import static org.apache.commons.lang3.BooleanUtils.isFalse;
 @Component
 public class MatchValidator {
 
-    public void validate(final Match match) {
+    public void validar(final Match match) {
 
         if (isNull(match)) {
             throw new ApiException(Mensagem.MATCH_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);

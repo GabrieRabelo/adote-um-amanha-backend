@@ -55,7 +55,7 @@ public class CadastrarPedidoServiceTest {
 
         service.cadastrar(request, userPrincipal);
 
-        verify(validator).validate(request);
+        verify(validator).validar(request);
         verify(pedidoMapper).apply(request, userPrincipal);
         verify(repository).save(pedidoEntityArgumentCaptor.capture());
 

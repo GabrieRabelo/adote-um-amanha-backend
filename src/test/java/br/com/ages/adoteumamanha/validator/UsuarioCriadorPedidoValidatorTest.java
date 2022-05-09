@@ -16,14 +16,14 @@ public class UsuarioCriadorPedidoValidatorTest {
 
     @Test
     public void ok() {
-        validator.validate(1L, 1L);
+        validator.validar(1L, 1L);
     }
 
     @Test
     public void usuario_nao_eh_criador_pedido() {
 
         try {
-            validator.validate(1L, 999L);
+            validator.validar(1L, 999L);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(USUARIO_NAO_PODE_DELETAR_PEDIDO.getDescricao()));
         }

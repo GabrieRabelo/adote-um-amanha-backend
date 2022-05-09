@@ -26,7 +26,7 @@ public class MatchValidatorTest {
 
     @Test(expected = ApiException.class)
     public void match_invalido() {
-        validator.validate(null);
+        validator.validar(null);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MatchValidatorTest {
                 .withNecessidade(necessidade)
                 .build();
 
-        validator.validate(match);
+        validator.validar(match);
     }
 
 
@@ -65,7 +65,7 @@ public class MatchValidatorTest {
                 .build();
 
         try {
-            validator.validate(match);
+            validator.validar(match);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(DOACAO_MATCH_INVALIDO.getDescricao()));
         }
@@ -88,7 +88,7 @@ public class MatchValidatorTest {
                 .build();
 
         try {
-            validator.validate(match);
+            validator.validar(match);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(NECESSIDADE_MATCH_INVALIDO.getDescricao()));
         }
@@ -113,7 +113,7 @@ public class MatchValidatorTest {
                 .build();
 
         try {
-            validator.validate(match);
+            validator.validar(match);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(CATEGORIA_MATCH_DIFERENTE.getDescricao()));
         }
@@ -140,7 +140,7 @@ public class MatchValidatorTest {
                 .build();
 
         try {
-            validator.validate(match);
+            validator.validar(match);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(SUBCATGEORIA_MATCH_DIFERENTE.getDescricao()));
         }

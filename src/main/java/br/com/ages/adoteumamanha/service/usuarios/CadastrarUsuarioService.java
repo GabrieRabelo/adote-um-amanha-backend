@@ -22,7 +22,7 @@ public class CadastrarUsuarioService {
     public void cadastrar(final CadastrarUsuarioRequest request, final Perfil perfil) {
 
         log.info("Validando request de cadastro de doador");
-        validator.validate(request);
+        validator.validar(request);
 
         final Usuario entity = mapper.apply(request, perfil);
 

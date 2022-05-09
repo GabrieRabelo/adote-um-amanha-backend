@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.BooleanUtils.isFalse;
 @RequiredArgsConstructor
 public class StatusPedidoValidator {
 
-    public void validate(final Pedido pedido) {
+    public void validar(final Pedido pedido) {
         if (isFalse(PENDENTE.equals(pedido.getStatus()))) {
             throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
         }

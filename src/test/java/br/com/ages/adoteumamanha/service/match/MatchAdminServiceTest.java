@@ -75,7 +75,7 @@ public class MatchAdminServiceTest {
 
         service.cadastrar(idDoacao, idNecessidade, userPrincipal);
 
-        verify(matchValidator).validate(matchArgumentCaptor.capture());
+        verify(matchValidator).validar(matchArgumentCaptor.capture());
         verify(buscarPedidoService, atLeastOnce()).buscarPorID(eq(idDoacao));
         verify(buscarPedidoService, atLeastOnce()).buscarPorID(eq(idNecessidade));
         verify(matchMapper).apply(userPrincipal, doacao, necessidade);

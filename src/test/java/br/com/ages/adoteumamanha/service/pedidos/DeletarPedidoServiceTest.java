@@ -64,8 +64,8 @@ public class DeletarPedidoServiceTest {
 
         service.deletar(idPedido, userPrincipal);
 
-        verify(statusPedidoValidator).validate(pedido);
-        verify(usuarioCriadorPedidoValidator).validate(idUsuario, pedido.getUsuario().getId());
+        verify(statusPedidoValidator).validar(pedido);
+        verify(usuarioCriadorPedidoValidator).validar(idUsuario, pedido.getUsuario().getId());
         verify(buscarPedidoService).buscarPorID(idPedido);
         verify(repository).delete(any(Pedido.class));
     }

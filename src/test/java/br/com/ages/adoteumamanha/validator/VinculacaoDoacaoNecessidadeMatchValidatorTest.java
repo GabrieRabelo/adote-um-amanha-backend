@@ -18,14 +18,14 @@ public class VinculacaoDoacaoNecessidadeMatchValidatorTest {
 
     @Test
     public void ok() {
-        validator.validate(NECESSIDADE);
+        validator.validar(NECESSIDADE);
     }
 
     @Test
     public void usuario_nao_eh_criador_pedido() {
 
         try {
-            validator.validate(DOACAO);
+            validator.validar(DOACAO);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH.getDescricao()));
         }

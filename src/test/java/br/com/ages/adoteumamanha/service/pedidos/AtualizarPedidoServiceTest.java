@@ -72,8 +72,8 @@ public class AtualizarPedidoServiceTest {
 
         service.atualizar(idPedido, request, userPrincipal);
 
-        verify(statusPedidoValidator).validate(pedido);
-        verify(usuarioCriadorPedidoValidator).validate(idUsuario, pedido.getUsuario().getId());
+        verify(statusPedidoValidator).validar(pedido);
+        verify(usuarioCriadorPedidoValidator).validar(idUsuario, pedido.getUsuario().getId());
         verify(repository).save(pedidoArgumentCaptor.capture());
 
         assertEquals(request.getAssunto(), pedidoArgumentCaptor.getValue().getAssunto());

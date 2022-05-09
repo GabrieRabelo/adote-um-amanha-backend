@@ -12,7 +12,7 @@ import static org.apache.commons.lang3.BooleanUtils.isFalse;
 @RequiredArgsConstructor
 public class UsuarioCriadorPedidoValidator {
 
-    public void validate(final Long idUsuarioLogado, final Long idUsuarioCriadorPedido) {
+    public void validar(final Long idUsuarioLogado, final Long idUsuarioCriadorPedido) {
         if (isFalse(idUsuarioLogado.equals(idUsuarioCriadorPedido))) {
             throw new ApiException(Mensagem.USUARIO_NAO_PODE_DELETAR_PEDIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }

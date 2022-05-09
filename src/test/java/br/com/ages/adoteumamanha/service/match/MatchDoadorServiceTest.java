@@ -92,10 +92,10 @@ public class MatchDoadorServiceTest {
 
         service.cadastrar(userPrincipal, idNecessidade, request);
 
-        verify(matchValidator).validate(matchArgumentCaptor.capture());
-        verify(validator).validate(request);
+        verify(matchValidator).validar(matchArgumentCaptor.capture());
+        verify(validator).validar(request);
         verify(repository).save(matchArgumentCaptor.getValue());
-        verify(vinculacaoDoacaoNecessidadeMatchValidator).validate(necessidade.getTipoPedido());
+        verify(vinculacaoDoacaoNecessidadeMatchValidator).validar(necessidade.getTipoPedido());
 
         assertEquals(DOACAO, matchArgumentCaptor.getValue().getDoacao().getTipoPedido());
         assertEquals(NECESSIDADE, matchArgumentCaptor.getValue().getNecessidade().getTipoPedido());

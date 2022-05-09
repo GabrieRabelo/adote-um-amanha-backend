@@ -19,14 +19,14 @@ public class StatusPedidoValidatorTest {
 
     @Test
     public void ok() {
-        validator.validate(Pedido.builder().withStatus(PENDENTE).build());
+        validator.validar(Pedido.builder().withStatus(PENDENTE).build());
     }
 
     @Test
     public void status_pedido_nao_pendente() {
 
         try {
-            validator.validate(Pedido.builder().withStatus(FINALIZADA).build());
+            validator.validar(Pedido.builder().withStatus(FINALIZADA).build());
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(STATUS_NAO_PENDENTE.getDescricao()));
         }

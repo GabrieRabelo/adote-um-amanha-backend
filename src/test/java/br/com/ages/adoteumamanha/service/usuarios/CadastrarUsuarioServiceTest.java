@@ -48,7 +48,7 @@ public class CadastrarUsuarioServiceTest {
 
         service.cadastrar(request, DOADOR);
 
-        verify(validator).validate(request);
+        verify(validator).validar(request);
         verify(mapper).apply(request, DOADOR);
         verify(repository).save(usuarioArgumentCaptor.capture());
 

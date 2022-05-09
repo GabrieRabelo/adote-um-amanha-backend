@@ -21,7 +21,7 @@ public class CadastrarPedidoRequestValidatorTest {
     @Test
     public void requestValida() {
         request = Fixture.make(CadastrarPedidoRequest.builder()).build();
-        validator.validate(request);
+        validator.validar(request);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class CadastrarPedidoRequestValidatorTest {
                 .build();
 
         try {
-            validator.validate(request);
+            validator.validar(request);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(ASSUNTO_INVALIDO.getDescricao()));
         }
@@ -44,7 +44,7 @@ public class CadastrarPedidoRequestValidatorTest {
                 .build();
 
         try {
-            validator.validate(request);
+            validator.validar(request);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(DESCRICAO_INVALIDA.getDescricao()));
         }
@@ -57,7 +57,7 @@ public class CadastrarPedidoRequestValidatorTest {
                 .build();
 
         try {
-            validator.validate(request);
+            validator.validar(request);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(CATEGORIA_INVALIDA.getDescricao()));
         }
@@ -70,7 +70,7 @@ public class CadastrarPedidoRequestValidatorTest {
                 .build();
 
         try {
-            validator.validate(request);
+            validator.validar(request);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(SUBCATEGORIA_INVALIDA.getDescricao()));
         }

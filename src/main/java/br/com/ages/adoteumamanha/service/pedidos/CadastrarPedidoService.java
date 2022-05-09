@@ -22,7 +22,7 @@ public class CadastrarPedidoService {
     public void cadastrar(final CadastrarPedidoRequest request, final UserPrincipal userPrincipal) {
 
         log.info("Validando request de cadastro do pedido");
-        validator.validate(request);
+        validator.validar(request);
 
         final Pedido entity = pedidoMapper.apply(request, userPrincipal);
 

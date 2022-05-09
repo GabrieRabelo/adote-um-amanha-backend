@@ -33,7 +33,7 @@ public class MatchDoadorService {
     public void cadastrar(final UserPrincipal doador, final Long idNecessidade, final CadastrarPedidoRequest request) {
 
         log.info("Validando request de cadastro de pedido");
-        validator.validate(request);
+        validator.validar(request);
 
         final Pedido doacao = pedidoMapper.apply(request, doador);
 
@@ -41,12 +41,12 @@ public class MatchDoadorService {
         final Pedido necesidade = buscarPedidoService.buscarPorID(idNecessidade);
 
         log.info("Validando de registro da necessidade buscada do banco é uma necessidade", necesidade.getTipoPedido());
-        vinculacaoDoacaoNecessidadeMatchValidator.validate(necesidade.getTipoPedido());
+        vinculacaoDoacaoNecessidadeMatchValidator.validar(necesidade.getTipoPedido());
 
         final Match match = matchMapper.apply(doador, doacao, necesidade);
 
         log.info("validando se o match foi mapeado corretamente");
-        matchValidator.validate(match);
+        matchValidator.validar(match);
 
         log.info("Atualizando os status da necessidade e doação para {}", MATCH_PENDENTE);
         necesidade.setStatus(MATCH_PENDENTE);

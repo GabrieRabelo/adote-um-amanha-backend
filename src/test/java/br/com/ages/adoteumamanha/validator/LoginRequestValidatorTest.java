@@ -29,9 +29,9 @@ public class LoginRequestValidatorTest {
     public void requestValida() {
         request = Fixture.make(LoginRequest.builder()).build();
 
-        validator.validate(request);
+        validator.validar(request);
 
-        verify(emailValidator).validate(request.getEmail());
+        verify(emailValidator).validar(request.getEmail());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class LoginRequestValidatorTest {
                 .build();
 
         try {
-            validator.validate(request);
+            validator.validar(request);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(EMAIL_INVALIDO.getDescricao()));
             verifyNoInteractions(emailValidator);
@@ -57,7 +57,7 @@ public class LoginRequestValidatorTest {
                 .build();
 
         try {
-            validator.validate(request);
+            validator.validar(request);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(SENHA_INVALIDA.getDescricao()));
             verifyNoInteractions(emailValidator);

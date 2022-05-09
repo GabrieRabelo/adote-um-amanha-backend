@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.BooleanUtils.isFalse;
 @RequiredArgsConstructor
 public class VinculacaoDoacaoNecessidadeMatchValidator {
 
-    public void validate(final TipoPedido tipoPedido) {
+    public void validar(final TipoPedido tipoPedido) {
         if (isFalse(NECESSIDADE.equals(tipoPedido))) {
             throw new ApiException(Mensagem.VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH.getDescricao(), HttpStatus.BAD_REQUEST);
         }

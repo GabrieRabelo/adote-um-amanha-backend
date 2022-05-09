@@ -40,13 +40,13 @@ public class AtualizarPedidoService {
         final Pedido pedido = buscarPedidoService.buscarPorID(id);
 
         log.info("Validando status do pedido: {}", pedido.getStatus());
-        statusPedidoValidator.validate(pedido);
+        statusPedidoValidator.validar(pedido);
 
         final Long idUsuarioCriadorPedido = ofNullable(pedido.getUsuario()).map(Usuario::getId).orElse(null);
         final Long idUsuarioLogado = userPrincipal.getId();
 
         log.info("Validando id usuário logado {} com o do criador do pedido {}", idUsuarioLogado, idUsuarioCriadorPedido);
-        usuarioCriadorPedidoValidator.validate(idUsuarioLogado, idUsuarioCriadorPedido);
+        usuarioCriadorPedidoValidator.validar(idUsuarioLogado, idUsuarioCriadorPedido);
 
         Optional.of(request).ifPresent(req -> {
             ofNullable(req.getAssunto()).ifPresent(pedido::setAssunto);

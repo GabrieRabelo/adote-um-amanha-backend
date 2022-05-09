@@ -15,8 +15,9 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 public class CadastrarUsuarioRequestValidator {
 
     private final EmailValidator emailValidator;
+    private final CpfCnpjValidator cpfCnpjValidator;
 
-    public void validate(final CadastrarUsuarioRequest request) {
+    public void validar(final CadastrarUsuarioRequest request) {
 
         if (isNull(request)) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
@@ -26,15 +27,13 @@ public class CadastrarUsuarioRequestValidator {
             throw new ApiException(Mensagem.NOME_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        emailValidator.validate(request.getEmail());
+        emailValidator.validar(request.getEmail());
 
         if (isEmpty(request.getSenha())) {
             throw new ApiException(Mensagem.SENHA_INVALIDA.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        if (isEmpty(request.getDocumento())) {
-            throw new ApiException(Mensagem.DOCUMENTO_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
+        cpfCnpjValidator.validar(request.getDocumento());
 
         if (isEmpty(request.getTelefone())) {
             throw new ApiException(Mensagem.TELEFONE_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
