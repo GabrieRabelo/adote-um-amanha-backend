@@ -6,10 +6,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @Builder(setterPrefix = "with")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AtualizarPedidoRequest {
+public class AtualizarPedidoRequest implements Serializable {
+
+    private static final long serialVersionUID = 5632330232162822488L;
 
     private final String assunto;
     private final String descricao;

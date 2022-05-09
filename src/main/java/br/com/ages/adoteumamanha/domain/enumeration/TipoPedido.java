@@ -7,6 +7,5 @@ public enum TipoPedido {
 
     DOACAO,
     NECESSIDADE
-
 }
 
