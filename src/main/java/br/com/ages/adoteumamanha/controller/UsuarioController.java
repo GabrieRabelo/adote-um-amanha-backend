@@ -31,7 +31,7 @@ public class UsuarioController implements UsuarioControllerApi {
         return ResponseEntity.ok(usuarioService.buscaUsuario(userPrincipal.getId()));
     }
 
-    @PostMapping("/public/users")
+    @PostMapping("/public/usuario")
     public ResponseEntity<Void> cadastrarDoador(@RequestBody final CadastrarUsuarioRequest request) {
 
         usuarioService.cadastrar(request);
