@@ -107,7 +107,7 @@ public class PedidoController implements PedidoControllerApi {
     }
 
     @GetMapping("/pedidos/{id}")
-    @RolesAllowed({"DOADOR", "ADMIN"})
+    @RolesAllowed({"CASA", "DOADOR", "ADMIN"})
     public ResponseEntity<DescricaoPedidoResponse> buscarDescricaoPedido(@PathVariable final Long id,
                                                                          @RequestParam final TipoPedido tipoPedido,
                                                                          @AuthenticationPrincipal final UserPrincipal userPrincipal) {
