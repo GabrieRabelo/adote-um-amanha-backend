@@ -18,12 +18,6 @@ values (9997, true, 'cmjp@casadomenino.org.br', 'Casa do Menino Jesus', 'CASA',
         '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '92.965.417/0002-97', '5135174877',
         'www.casadomenino.org.br', 'RS', 'Porto Alegre', 'Partenon', '91530-350', 'R. Nelsom Zang', 420);
 
-insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, site, endereco_estado,
-                    endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)
-values (9996, true, 'lardesaojose@hotmail.com', 'Lar de São José', 'CASA',
-        '$2a$10$KDZdDpsS30B0YID4riOWoeUwfvRB5lXRB8WOoNFiO/nidARaU4haC', '92.965.417/0002-98', '5135174877',
-        'www.lardesaojosepoa.com.br', 'RS', 'Porto Alegre', 'Santana', '90620-110', 'R. São Manoel', 1909);
-
 ---- Doador
 insert into usuario(id, ativo, email, nome, perfil, senha, documento, telefone, endereco_estado,
                     endereco_cidade, endereco_bairro, endereco_CEP, endereco_rua, endereco_numero)
@@ -41,8 +35,8 @@ values (9994, true, 'vini@gmail.com', 'Vinicius', 'DOADOR',
 -- Necessidades
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
                    url_video)
-values (9999, 'NECESSIDADE', 'BEM', 'ALIMENTACAO', 'PENDENTE', 'Leite em pó desnatado',
-        'J.P. tem tolerancia a lactose e precisa de um tipo específico de leite', '2022-04-08 04:05:06', 9999,
+values (9999, 'NECESSIDADE', 'BEM', 'SAUDE', 'PENDENTE', 'Leite em pó desnatado',
+        'A.S. precisa de aparelho auditivo pois perdeu a audição quando criança', '2022-04-08 04:05:06', 9999,
         'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
