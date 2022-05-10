@@ -13,9 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
+import static java.time.LocalTime.*;
 import static java.util.Optional.ofNullable;
 import static org.springframework.data.domain.Sort.by;
 
@@ -38,7 +41,7 @@ public class BuscarPedidosComFiltrosService {
                                   final TipoPedido tipoPedido,
                                   final Long idUsuarioLogado) {
 
-        final LocalDateTime mesesDeCorte = ofNullable(mesesCorte).map(meses -> LocalDateTime.now().minusMonths(meses)).orElse(null);
+        final LocalDateTime mesesDeCorte = ofNullable(mesesCorte).map(meses -> LocalDateTime.now().minusMonths(meses).with(MIN)).orElse(null);
         log.info("categorias {}, subcategorias {}, status {}, dataCorte {}, texto de busca {}", categorias, subcategorias, status, mesesDeCorte, textoBusca);
 
         log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}", pagina, tamanho, ordenacao, direcao);
