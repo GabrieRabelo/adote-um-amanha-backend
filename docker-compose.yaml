@@ -9,6 +9,7 @@ services:
       - backend
     environment:
       - DB_URL=jdbc:postgresql://18.118.226.194:5432/ages
+      - DB_DDL=update
 
 networks:
   backend:
