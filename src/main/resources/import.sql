@@ -36,8 +36,8 @@ values (9994, true, 'vini@gmail.com', 'Vinicius', 'DOADOR',
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
                    url_video)
 values (9999, 'NECESSIDADE', 'BEM', 'SAUDE', 'PENDENTE', 'Leite em pó desnatado',
-        'A.S. precisa de aparelho auditivo pois perdeu a audição quando criança', '2022-04-08 04:05:06', 9999,
-        'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
+        'A.S. precisa de aparelho auditivo pois perdeu a audição quando criança', '2022-04-08 04:05:06', 9997,
+        'https://www.youtube.com/watch?v=mV4Mhza_oYw');
 
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
                    url_video)
