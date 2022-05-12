@@ -2,14 +2,14 @@ version: '3.7'
 
 services:
   adoteumamanha-springbackend:
-    image: adote-um-amanha/backenduat:latest
+    image: adote-um-amanha/springbackend:latest
     ports:
-      - "5020:8090"
+      - "5030:8090"
     networks:
       - backend
     environment:
-      - DB_URL=jdbc:postgresql://18.118.226.194:5432/agesuat
-      - DB_DDL=create
+      - DB_URL=jdbc:postgresql://18.118.226.194:5432/ages
+      - DB_DDL=update
 
 networks:
   backend:
