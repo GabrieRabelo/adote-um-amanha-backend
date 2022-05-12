@@ -1,0 +1,6 @@
+mkdir backend-prod
+cd backend-prod
+put target\*.jar
+put docker-compose-prod.yaml
+put Dockerfile
+bye
