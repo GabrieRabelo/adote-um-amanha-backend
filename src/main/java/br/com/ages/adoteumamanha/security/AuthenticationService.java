@@ -26,7 +26,7 @@ public class AuthenticationService {
     public LoginResponse authenticate(final LoginRequest request) {
 
         log.info("Validando request de login");
-        validator.validate(request);
+        validator.validar(request);
 
         log.info("Autenticando o usuário: {}", request.getEmail());
         final Authentication authentication = authenticationManager

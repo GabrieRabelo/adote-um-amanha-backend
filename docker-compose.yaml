@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  adoteumamanha-springbackend:
+    image: adote-um-amanha/backenduat:latest
+    ports:
+      - "5020:8090"
+    networks:
+      - backend
+    environment:
+      - DB_URL=jdbc:postgresql://18.118.226.194:5432/agesuat
+      - DB_DDL=create
+
+networks:
+  backend:
+    external: true
+    driver: bridge

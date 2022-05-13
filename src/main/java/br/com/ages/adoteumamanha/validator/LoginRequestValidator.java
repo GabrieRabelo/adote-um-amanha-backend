@@ -16,7 +16,7 @@ public class LoginRequestValidator {
 
     private final EmailValidator emailValidator;
 
-    public void validate(final LoginRequest request) {
+    public void validar(final LoginRequest request) {
 
         if (isNull(request)) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
@@ -30,6 +30,6 @@ public class LoginRequestValidator {
             throw new ApiException(Mensagem.SENHA_INVALIDA.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        emailValidator.validate(request.getEmail());
+        emailValidator.validar(request.getEmail());
     }
 }

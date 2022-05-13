@@ -1,17 +1,17 @@
 package br.com.ages.adoteumamanha.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public final class ErroResponse<T> implements Serializable {
 
-    private static final long serialVersionUID = 6267754919995285475L;
+    private static final long serialVersionUID = 7880262768730611523L;
 
     private Integer codigoStatus;
     private T informacao;
@@ -22,4 +22,5 @@ public final class ErroResponse<T> implements Serializable {
     public ErroResponse() {
         this.dataHora = LocalDateTime.now();
     }
+
 }

@@ -32,20 +32,20 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @JsonIgnore
     @Column(nullable = false)
     private String senha;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String documento;
 
     @Column(nullable = false)
     private String telefone;
 
-    @Column(nullable = false)
+    @Column
     private String site;
 
     @Embedded
@@ -58,7 +58,6 @@ public class Usuario implements Serializable {
             @AttributeOverride(name = "numero", column = @Column(name = "endereco_numero")),
             @AttributeOverride(name = "complemento", column = @Column(name = "endereco_complemento"))
     })
-
     @Column(nullable = false)
     private Endereco endereco;
 

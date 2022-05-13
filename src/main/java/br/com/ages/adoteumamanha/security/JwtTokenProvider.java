@@ -23,15 +23,16 @@ public class JwtTokenProvider {
     @Value("${security.jwt.expiration}")
     private int jwtExpiration;
 
-    public static String generate(final Long userId, final String jwtSecret, final int jwtExpiration) {
+    public static String generate(final Long userId, final String role, final String jwtSecret, final int jwtExpiration) {
 
         final Date now = new Date();
         final Date expiryDate = new Date(new Date().getTime() + jwtExpiration);
 
         return Jwts.builder()
-                .setSubject(Long.toString(userId))
+                .setId(Long.toString(userId))
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
+                .setSubject(role)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
@@ -41,15 +42,16 @@ public class JwtTokenProvider {
         final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
         final Long userId = userPrincipal.getId();
+        final String role = String.valueOf(userPrincipal.getAuthorities().stream().findFirst().orElse(null));
 
-        return generate(userId, jwtSecret, jwtExpiration);
+        return generate(userId, role, jwtSecret, jwtExpiration);
     }
 
     public Optional<Long> getUserId(final String jwt) {
         try {
             final Claims claims = parse(jwt).getBody();
 
-            return Optional.of(parseLong(claims.getSubject()));
+            return Optional.of(parseLong(claims.getId()));
         } catch (Exception ex) {
             return empty();
         }

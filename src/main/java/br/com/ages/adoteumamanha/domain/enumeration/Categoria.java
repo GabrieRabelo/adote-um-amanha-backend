@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum Categoria {
 
     BEM,
-    SERVIÇO
+    SERVICO
 
 }
 
