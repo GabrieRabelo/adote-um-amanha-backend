@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.security;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
+import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.values;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Data
 @Slf4j
@@ -29,15 +33,18 @@ public class UserPrincipal implements UserDetails {
 
     private Boolean ativo;
 
+    private Perfil perfil;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(final Long id, final String nome, final String email, final String senha, final Boolean ativo,
-                         final Collection<? extends GrantedAuthority> authorities) {
+                         final Perfil perfil, final Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.ativo = ativo;
+        this.perfil = perfil;
         this.authorities = authorities;
     }
 
@@ -45,7 +52,26 @@ public class UserPrincipal implements UserDetails {
         final List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPerfil().getDescricao()));
 
         return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(),
-                usuario.getAtivo(), authorities);
+                usuario.getAtivo(), getPerfil(authorities), authorities);
+    }
+
+    private static Perfil getPerfil(final List<GrantedAuthority> authorities) {
+
+        if (isEmpty(authorities)) {
+            return null;
+        }
+
+        final String permissao = authorities
+                .stream()
+                .map(it -> it.getAuthority())
+                .findFirst()
+                .orElse(null);
+
+        return Arrays.stream(values())
+                .filter(it -> it.getDescricao().equals(permissao))
+                .findFirst()
+                .orElseGet(null);
+
     }
 
     @Override
@@ -83,5 +109,4 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return isAccountNonExpired();
     }
-
 }

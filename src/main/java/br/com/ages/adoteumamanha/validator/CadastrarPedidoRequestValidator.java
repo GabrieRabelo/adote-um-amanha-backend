@@ -14,7 +14,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @RequiredArgsConstructor
 public class CadastrarPedidoRequestValidator {
 
-    public void validate(final CadastrarPedidoRequest request) {
+    public void validar(final CadastrarPedidoRequest request) {
 
         if (isNull(request)) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
