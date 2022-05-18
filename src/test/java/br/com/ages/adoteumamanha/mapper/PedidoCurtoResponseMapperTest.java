@@ -24,6 +24,7 @@ public class PedidoCurtoResponseMapperTest {
         assertEquals(pedido.getDataHora(), response.getData());
         assertEquals(pedido.getStatus(), response.getStatus());
         assertEquals(pedido.getTipoPedido(), response.getTipo());
+        assertEquals(pedido.getUsuario().getNome(), response.getNomeUsuario());
     }
 
     @Test

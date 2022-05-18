@@ -24,5 +24,5 @@ public class ResumoPedidoResponse implements Serializable {
     private LocalDateTime data;
     private Status status;
     private TipoPedido tipo;
-
+    private String nomeUsuario;
 }
