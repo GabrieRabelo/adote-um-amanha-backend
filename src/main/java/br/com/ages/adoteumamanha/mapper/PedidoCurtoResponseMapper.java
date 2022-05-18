@@ -21,6 +21,7 @@ public class PedidoCurtoResponseMapper implements Function<Pedido, ResumoPedidoR
                         .withStatus(p.getStatus())
                         .withSubcategoria(p.getSubcategoria())
                         .withTipo(p.getTipoPedido())
+                        .withNomeUsuario(p.getUsuario().getNome())
                         .build())
                 .orElse(null);
     }
