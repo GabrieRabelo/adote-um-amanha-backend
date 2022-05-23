@@ -2,6 +2,7 @@ package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.MatchControllerApi;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.match.MatchAdminService;
 import br.com.ages.adoteumamanha.service.match.MatchDoadorService;
@@ -39,6 +40,13 @@ public class MatchController implements MatchControllerApi {
 
         matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{idMatch}")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<ResumoMatchResponse> buscarMatch(@PathVariable("idMatch") final Long idMatch) {
+        matchAdminService.buscarPorID(idMatch);
+        return ResponseEntity.ok().body(matchAdminService.buscarPorID(idMatch));
     }
 
 }
