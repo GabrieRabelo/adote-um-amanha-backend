@@ -53,17 +53,15 @@ public class MatchController implements MatchControllerApi {
     public ResponseEntity<MatchesResponse> buscarMatches(@RequestParam(defaultValue = "0") final Integer pagina,
                                                          @RequestParam(defaultValue = "5") final Integer tamanho,
                                                          @RequestParam(defaultValue = "DESC") final Direcao direcao,
-                                                         @RequestParam(defaultValue = "dataHora") final String ordenacao,
+                                                         @RequestParam(defaultValue = "data") final String ordenacao,
                                                          @RequestParam(defaultValue = "", required = false) final String textoBusca,
                                                          @RequestParam(required = false) final List<Categoria> categorias,
                                                          @RequestParam(required = false) final List<Subcategoria> subcategorias,
                                                          @RequestParam(required = false) final List<Status> status,
-                                                         @RequestParam(required = false) final Integer mesesCorte,
-                                                         @RequestParam final TipoPedido tipoPedido,
-                                                         @AuthenticationPrincipal UserPrincipal userPrincipal) {
+                                                         @RequestParam(required = false) final Integer mesesCorte){
 
         return ResponseEntity.ok().body(
-                buscarMatchesComFiltrosService.buscar(pagina, tamanho, ordenacao, direcao, categorias, subcategorias, status, mesesCorte, textoBusca, userPrincipal.getId())));
+                buscarMatchesComFiltrosService.buscar(pagina, tamanho, ordenacao, direcao, categorias, subcategorias, status, mesesCorte, textoBusca));
     }
 
 }

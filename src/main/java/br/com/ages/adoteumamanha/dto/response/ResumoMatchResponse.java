@@ -1,5 +1,6 @@
 package br.com.ages.adoteumamanha.dto.response;
 
+import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
 import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
@@ -18,12 +19,11 @@ public class ResumoMatchResponse implements Serializable {
 
     private Long id;
     private String assunto;
+    private Categoria categoria;
     private Subcategoria subcategoria;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime data;
-    private Status status;
-    private TipoPedido tipo;
     private String nomeCasa;
     private String nomeDoador;
 }

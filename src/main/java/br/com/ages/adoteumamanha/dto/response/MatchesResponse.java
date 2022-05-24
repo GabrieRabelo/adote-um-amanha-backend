@@ -9,9 +9,9 @@ import java.util.List;
 
 @Getter
 @Builder(setterPrefix = "with")
-public final class MatchesResponse implements Pageable<ResumoPedidoResponse>, Serializable {
+public final class MatchesResponse implements Pageable<ResumoMatchResponse>, Serializable {
 
-    private static final long serialVersionUID = -6315606538486556813L;
+    private static final long serialVersionUID = -3398432016482582134L;
 
     private final Boolean ultimaPagina;
     private final Integer totalDePaginas;
@@ -21,7 +21,7 @@ public final class MatchesResponse implements Pageable<ResumoPedidoResponse>, Se
     private final Boolean primeiraPagina;
     private final Integer numeroDeElementos;
     private final Boolean paginaVazia;
-    private final List<ResumoPedidoResponse> conteudo;
+    private final List<ResumoMatchResponse> conteudo;
 
 }
 
