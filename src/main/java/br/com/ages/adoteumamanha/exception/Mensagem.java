@@ -41,7 +41,8 @@ public enum Mensagem {
     TELEFONE_INVALIDO("Telefone inválido"),
     USUARIO_NAO_ENCONTRADO("Usuário não encontrado"),
     USUARIO_NAO_PODE_DELETAR_PEDIDO("Apenas o usuário criador do pedido poderá deletá-lo."),
-    VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH("Não pode vincular uma doação com outra doação");
+    VINCULACAO_DE_DOACAO_COM_DOACAO_MATCH("Não pode vincular uma doação com outra doação"),
+    MATCH_NAO_ENCONTRADO("Match não encontrado");
 
     private final String descricao;
 }

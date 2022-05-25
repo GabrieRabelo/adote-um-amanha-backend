@@ -2,11 +2,9 @@ package br.com.ages.adoteumamanha.service.match;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
-import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.MatchMapper;
-import br.com.ages.adoteumamanha.mapper.ResumoMatchResponseMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.pedidos.BuscarPedidoService;
@@ -26,15 +24,8 @@ public class MatchAdminService {
 
     private final MatchRepository repository;
     private final MatchMapper matchMapper;
-    private final ResumoMatchResponseMapper resumoMatchResponseMapper;
     private final MatchValidator matchValidator;
     private final BuscarPedidoService buscarPedidoService;
-
-    public ResumoMatchResponse buscarPorID(final Long id) {
-        log.info("Buscando match por id {}", id);
-        final Match match = repository.getById(id);
-        return resumoMatchResponseMapper.apply(match);
-    }
 
     public void cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
 
