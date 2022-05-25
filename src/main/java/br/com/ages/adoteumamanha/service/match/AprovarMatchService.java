@@ -5,6 +5,7 @@ import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.request.ReprovarMatchRequest;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
@@ -14,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static java.util.Objects.isNull;
@@ -30,19 +33,24 @@ public class AprovarMatchService {
 
     public void aprovar(Long idMatch, UserPrincipal userPrincipal) {
 
+
         final Match match = matchRepository.findById(idMatch)
                 .orElseThrow(() -> new ApiException(Mensagem.MATCH_INEXISTENTE.getDescricao(), HttpStatus.NOT_FOUND));
 
         final Pedido necessidade = match.getNecessidade();
         final Pedido doacao = match.getDoacao();
 
-        if(Status.FINALIZADA.equals(necessidade.getStatus()) && Status.FINALIZADA.equals(doacao.getStatus())){
-            throw new ApiException(Mensagem.MATCH_FINALIZADO.getDescricao(), HttpStatus.NOT_FOUND);
+        if(Status.FINALIZADA.equals(match.getStatus()))
+        {
+            throw new ApiException(Mensagem.MATCH_FINALIZADO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
         necessidade.setStatus(Status.FINALIZADA);
         doacao.setStatus(Status.FINALIZADA);
         match.setStatus(Status.FINALIZADA);
+
+        match.setDataFinalizacao(LocalDateTime.now());
+        match.setFinalizadoPor(userPrincipal.getEmail());
 
         matchRepository.save(match);
 

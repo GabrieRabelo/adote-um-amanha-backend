@@ -33,13 +33,19 @@ public class Match implements Serializable {
     private Pedido doacao;
 
     @Column(nullable = false)
-    private LocalDateTime data;
+    private LocalDateTime dataCriacao;
+
+    private LocalDateTime dataFinalizacao;
+
+    private String finalizadoPor;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
     private String descricao;
+
+    private String motivoReprovacao;
 
 }
 
