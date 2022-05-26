@@ -4,6 +4,7 @@ import br.com.ages.adoteumamanha.controller.api.MatchControllerApi;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
+import br.com.ages.adoteumamanha.service.match.BuscarMatchService;
 import br.com.ages.adoteumamanha.service.match.MatchAdminService;
 import br.com.ages.adoteumamanha.service.match.MatchDoadorService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class MatchController implements MatchControllerApi {
 
     private final MatchDoadorService matchDoadorService;
     private final MatchAdminService matchAdminService;
+    private final BuscarMatchService buscarMatchService;
 
     @PostMapping("/{idNecessidade}")
     @RolesAllowed("DOADOR")
@@ -45,8 +47,8 @@ public class MatchController implements MatchControllerApi {
     @GetMapping("/{idMatch}")
     @RolesAllowed("ADMIN")
     public ResponseEntity<ResumoMatchResponse> buscarMatch(@PathVariable("idMatch") final Long idMatch) {
-        matchAdminService.buscarPorID(idMatch);
-        return ResponseEntity.ok().body(matchAdminService.buscarPorID(idMatch));
+        buscarMatchService.buscarPorID(idMatch);
+        return ResponseEntity.ok().body(buscarMatchService.buscarPorID(idMatch));
     }
 
 }
