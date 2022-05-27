@@ -8,7 +8,7 @@ public enum Status {
     PENDENTE,
     MATCH_PENDENTE,
     FINALIZADA,
-    RECUSADA
+    RECUSADO
 
 }
 

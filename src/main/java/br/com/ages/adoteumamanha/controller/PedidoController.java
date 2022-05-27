@@ -4,12 +4,14 @@ import br.com.ages.adoteumamanha.controller.api.PedidoControllerApi;
 import br.com.ages.adoteumamanha.domain.enumeration.*;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.request.RecusarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.DescricaoPedidoResponse;
 import br.com.ages.adoteumamanha.dto.response.PedidosResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.pedidos.AtualizarPedidoService;
 import br.com.ages.adoteumamanha.service.pedidos.CadastrarPedidoService;
 import br.com.ages.adoteumamanha.service.pedidos.DeletarPedidoService;
+import br.com.ages.adoteumamanha.service.pedidos.RecusarPedidoService;
 import br.com.ages.adoteumamanha.service.pedidos.descricao.BuscarDescricaoPedidoService;
 import br.com.ages.adoteumamanha.service.pedidos.descricao.BuscarDescricaoPedidoStrategy;
 import br.com.ages.adoteumamanha.service.pedidos.filtros.BuscarPedidosComFiltrosService;
@@ -28,7 +30,6 @@ import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDAD
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
-
 @RestController
 @RequiredArgsConstructor
 public class PedidoController implements PedidoControllerApi {
@@ -40,6 +41,7 @@ public class PedidoController implements PedidoControllerApi {
     private final BuscarPedidosComFiltrosStrategy buscarPedidosComFiltrosStrategy;
     private final BuscarDescricaoPedidoService buscarDescricaoPedidoService;
     private final BuscarDescricaoPedidoStrategy buscarDescricaoPedidoStrategy;
+    private final RecusarPedidoService recusarPedidoService;
 
     @PostMapping("/pedidos")
     @RolesAllowed({"CASA", "DOADOR"})
@@ -114,6 +116,15 @@ public class PedidoController implements PedidoControllerApi {
 
         return ResponseEntity.ok().body(buscarDescricaoPedidoStrategy.run(userPrincipal.getPerfil(), tipoPedido)
                 .executar(id, userPrincipal.getId()));
+    }
+
+    @PatchMapping("/pedidos/{id}/recusar")
+    @RolesAllowed({"ADMIN"})
+    public ResponseEntity<Void> recusarPedido(@PathVariable final Long id,
+                                              @RequestBody RecusarPedidoRequest recusarPedidoRequest) {
+
+        recusarPedidoService.recusar(id, recusarPedidoRequest.getMotivoRecusa());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
-import static br.com.ages.adoteumamanha.domain.enumeration.Status.RECUSADA;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.RECUSADO;
 import static br.com.ages.adoteumamanha.fixture.Fixture.make;
 import static java.util.Optional.of;
 import static org.junit.Assert.assertEquals;
@@ -61,7 +61,7 @@ public class RecusarMatchServiceTest {
 
         final Match matchSalvo = argumentCaptor.getValue();
 
-        assertEquals(RECUSADA, matchSalvo.getStatus());
+        assertEquals(RECUSADO, matchSalvo.getStatus());
         assertEquals(PENDENTE, matchSalvo.getDoacao().getStatus());
         assertEquals(PENDENTE, matchSalvo.getNecessidade().getStatus());
         assertEquals(matchSalvo.getFinalizadoPor(), userPrincipal.getEmail());

@@ -31,7 +31,7 @@ public class AprovarMatchService {
         final Pedido necessidade = match.getNecessidade();
         final Pedido doacao = match.getDoacao();
 
-        if (Status.FINALIZADA.equals(match.getStatus()) || Status.RECUSADA.equals(match.getStatus())) {
+        if (Status.FINALIZADA.equals(match.getStatus()) || Status.RECUSADO.equals(match.getStatus())) {
             throw new ApiException(Mensagem.MATCH_FINALIZADA_OU_RECUSADA.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 

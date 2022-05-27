@@ -40,7 +40,7 @@ public class RecusarMatchService {
         final Pedido doacao = match.getDoacao();
 
         log.info("Verificando se o match já não foi finalizado ou recusado anteriormente");
-        if (Status.FINALIZADA.equals(match.getStatus()) && Status.RECUSADA.equals(match.getStatus())) {
+        if (Status.FINALIZADA.equals(match.getStatus()) && Status.RECUSADO.equals(match.getStatus())) {
             throw new ApiException(Mensagem.MATCH_FINALIZADA_OU_RECUSADA.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
@@ -54,7 +54,7 @@ public class RecusarMatchService {
         match.setMotivoReprovacao(request.getMotivoReprovacao());
         match.setDataTermino(LocalDateTime.now());
         match.setFinalizadoPor(userPrincipal.getEmail());
-        match.setStatus(Status.RECUSADA);
+        match.setStatus(Status.RECUSADO);
 
         log.info("Salvando no banco o match");
         matchRepository.save(match);
