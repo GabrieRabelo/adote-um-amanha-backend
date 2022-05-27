@@ -35,7 +35,7 @@ public class Match implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataCriacao;
 
-    private LocalDateTime dataFinalizacao;
+    private LocalDateTime dataTermino;
 
     private String finalizadoPor;
 
