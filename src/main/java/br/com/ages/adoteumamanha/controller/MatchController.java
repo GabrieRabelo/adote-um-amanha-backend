@@ -30,7 +30,6 @@ public class MatchController implements MatchControllerApi {
     private final BuscarMatchService buscarMatchService;
     private final AprovarMatchService aprovarMatchService;
     private final RecusarMatchService recusarMatchService;
-
     private final BuscarMatchesComFiltrosService buscarMatchesComFiltrosService;
 
     @PostMapping("/{idNecessidade}")

@@ -11,7 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static java.util.Optional.of;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BuscarMatchServiceTest {
@@ -34,6 +35,7 @@ public class BuscarMatchServiceTest {
 
         verify(repository).findById(id);
     }
+
     @Test(expected = ApiException.class)
     public void buscar_por_id_erro() {
 

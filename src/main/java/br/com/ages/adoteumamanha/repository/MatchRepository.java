@@ -19,7 +19,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query(value = "SELECT m FROM Match m " +
             " WHERE ((coalesce(:categorias) is null or (m.necessidade.categoria in (:categorias)))" +
             " and (coalesce(:subcategorias) is null or (m.necessidade.subcategoria in (:subcategorias)))" +
-            " and (coalesce(:data) is null or (m.data >= (:data)))" +
+            " and (coalesce(:data) is null or (m.dataCriacao >= (:data)))" +
             " and (coalesce(:status) is null or (m.status in (:status)))" +
             " and (coalesce(:texto) is null or (((lower(m.necessidade.assunto) like(concat('%', lower(:texto), '%')))" +
             " or (lower(m.descricao) like(concat('%', lower(:texto), '%')))" +

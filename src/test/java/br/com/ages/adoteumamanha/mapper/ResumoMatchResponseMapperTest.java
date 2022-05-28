@@ -19,7 +19,7 @@ public class ResumoMatchResponseMapperTest {
 
         assertEquals(match.getId(), response.getId());
         assertEquals(match.getNecessidade().getAssunto(), response.getAssunto());
-        assertEquals(match.getData(), response.getData());
+        assertEquals(match.getDataCriacao(), response.getData());
         assertEquals(match.getNecessidade().getCategoria(), response.getCategoria());
         assertEquals(match.getNecessidade().getSubcategoria(), response.getSubcategoria());
         assertEquals(match.getStatus(), response.getStatus());

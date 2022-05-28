@@ -3,7 +3,9 @@ package br.com.ages.adoteumamanha.mapper;
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import org.springframework.stereotype.Component;
+
 import java.util.function.Function;
+
 import static java.util.Optional.ofNullable;
 
 @Component
@@ -15,7 +17,7 @@ public class ResumoMatchResponseMapper implements Function<Match, ResumoMatchRes
                 .map(m -> ResumoMatchResponse.builder()
                         .withId(m.getId())
                         .withAssunto(m.getNecessidade().getAssunto())
-                        .withData(m.getData())
+                        .withData(m.getDataCriacao())
                         .withCategoria(m.getNecessidade().getCategoria())
                         .withSubcategoria(m.getNecessidade().getSubcategoria())
                         .withStatus(m.getStatus())

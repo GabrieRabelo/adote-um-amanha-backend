@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class ResumoMatchResponse implements Serializable {
 
     private static final long serialVersionUID = -700688231746616781L;
-
+    private final Long idCasa;
+    private final Long idDoador;
     private Long id;
     private String assunto;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
@@ -24,8 +25,6 @@ public class ResumoMatchResponse implements Serializable {
     private Subcategoria subcategoria;
     private Status status;
     private String descricaoDoacao;
-    private final Long idCasa;
     private String nomeCasa;
-    private final Long idDoador;
     private String nomeDoador;
 }
