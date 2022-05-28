@@ -27,7 +27,7 @@ public class MatchAdminService {
     private final MatchValidator matchValidator;
     private final BuscarPedidoService buscarPedidoService;
 
-    public void cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
+    public long cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
 
         log.info("Validando id da doação {} e id da necessidade", idDoacao, idNecessidade);
         if (isNull(idDoacao) || isNull(idNecessidade)) {
@@ -50,7 +50,8 @@ public class MatchAdminService {
         doacao.setStatus(FINALIZADA);
 
         log.info("Cadastrando match da necessidade id: {} com necessidade id {} pelo administrador", idDoacao, idNecessidade);
-        repository.save(match);
+
+        return repository.save(match).getId();
     }
 
 }

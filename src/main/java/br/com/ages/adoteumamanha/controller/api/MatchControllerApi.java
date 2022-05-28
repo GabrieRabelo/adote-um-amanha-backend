@@ -37,7 +37,7 @@ public interface MatchControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<Void> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
+    ResponseEntity<Long> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
                                     @PathVariable("idDoacao") final Long idDoacao,
                                     @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
+import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
+import static java.util.Arrays.asList;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/match")
@@ -33,12 +37,11 @@ public class MatchController implements MatchControllerApi {
 
     @PostMapping("/{idNecessidade}/vincula/{idDoacao}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<Void> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
+    public ResponseEntity<Long> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
                                            @PathVariable("idDoacao") final Long idDoacao,
                                            @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal), HttpStatus.CREATED);
     }
 
 }
