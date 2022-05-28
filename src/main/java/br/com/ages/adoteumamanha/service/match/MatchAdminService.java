@@ -29,7 +29,7 @@ public class MatchAdminService {
 
     public void cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
 
-        log.info("Validando id da doação {} e id da necessidade", idDoacao, idNecessidade);
+        log.info("Validando id da doação {} e id da necessidade {}", idDoacao, idNecessidade);
         if (isNull(idDoacao) || isNull(idNecessidade)) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
