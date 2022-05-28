@@ -27,6 +27,8 @@ public enum Mensagem {
     ESTADO_INVALIDO("Estado inválido"),
     ITEM_NAO_ENCONTRADO("Item não encontrado"),
     MATCH_INVALIDO("Match inválido."),
+    MATCH_INEXISTENTE("Match não encontrado."),
+    MATCH_FINALIZADA_OU_RECUSADA("Match já foi finalizado ou recusado no sistema."),
     NECESSIDADE_MATCH_INVALIDO("Necessidade do match inválida."),
     NECESSIDADE_NAO_ENCONTRADA("Necessidade não encontrada"),
     NOME_INVALIDO("Nome inválido"),

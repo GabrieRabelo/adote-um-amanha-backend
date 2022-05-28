@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.controller.api;
 
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.request.RecusarMatchRequest;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,4 +42,28 @@ public interface MatchControllerApi {
                                     @PathVariable("idDoacao") final Long idDoacao,
                                     @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
+    @ApiOperation(value = "Serviço para recusar match",
+            notes = "Serviço responsável por recusar um match pelo seu identificador")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Match realizado com sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<Void> recusarMatch(@PathVariable("idMatch") final Long idMatch,
+                                      @AuthenticationPrincipal final UserPrincipal userPrincipal,
+                                      @RequestBody final RecusarMatchRequest request);
+
+    @ApiOperation(value = "Serviço para aprovar match",
+            notes = "Serviço responsável por aprovar um match pelo seu identificador")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Match realizado com sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<Void> aprovarMatch(@PathVariable("idMatch") final Long idMatch,
+                                      @AuthenticationPrincipal final UserPrincipal userPrincipal);
 }

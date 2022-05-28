@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(setterPrefix = "with")
+@Builder(setterPrefix = "with", toBuilder = true)
 @Table
 @Entity
 public class Pedido implements Serializable {
@@ -53,6 +53,9 @@ public class Pedido implements Serializable {
 
     @Column(nullable = false)
     private LocalDateTime dataHora;
+
+    @Column
+    private String motivoRecusa;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;

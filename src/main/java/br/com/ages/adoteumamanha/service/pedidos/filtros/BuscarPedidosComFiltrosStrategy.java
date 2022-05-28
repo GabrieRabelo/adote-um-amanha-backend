@@ -20,7 +20,7 @@ public class BuscarPedidosComFiltrosStrategy {
 
     public BuscarPedidosImplementacaoFiltros run(final Perfil perfil, final TipoPedido tipoPedido) {
 
-        log.info("Proucando a service com a implementação para {} e de tipo de pedido {}", perfil, tipoPedido);
+        log.info("Procurando a service com a implementação para {} e de tipo de pedido {}", perfil, tipoPedido);
         return services.stream()
                 .filter(service -> perfil.equals(service.getPerfil()))
                 .filter(service -> service.getTipoPedido().equals(tipoPedido))

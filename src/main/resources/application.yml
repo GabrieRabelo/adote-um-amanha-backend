@@ -8,7 +8,7 @@ spring:
     name: adote-um-amanha
   jpa:
     hibernate:
-      ddl-auto: ${DB_DDL:create}
+      ddl-auto: ${DB_DDL:update}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
