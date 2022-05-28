@@ -13,12 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
-import static java.time.LocalTime.*;
+import static java.time.LocalTime.MIN;
 import static java.util.Optional.ofNullable;
 import static org.springframework.data.domain.Sort.by;
 

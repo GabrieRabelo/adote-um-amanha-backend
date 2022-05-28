@@ -30,7 +30,7 @@ public class MatchMapper implements TriFunction<UserPrincipal, Pedido, Pedido, M
         return Match.builder()
                 .withDoacao(doacao)
                 .withNecessidade(necessidade)
-                .withData(LocalDateTime.now())
+                .withDataCriacao(LocalDateTime.now())
                 .withDescricao(buildDescricao(userPrincipal))
                 .withStatus(buildStatus(userPrincipal))
                 .build();

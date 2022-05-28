@@ -1,14 +1,15 @@
 package br.com.ages.adoteumamanha.controller;
 
 import br.com.ages.adoteumamanha.controller.api.MatchControllerApi;
-import br.com.ages.adoteumamanha.domain.enumeration.*;
+import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
+import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
+import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.request.RecusarMatchRequest;
 import br.com.ages.adoteumamanha.dto.response.MatchesResponse;
-import br.com.ages.adoteumamanha.dto.response.PedidosResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
-import br.com.ages.adoteumamanha.service.match.BuscarMatchesComFiltrosService;
-import br.com.ages.adoteumamanha.service.match.MatchAdminService;
-import br.com.ages.adoteumamanha.service.match.MatchDoadorService;
+import br.com.ages.adoteumamanha.service.match.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ public class MatchController implements MatchControllerApi {
 
     private final MatchDoadorService matchDoadorService;
     private final MatchAdminService matchAdminService;
+    private final AprovarMatchService aprovarMatchService;
+    private final RecusarMatchService recusarMatchService;
 
     private final BuscarMatchesComFiltrosService buscarMatchesComFiltrosService;
 
@@ -48,6 +51,25 @@ public class MatchController implements MatchControllerApi {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("/{idMatch}/aprovar")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<Void> aprovarMatch(@PathVariable("idMatch") final Long idMatch,
+                                             @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+
+        aprovarMatchService.aprovar(idMatch, userPrincipal);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{idMatch/recusar}")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<Void> recusarMatch(@PathVariable("idMatch") final Long idMatch,
+                                             @AuthenticationPrincipal final UserPrincipal userPrincipal,
+                                             @RequestBody final RecusarMatchRequest request) {
+
+        recusarMatchService.recusar(idMatch, userPrincipal, request);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @GetMapping
     @RolesAllowed({"ADMIN"})
     public ResponseEntity<MatchesResponse> buscarMatches(@RequestParam(defaultValue = "0") final Integer pagina,
@@ -58,7 +80,7 @@ public class MatchController implements MatchControllerApi {
                                                          @RequestParam(required = false) final List<Categoria> categorias,
                                                          @RequestParam(required = false) final List<Subcategoria> subcategorias,
                                                          @RequestParam(required = false) final List<Status> status,
-                                                         @RequestParam(required = false) final Integer mesesCorte){
+                                                         @RequestParam(required = false) final Integer mesesCorte) {
 
         return ResponseEntity.ok().body(
                 buscarMatchesComFiltrosService.buscar(pagina, tamanho, ordenacao, direcao, categorias, subcategorias, status, mesesCorte, textoBusca));

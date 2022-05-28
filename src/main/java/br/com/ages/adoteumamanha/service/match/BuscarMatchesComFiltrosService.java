@@ -41,7 +41,6 @@ public class BuscarMatchesComFiltrosService {
                                   final String textoBusca) {
 
 
-
         final LocalDateTime mesesDeCorte = ofNullable(mesesCorte).map(meses -> LocalDateTime.now().minusMonths(meses).with(MIN)).orElse(null);
         log.debug("Buscando matches dados os seguintes parâmetros: categorias {}, subcategorias {}, status {}, dataCorte {}, texto de busca {}", categorias, subcategorias, status, mesesDeCorte, textoBusca);
 

@@ -1,11 +1,8 @@
 package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
-import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.dto.response.MatchesResponse;
-import br.com.ages.adoteumamanha.dto.response.PedidosResponse;
 import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
-import br.com.ages.adoteumamanha.dto.response.ResumoPedidoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
