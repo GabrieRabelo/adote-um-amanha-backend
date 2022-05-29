@@ -89,7 +89,7 @@ public interface MatchControllerApi {
     ResponseEntity<DescricaoMatchResponse> buscarMatch(@PathVariable("idMatch") final Long idMatch);
 
     @ApiOperation(value = "Serviço para listagem de matches",
-            notes = "Serviço responsável por listar de matches")
+            notes = "Serviço responsável por listar matches")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Sucesso"),
             @ApiResponse(code = 400, message = "Solicitação Inválida"),
