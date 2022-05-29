@@ -1,15 +1,21 @@
 package br.com.ages.adoteumamanha;
 
+import br.com.ages.adoteumamanha.service.pedidos.BuscarPedidoService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
 class AdoteUmAmanhaApplicationTests {
+
+    @Autowired
+    BuscarPedidoService buscarPedidoService;
 
     @Test
     void contextLoads() {
-        new AdoteUmAmanhaApplication().main(new String[]{"--spring.profiles.active=test"});
+        assertThat(buscarPedidoService).isNotNull();
     }
 
 }
