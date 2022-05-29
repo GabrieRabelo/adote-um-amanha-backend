@@ -20,6 +20,7 @@ public class BuscarMatchService {
     private final DescricaoMatchResponseMapper descricaoMatchResponseMapper;
 
     public DescricaoMatchResponse buscarPorID(final Long id) {
+
         log.info("Buscando match por Id: {}", id);
         final Match match = repository.findById(id)
                 .orElseThrow(() -> new ApiException(Mensagem.MATCH_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND));

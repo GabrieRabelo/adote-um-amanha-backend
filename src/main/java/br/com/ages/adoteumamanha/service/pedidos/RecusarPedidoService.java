@@ -19,15 +19,17 @@ public class RecusarPedidoService {
 
     public void recusar(final Long id, final String motivoRecusa) {
 
-        log.debug("Recusando pedido com id: {}", id);
-
+        log.info("Buscando pedido com id: {}", id);
         final Pedido pedido = buscarPedidoService.buscarPorID(id);
 
+        log.info("Validando pedido");
         statusPedidoValidator.validar(pedido);
 
+        log.info("Alterando atributos do pedido recusado");
         pedido.setMotivoRecusa(motivoRecusa);
         pedido.setStatus(Status.RECUSADO);
 
+        log.info("Salvando pedido com id: {}", id);
         repository.save(pedido);
     }
 }
