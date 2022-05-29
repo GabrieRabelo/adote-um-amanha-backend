@@ -9,6 +9,7 @@ import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.RecusarMatchRequest;
 import br.com.ages.adoteumamanha.dto.response.DescricaoMatchResponse;
 import br.com.ages.adoteumamanha.dto.response.MatchesResponse;
+import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.match.*;
 import lombok.RequiredArgsConstructor;
@@ -44,12 +45,11 @@ public class MatchController implements MatchControllerApi {
 
     @PostMapping("/{idNecessidade}/vincula/{idDoacao}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<Void> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
-                                           @PathVariable("idDoacao") final Long idDoacao,
-                                           @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+    public ResponseEntity<DescricaoMatchResponse> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
+                                                          @PathVariable("idDoacao") final Long idDoacao,
+                                                          @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity(matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal), HttpStatus.CREATED);
     }
 
     @GetMapping("/{idMatch}")
