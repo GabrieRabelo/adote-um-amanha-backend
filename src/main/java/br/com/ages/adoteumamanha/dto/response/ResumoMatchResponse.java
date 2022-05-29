@@ -3,7 +3,6 @@ package br.com.ages.adoteumamanha.dto.response;
 import br.com.ages.adoteumamanha.domain.enumeration.Categoria;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
-import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;

@@ -35,16 +35,20 @@ public class Match implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataCriacao;
 
+    @Column
     private LocalDateTime dataFechamento;
 
+    @Column
     private String finalizadoPor;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column
     private String descricao;
 
+    @Column
     private String motivoReprovacao;
 
 }

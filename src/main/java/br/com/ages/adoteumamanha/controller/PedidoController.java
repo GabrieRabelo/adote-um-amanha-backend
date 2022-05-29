@@ -121,9 +121,10 @@ public class PedidoController implements PedidoControllerApi {
     @PatchMapping("/pedidos/{id}/recusar")
     @RolesAllowed({"ADMIN"})
     public ResponseEntity<Void> recusarPedido(@PathVariable final Long id,
+                                              @AuthenticationPrincipal final UserPrincipal userPrincipal,
                                               @RequestBody RecusarPedidoRequest recusarPedidoRequest) {
 
-        recusarPedidoService.recusar(id, recusarPedidoRequest.getMotivoRecusa());
+        recusarPedidoService.recusar(id, userPrincipal, recusarPedidoRequest.getMotivoRecusa());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
