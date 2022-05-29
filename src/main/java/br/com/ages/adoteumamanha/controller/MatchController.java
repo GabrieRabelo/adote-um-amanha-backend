@@ -44,12 +44,11 @@ public class MatchController implements MatchControllerApi {
 
     @PostMapping("/{idNecessidade}/vincula/{idDoacao}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<Void> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
+    public ResponseEntity<ResumoMatchResponse> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
                                            @PathVariable("idDoacao") final Long idDoacao,
                                            @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal), HttpStatus.CREATED);
     }
 
     @GetMapping("/{idMatch}")
