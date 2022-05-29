@@ -63,6 +63,7 @@ public class RecusarPedidoServiceTest {
         var pedidoEsperado = pedido.toBuilder()
                 .withStatus(Status.RECUSADO)
                 .withMotivoRecusa(motivoRecusa)
+                .withFinalizadoPor(userPrincipal.getEmail())
                 .build();
 
         when(buscarPedidoService.buscarPorID(idPedido)).thenReturn(pedido);
