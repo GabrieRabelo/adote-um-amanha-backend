@@ -56,10 +56,45 @@ public class MatchValidatorTest {
         validator.validar(match);
     }
 
+    @Test
+    public void match_doacao_null() {
+
+        final Pedido doacao = null;
+
+        final Match match = make(Match.builder())
+                .withDoacao(doacao)
+                .build();
+
+        try {
+            validator.validar(match);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(DOACAO_MATCH_INVALIDO.getDescricao()));
+        }
+    }
+
+    @Test
+    public void match_necessidade_null() {
+
+        final Pedido doacao = make(Pedido.builder())
+                .withTipoPedido(DOACAO)
+                .build();
+
+        final Pedido necessidade = null;
+
+        final Match match = make(Match.builder())
+                .withDoacao(doacao)
+                .withNecessidade(necessidade)
+                .build();
+
+        try {
+            validator.validar(match);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(NECESSIDADE_MATCH_INVALIDO.getDescricao()));
+        }
+    }
 
     @Test
     public void match_doacao_nao_eh_uma_doacao() {
-
         final Pedido doacao = make(Pedido.builder())
                 .withTipoPedido(NECESSIDADE)
                 .build();

@@ -10,7 +10,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static br.com.ages.adoteumamanha.exception.Mensagem.*;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CadastrarUsuarioRequestValidatorTest {
@@ -33,6 +34,18 @@ public class CadastrarUsuarioRequestValidatorTest {
     }
 
     @Test
+    public void requestInvalida() {
+
+        try {
+            validator.validar(null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+            verifyNoInteractions(emailValidator, cpfCnpjValidator);
+        }
+    }
+
+
+    @Test
     public void nome_invalido() {
         request = Fixture.make(CadastrarUsuarioRequest.builder())
                 .withNome(null)
@@ -52,8 +65,6 @@ public class CadastrarUsuarioRequestValidatorTest {
                 .withSenha(null)
                 .build();
 
-        doNothing().when(emailValidator).validar(request.getEmail());
-
         try {
             validator.validar(request);
         } catch (Exception e) {
@@ -67,8 +78,6 @@ public class CadastrarUsuarioRequestValidatorTest {
         request = Fixture.make(CadastrarUsuarioRequest.builder())
                 .withTelefone(null)
                 .build();
-
-        doNothing().when(emailValidator).validar(request.getEmail());
 
         try {
             validator.validar(request);
@@ -85,8 +94,6 @@ public class CadastrarUsuarioRequestValidatorTest {
                 .withEstado(null)
                 .build();
 
-        doNothing().when(emailValidator).validar(request.getEmail());
-
         try {
             validator.validar(request);
         } catch (Exception e) {
@@ -101,8 +108,6 @@ public class CadastrarUsuarioRequestValidatorTest {
         request = Fixture.make(CadastrarUsuarioRequest.builder())
                 .withCidade(null)
                 .build();
-
-        doNothing().when(emailValidator).validar(request.getEmail());
 
         try {
             validator.validar(request);
@@ -119,8 +124,6 @@ public class CadastrarUsuarioRequestValidatorTest {
                 .withBairro(null)
                 .build();
 
-        doNothing().when(emailValidator).validar(request.getEmail());
-
         try {
             validator.validar(request);
         } catch (Exception e) {
@@ -136,7 +139,19 @@ public class CadastrarUsuarioRequestValidatorTest {
                 .withCep(null)
                 .build();
 
-        doNothing().when(emailValidator).validar(request.getEmail());
+        try {
+            validator.validar(request);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(CEP_INVALIDO.getDescricao()));
+            verifyNoInteractions(emailValidator, cpfCnpjValidator);
+        }
+    }
+
+    @Test
+    public void cep_empty() {
+        request = Fixture.make(CadastrarUsuarioRequest.builder())
+                .withCep(" ")
+                .build();
 
         try {
             validator.validar(request);
@@ -153,8 +168,6 @@ public class CadastrarUsuarioRequestValidatorTest {
                 .withRua(null)
                 .build();
 
-        doNothing().when(emailValidator).validar(request.getEmail());
-
         try {
             validator.validar(request);
         } catch (Exception e) {
@@ -169,8 +182,6 @@ public class CadastrarUsuarioRequestValidatorTest {
         request = Fixture.make(CadastrarUsuarioRequest.builder())
                 .withNumero(null)
                 .build();
-
-        doNothing().when(emailValidator).validar(request.getEmail());
 
         try {
             validator.validar(request);

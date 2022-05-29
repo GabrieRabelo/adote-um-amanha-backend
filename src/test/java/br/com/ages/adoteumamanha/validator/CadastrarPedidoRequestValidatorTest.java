@@ -25,6 +25,16 @@ public class CadastrarPedidoRequestValidatorTest {
     }
 
     @Test
+    public void requestInvalida() {
+
+        try {
+            validator.validar(null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+        }
+    }
+
+    @Test
     public void assuntoInvalido() {
         request = Fixture.make(CadastrarPedidoRequest.builder())
                 .withAssunto(null)

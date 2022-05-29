@@ -23,6 +23,10 @@ public class CadastrarUsuarioRequestValidator {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
+        if (isEmpty(request.getCep())) {
+            throw new ApiException(Mensagem.CEP_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
         if (isEmpty(request.getNome())) {
             throw new ApiException(Mensagem.NOME_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
@@ -39,10 +43,6 @@ public class CadastrarUsuarioRequestValidator {
             throw new ApiException(Mensagem.TELEFONE_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
-        if (isEmpty(request.getCep())) {
-            throw new ApiException(Mensagem.CEP_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
-
         if (isEmpty(request.getEstado())) {
             throw new ApiException(Mensagem.ESTADO_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
@@ -53,10 +53,6 @@ public class CadastrarUsuarioRequestValidator {
 
         if (isEmpty(request.getBairro())) {
             throw new ApiException(Mensagem.BAIRRO_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
-        }
-
-        if (isEmpty(request.getCep())) {
-            throw new ApiException(Mensagem.CEP_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
         if (isEmpty(request.getRua())) {

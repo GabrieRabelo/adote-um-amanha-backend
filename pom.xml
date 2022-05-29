@@ -136,7 +136,6 @@
                 <version>0.8.5</version>
                 <configuration>
                     <excludes>
-                        <exclude>com/totvs/tfs/credito/**/*</exclude>
                         <exclude>br/com/ages/adoteumamanha/config/**/*</exclude>
                         <exclude>br/com/ages/adoteumamanha/controller/**/*</exclude>
                         <exclude>br/com/ages/adoteumamanha/domain/**/*</exclude>

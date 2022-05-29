@@ -30,17 +30,10 @@ public class CpfCnpjValidator {
         return soma > 9 ? 0 : soma;
     }
 
-    private String padLeft(final String text, final Character character) {
-        return String.format("%11s", text).replace(' ', character);
-    }
-
     private Boolean isValidCPF(String cpf) {
+        if (cpf == null) return false;
         cpf = cpf.trim().replaceAll("\\D", "");
-        if ((cpf == null) || (cpf.length() != 11)) return false;
-
-        for (int j = 0; j < 10; j++)
-            if (padLeft(Integer.toString(j), Character.forDigit(j, 10)).equals(cpf))
-                return false;
+        if (cpf.length() != 11) return false;
 
         final Integer digito1 = calcularDigito(cpf.substring(0, 9), pesoCPF);
         final Integer digito2 = calcularDigito(cpf.substring(0, 9) + digito1, pesoCPF);
@@ -48,9 +41,9 @@ public class CpfCnpjValidator {
     }
 
     private Boolean isValidCNPJ(String cnpj) {
+        if (cnpj == null) return false;
         cnpj = cnpj.trim().replaceAll("\\D", "");
-        if ((cnpj == null) || (cnpj.length() != 14)) return false;
-
+        if ((cnpj.length() != 14)) return false;
         final Integer digito1 = calcularDigito(cnpj.substring(0, 12), pesoCNPJ);
         final Integer digito2 = calcularDigito(cnpj.substring(0, 12) + digito1, pesoCNPJ);
         return cnpj.equals(cnpj.substring(0, 12) + digito1.toString() + digito2.toString());

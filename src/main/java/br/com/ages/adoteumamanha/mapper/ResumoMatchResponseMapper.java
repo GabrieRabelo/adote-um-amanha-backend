@@ -2,11 +2,13 @@ package br.com.ages.adoteumamanha.mapper;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
+import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
 import static java.util.Optional.ofNullable;
 
+@Component
 public class ResumoMatchResponseMapper implements Function<Match, ResumoMatchResponse> {
     public ResumoMatchResponse apply(final Match match) {
         return ofNullable(match)

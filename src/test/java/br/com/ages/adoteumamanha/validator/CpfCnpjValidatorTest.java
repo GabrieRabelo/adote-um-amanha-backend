@@ -34,4 +34,24 @@ public class CpfCnpjValidatorTest {
         }
     }
 
+    @Test
+    public void cnpj_invalido() {
+
+        try {
+            validator.validar(null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(CPF_CNPJ_INVALIDO.getDescricao()));
+        }
+    }
+
+    @Test
+    public void cpf_invalido() {
+
+        try {
+            validator.validar(null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(CPF_CNPJ_INVALIDO.getDescricao()));
+        }
+    }
+
 }
