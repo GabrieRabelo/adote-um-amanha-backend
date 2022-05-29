@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class MatchesResponseMapper implements Function<Page<Match>, MatchesResponse> {
 
-    final MatchCurtoResponseMapper matchCurtoResponseMapper = new MatchCurtoResponseMapper();
+    final ResumoMatchResponseMapper resumoMatchResponseMapper = new ResumoMatchResponseMapper();
 
     @Override
     public MatchesResponse apply(final Page<Match> matches) {
@@ -37,7 +37,7 @@ public class MatchesResponseMapper implements Function<Page<Match>, MatchesRespo
         return Optional.of(matches.getContent())
                 .orElseGet(Collections::emptyList)
                 .stream()
-                .map(matchCurtoResponseMapper)
+                .map(resumoMatchResponseMapper)
                 .collect(Collectors.toList());
     }
 

@@ -2,7 +2,7 @@ package br.com.ages.adoteumamanha.service.match;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.exception.ApiException;
-import br.com.ages.adoteumamanha.mapper.ResumoMatchResponseMapper;
+import br.com.ages.adoteumamanha.mapper.DescricaoMatchResponseMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class BuscarMatchServiceTest {
     private MatchRepository repository;
 
     @Mock
-    private ResumoMatchResponseMapper resumoMatchResponseMapper;
+    private DescricaoMatchResponseMapper descricaoMatchResponseMapper;
 
     @Test
     public void buscar_por_id_ok() {

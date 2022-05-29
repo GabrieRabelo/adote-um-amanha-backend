@@ -10,6 +10,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Categoria.BEM;
 import static br.com.ages.adoteumamanha.domain.enumeration.Categoria.SERVICO;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.FINALIZADA;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.Subcategoria.PROFISSIONALIZACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.Subcategoria.SAUDE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
@@ -35,12 +37,14 @@ public class MatchValidatorTest {
         final Pedido doacao = make(Pedido.builder())
                 .withTipoPedido(DOACAO)
                 .withCategoria(BEM)
+                .withStatus(PENDENTE)
                 .withSubcategoria(PROFISSIONALIZACAO)
                 .build();
 
         final Pedido necessidade = make(Pedido.builder())
                 .withTipoPedido(NECESSIDADE)
                 .withCategoria(BEM)
+                .withStatus(PENDENTE)
                 .withSubcategoria(PROFISSIONALIZACAO)
                 .build();
 
@@ -143,6 +147,65 @@ public class MatchValidatorTest {
             validator.validar(match);
         } catch (Exception e) {
             assertTrue(e.getMessage().contains(SUBCATGEORIA_MATCH_DIFERENTE.getDescricao()));
+        }
+    }
+
+    @Test
+    public void match_necessidade_nao_pendente() {
+
+        final Pedido doacao = make(Pedido.builder())
+                .withTipoPedido(DOACAO)
+                .withCategoria(BEM)
+                .withStatus(PENDENTE)
+                .withSubcategoria(PROFISSIONALIZACAO)
+                .build();
+
+        final Pedido necessidade = make(Pedido.builder())
+                .withTipoPedido(NECESSIDADE)
+                .withCategoria(BEM)
+                .withStatus(FINALIZADA)
+                .withSubcategoria(PROFISSIONALIZACAO)
+                .build();
+
+        final Match match = make(Match.builder())
+                .withDoacao(doacao)
+                .withNecessidade(necessidade)
+                .build();
+
+        try {
+            validator.validar(match);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(STATUS_NAO_PENDENTE.getDescricao()));
+        }
+    }
+
+    @Test
+    public void match_necessidade_doacao_nao_pendente() {
+
+        final Pedido doacao = make(Pedido.builder())
+                .withTipoPedido(DOACAO)
+                .withCategoria(BEM)
+                .withStatus(FINALIZADA)
+                .withSubcategoria(PROFISSIONALIZACAO)
+                .build();
+
+        final Pedido necessidade = make(Pedido.builder())
+                .withTipoPedido(NECESSIDADE)
+                .withCategoria(BEM)
+                .withStatus(FINALIZADA)
+                .withSubcategoria(PROFISSIONALIZACAO)
+                .build();
+
+        final Match match = make(Match.builder())
+                .withDoacao(doacao)
+                .withStatus(PENDENTE)
+                .withNecessidade(necessidade)
+                .build();
+
+        try {
+            validator.validar(match);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(STATUS_NAO_PENDENTE.getDescricao()));
         }
     }
 

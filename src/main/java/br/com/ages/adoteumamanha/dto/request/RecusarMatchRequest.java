@@ -10,6 +10,7 @@ import java.io.Serializable;
 public final class RecusarMatchRequest implements Serializable {
 
     private static final long serialVersionUID = -5756111733363597084L;
-    private final String motivoReprovacao;
+
+    private final String motivoRecusa;
 
 }

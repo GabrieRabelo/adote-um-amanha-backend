@@ -41,7 +41,7 @@ values (9999, 'NECESSIDADE', 'BEM', 'SAUDE', 'PENDENTE', 'Leite em pó desnatado
 
 insert into pedido(id, tipo_pedido, categoria, subcategoria, status, assunto, descricao, data_hora, usuario_id,
                    url_video)
-values (9998, 'NECESSIDADE', 'SERVICO', 'SAUDE', 'FINALIZADA', 'Consulta psicológica',
+values (9998, 'NECESSIDADE', 'SERVICO', 'SAUDE', 'PENDENTE', 'Consulta psicológica',
         'A. C. precisa de sessões terapeuticas para superar traumas', '2022-04-01 04:05:06', 9998,
         'https://www.youtube.com/watch?v=0gBgyxXJ1GY');
 

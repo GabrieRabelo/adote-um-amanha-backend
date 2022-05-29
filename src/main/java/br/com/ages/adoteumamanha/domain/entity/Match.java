@@ -26,16 +26,16 @@ public class Match implements Serializable {
     @Column(nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pedido necessidade;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pedido doacao;
 
     @Column(nullable = false)
     private LocalDateTime dataCriacao;
 
-    private LocalDateTime dataTermino;
+    private LocalDateTime dataFechamento;
 
     private String finalizadoPor;
 

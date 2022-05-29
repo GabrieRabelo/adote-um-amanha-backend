@@ -62,6 +62,6 @@ public class AprovarMatchServiceTest {
         assertEquals(FINALIZADA, matchSalvo.getDoacao().getStatus());
         assertEquals(FINALIZADA, matchSalvo.getNecessidade().getStatus());
         assertEquals(matchSalvo.getFinalizadoPor(), userPrincipal.getEmail());
-        assertNotNull(matchSalvo.getDataTermino());
+        assertNotNull(matchSalvo.getDataFechamento());
     }
 }

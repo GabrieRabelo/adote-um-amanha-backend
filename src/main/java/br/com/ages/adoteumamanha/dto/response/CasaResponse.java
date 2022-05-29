@@ -12,10 +12,10 @@ public class CasaResponse implements Serializable {
 
     private static final long serialVersionUID = 84109019533928162L;
 
-    private String nome;
-    private String telefone;
-    private String email;
-    private Endereco endereco;
-    private String site;
+    private final String nome;
+    private final String telefone;
+    private final String email;
+    private final Endereco endereco;
+    private final String site;
 
 }

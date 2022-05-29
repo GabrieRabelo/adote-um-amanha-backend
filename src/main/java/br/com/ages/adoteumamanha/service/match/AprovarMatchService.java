@@ -43,7 +43,7 @@ public class AprovarMatchService {
 
         log.info("Alterado atributos do match com id {} referente a sua aprovação", match.getId());
         match.setStatus(Status.FINALIZADA);
-        match.setDataTermino(LocalDateTime.now());
+        match.setDataFechamento(LocalDateTime.now());
         match.setFinalizadoPor(userPrincipal.getEmail());
 
         log.info("Salvando no banco o match");

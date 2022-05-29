@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class PedidosResponseMapper implements Function<Page<Pedido>, PedidosResponse> {
 
-    final PedidoCurtoResponseMapper pedidoCurtoResponseMapper = new PedidoCurtoResponseMapper();
+    final ResumoPedidoResponseMapper resumoPedidoResponseMapper = new ResumoPedidoResponseMapper();
 
     @Override
     public PedidosResponse apply(final Page<Pedido> pedidos) {
@@ -37,7 +37,7 @@ public class PedidosResponseMapper implements Function<Page<Pedido>, PedidosResp
         return Optional.of(pedidos.getContent())
                 .orElseGet(Collections::emptyList)
                 .stream()
-                .map(pedidoCurtoResponseMapper)
+                .map(resumoPedidoResponseMapper)
                 .collect(Collectors.toList());
     }
 

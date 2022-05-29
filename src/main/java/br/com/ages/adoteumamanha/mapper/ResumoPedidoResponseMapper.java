@@ -9,7 +9,7 @@ import java.util.function.Function;
 import static java.util.Optional.ofNullable;
 
 @Component
-public class PedidoCurtoResponseMapper implements Function<Pedido, ResumoPedidoResponse> {
+public class ResumoPedidoResponseMapper implements Function<Pedido, ResumoPedidoResponse> {
 
     @Override
     public ResumoPedidoResponse apply(final Pedido pedido) {
@@ -22,6 +22,7 @@ public class PedidoCurtoResponseMapper implements Function<Pedido, ResumoPedidoR
                         .withSubcategoria(p.getSubcategoria())
                         .withTipo(p.getTipoPedido())
                         .withNomeUsuario(p.getUsuario().getNome())
+                        .withCategoria(p.getCategoria())
                         .build())
                 .orElse(null);
     }
