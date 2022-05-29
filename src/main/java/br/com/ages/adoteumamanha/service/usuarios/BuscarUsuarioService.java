@@ -30,7 +30,7 @@ public class BuscarUsuarioService {
                 .orElseThrow(() -> new ApiException(Mensagem.CASA_NAO_ENCONTRADA.getDescricao(), HttpStatus.NOT_FOUND));
     }
 
-    public UsuarioResponse buscarUsuario(final Long id) {
+    public UsuarioResponse buscarUsuarioPorId(final Long id) {
         log.info("Buscando usuário pelo id: {}", id);
         return usuarioRepository.findById(id)
                 .map(usuarioResponseMapper)

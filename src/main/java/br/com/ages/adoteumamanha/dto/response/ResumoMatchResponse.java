@@ -15,16 +15,18 @@ import java.time.LocalDateTime;
 public class ResumoMatchResponse implements Serializable {
 
     private static final long serialVersionUID = -700688231746616781L;
-    private final Long idCasa;
-    private final Long idDoador;
-    private Long id;
-    private String assunto;
+
+    private final Long id;
+    private final String nomeCasa;
+    private final String nomeDoador;
+
+    private final String assunto;
+
+    private final Categoria categoria;
+    private final Subcategoria subcategoria;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private LocalDateTime data;
-    private Categoria categoria;
-    private Subcategoria subcategoria;
-    private Status status;
-    private String descricaoDoacao;
-    private String nomeCasa;
-    private String nomeDoador;
+    private final LocalDateTime data;
+
+    private final Status status;
 }

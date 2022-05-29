@@ -8,8 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static br.com.ages.adoteumamanha.exception.Mensagem.EMAIL_INVALIDO;
-import static br.com.ages.adoteumamanha.exception.Mensagem.SENHA_INVALIDA;
+import static br.com.ages.adoteumamanha.exception.Mensagem.*;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -32,6 +31,16 @@ public class LoginRequestValidatorTest {
         validator.validar(request);
 
         verify(emailValidator).validar(request.getEmail());
+    }
+
+    @Test
+    public void requestInvalida() {
+        try {
+            validator.validar(null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+            verifyNoInteractions(emailValidator);
+        }
     }
 
     @Test

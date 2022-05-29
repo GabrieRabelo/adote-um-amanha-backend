@@ -42,14 +42,13 @@ public class BuscarMatchesComFiltrosService {
 
 
         final LocalDateTime mesesDeCorte = ofNullable(mesesCorte).map(meses -> LocalDateTime.now().minusMonths(meses).with(MIN)).orElse(null);
-        log.debug("Buscando matches dados os seguintes parâmetros: categorias {}, subcategorias {}, status {}, dataCorte {}, texto de busca {}", categorias, subcategorias, status, mesesDeCorte, textoBusca);
+        log.info("Buscando matches dados os seguintes parâmetros: categorias {}, subcategorias {}, status {}, dataCorte {}, texto de busca {}", categorias, subcategorias, status, mesesDeCorte, textoBusca);
 
         log.info("pagina {}, tamanho {}, ordenacao {}, direcao {}", pagina, tamanho, ordenacao, direcao);
         final Pageable paging = PageRequest.of(pagina, tamanho, by(Sort.Direction.valueOf(direcao.name()), ordenacao));
 
-        log.info("Buscando no banco pedidos paginados");
+        log.info("Buscando no banco matches paginados");
         final Page<Match> matchesEntities = repository.findAllMatchesPorFiltro(categorias, subcategorias, mesesDeCorte, textoBusca, status, paging);
-
 
         return matchesResponseMapper.apply(matchesEntities);
     }

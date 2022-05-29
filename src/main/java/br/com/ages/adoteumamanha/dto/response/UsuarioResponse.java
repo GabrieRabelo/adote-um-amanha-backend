@@ -12,7 +12,7 @@ public class UsuarioResponse implements Serializable {
 
     private static final long serialVersionUID = -2338010642651294681L;
 
-    private String nome;
-    private Perfil perfil;
+    private final String nome;
+    private final Perfil perfil;
 
 }

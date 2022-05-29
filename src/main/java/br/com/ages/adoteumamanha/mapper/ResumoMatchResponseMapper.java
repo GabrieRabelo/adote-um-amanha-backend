@@ -10,23 +10,19 @@ import static java.util.Optional.ofNullable;
 
 @Component
 public class ResumoMatchResponseMapper implements Function<Match, ResumoMatchResponse> {
-
-    @Override
     public ResumoMatchResponse apply(final Match match) {
         return ofNullable(match)
                 .map(m -> ResumoMatchResponse.builder()
                         .withId(m.getId())
                         .withAssunto(m.getNecessidade().getAssunto())
-                        .withData(m.getDataCriacao())
                         .withCategoria(m.getNecessidade().getCategoria())
                         .withSubcategoria(m.getNecessidade().getSubcategoria())
-                        .withStatus(m.getStatus())
-                        .withDescricaoDoacao(m.getNecessidade().getDescricao())
-                        .withIdCasa(m.getNecessidade().getUsuario().getId())
+                        .withData(m.getDataCriacao())
                         .withNomeCasa(m.getNecessidade().getUsuario().getNome())
-                        .withIdDoador(m.getDoacao().getUsuario().getId())
                         .withNomeDoador(m.getDoacao().getUsuario().getNome())
+                        .withStatus(m.getStatus())
                         .build())
                 .orElse(null);
     }
+
 }

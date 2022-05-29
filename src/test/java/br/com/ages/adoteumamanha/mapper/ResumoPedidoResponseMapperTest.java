@@ -8,9 +8,9 @@ import static br.com.ages.adoteumamanha.fixture.Fixture.make;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class PedidoCurtoResponseMapperTest {
+public class ResumoPedidoResponseMapperTest {
 
-    final PedidoCurtoResponseMapper MAPPER = new PedidoCurtoResponseMapper();
+    final ResumoPedidoResponseMapper MAPPER = new ResumoPedidoResponseMapper();
 
     @Test
     public void mapper() {

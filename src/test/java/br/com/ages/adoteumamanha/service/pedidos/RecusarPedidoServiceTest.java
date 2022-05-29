@@ -4,7 +4,9 @@ import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
+import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.StatusPedidoValidator;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -36,6 +38,13 @@ public class RecusarPedidoServiceTest {
     @Captor
     private ArgumentCaptor<Pedido> captor;
 
+    private UserPrincipal userPrincipal;
+
+    @Before
+    public void setup() {
+        userPrincipal = UserPrincipal.create(make(Usuario.builder()).build());
+    }
+
     @Test
     public void testeRecusarPedido() {
 
@@ -54,12 +63,13 @@ public class RecusarPedidoServiceTest {
         var pedidoEsperado = pedido.toBuilder()
                 .withStatus(Status.RECUSADO)
                 .withMotivoRecusa(motivoRecusa)
+                .withFinalizadoPor(userPrincipal.getEmail())
                 .build();
 
         when(buscarPedidoService.buscarPorID(idPedido)).thenReturn(pedido);
         doNothing().when(statusPedidoValidator).validar(pedido);
 
-        service.recusar(idPedido, motivoRecusa);
+        service.recusar(idPedido, userPrincipal, motivoRecusa);
         verify(repository).save(captor.capture());
 
         var pedidoSalvo = captor.getValue();

@@ -29,7 +29,7 @@ public class UsuarioController implements UsuarioControllerApi {
 
     @GetMapping(value = "/usuario")
     public ResponseEntity<UsuarioResponse> buscarUsuarioAutenticado(@AuthenticationPrincipal final UserPrincipal userPrincipal) {
-        return ResponseEntity.ok(buscarUsuarioService.buscarUsuario(userPrincipal.getId()));
+        return ResponseEntity.ok(buscarUsuarioService.buscarUsuarioPorId(userPrincipal.getId()));
     }
 
     @PostMapping("/public/usuario")

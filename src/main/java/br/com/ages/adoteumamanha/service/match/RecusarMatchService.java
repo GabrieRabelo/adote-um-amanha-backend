@@ -28,7 +28,7 @@ public class RecusarMatchService {
     public void recusar(final Long idMatch, final UserPrincipal userPrincipal, final RecusarMatchRequest request) {
 
         log.info("Validando request");
-        if (isNull(request) || isEmpty(request.getMotivoReprovacao())) {
+        if (isNull(request) || isEmpty(request.getMotivoRecusa())) {
             throw new ApiException(Mensagem.REQUEST_INVALIDO.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
@@ -40,7 +40,7 @@ public class RecusarMatchService {
         final Pedido doacao = match.getDoacao();
 
         log.info("Verificando se o match já não foi finalizado ou recusado anteriormente");
-        if (Status.FINALIZADA.equals(match.getStatus()) && Status.RECUSADO.equals(match.getStatus())) {
+        if (Status.FINALIZADA.equals(match.getStatus()) || Status.RECUSADO.equals(match.getStatus())) {
             throw new ApiException(Mensagem.MATCH_FINALIZADA_OU_RECUSADA.getDescricao(), HttpStatus.BAD_REQUEST);
         }
 
@@ -51,8 +51,8 @@ public class RecusarMatchService {
         doacao.setStatus(Status.PENDENTE);
 
         log.info("Alterado atributos do match com id {} referente a sua recusa", match.getId());
-        match.setMotivoReprovacao(request.getMotivoReprovacao());
-        match.setDataTermino(LocalDateTime.now());
+        match.setMotivoReprovacao(request.getMotivoRecusa());
+        match.setDataFechamento(LocalDateTime.now());
         match.setFinalizadoPor(userPrincipal.getEmail());
         match.setStatus(Status.RECUSADO);
 

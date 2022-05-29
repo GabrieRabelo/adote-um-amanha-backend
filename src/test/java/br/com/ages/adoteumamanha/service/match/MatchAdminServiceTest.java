@@ -4,6 +4,7 @@ import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.fixture.Fixture;
+import br.com.ages.adoteumamanha.mapper.DescricaoMatchResponseMapper;
 import br.com.ages.adoteumamanha.mapper.MatchMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -39,6 +40,9 @@ public class MatchAdminServiceTest {
 
     @Mock
     private MatchMapper matchMapper;
+
+    @Mock
+    private DescricaoMatchResponseMapper descricaoMatchResponseMapper;
 
     @Mock
     private MatchRepository matchRepository;

@@ -22,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
@@ -65,7 +66,9 @@ public class MatchDoadorServiceTest {
 
     @Before
     public void setup() {
-        userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder()).build());
+        userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder())
+                .withPerfil(DOADOR)
+                .build());
     }
 
     @Test

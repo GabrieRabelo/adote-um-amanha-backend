@@ -2,9 +2,11 @@ package br.com.ages.adoteumamanha.service.match;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
+import br.com.ages.adoteumamanha.dto.response.DescricaoMatchResponse;
 import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
+import br.com.ages.adoteumamanha.mapper.DescricaoMatchResponseMapper;
 import br.com.ages.adoteumamanha.mapper.MatchMapper;
 import br.com.ages.adoteumamanha.mapper.ResumoMatchResponseMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
@@ -28,9 +30,9 @@ public class MatchAdminService {
     private final MatchMapper matchMapper;
     private final MatchValidator matchValidator;
     private final BuscarPedidoService buscarPedidoService;
-    private final ResumoMatchResponseMapper resumoMatchResponseMapper;
+    private final DescricaoMatchResponseMapper descricaoMatchResponseMapper;
 
-    public ResumoMatchResponse cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
+    public DescricaoMatchResponse cadastrar(final Long idDoacao, final Long idNecessidade, final UserPrincipal userPrincipal) {
 
         log.info("Validando id da doação {} e id da necessidade {}", idDoacao, idNecessidade);
         if (isNull(idDoacao) || isNull(idNecessidade)) {
@@ -53,8 +55,7 @@ public class MatchAdminService {
         doacao.setStatus(FINALIZADA);
 
         log.info("Cadastrando match da doação id: {} com necessidade id {} pelo administrador", idDoacao, idNecessidade);
-        var savedMatch = repository.save(match);
-        return resumoMatchResponseMapper.apply(savedMatch);
+        return descricaoMatchResponseMapper.apply(repository.save(match));
     }
 
 }

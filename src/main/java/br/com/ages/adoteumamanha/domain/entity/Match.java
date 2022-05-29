@@ -26,25 +26,29 @@ public class Match implements Serializable {
     @Column(nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pedido necessidade;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pedido doacao;
 
     @Column(nullable = false)
     private LocalDateTime dataCriacao;
 
-    private LocalDateTime dataTermino;
+    @Column
+    private LocalDateTime dataFechamento;
 
+    @Column
     private String finalizadoPor;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column
     private String descricao;
 
+    @Column
     private String motivoReprovacao;
 
 }

@@ -1,6 +1,7 @@
 package br.com.ages.adoteumamanha.validator;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,10 @@ public class MatchValidator {
 
         if (isFalse(equal(match.getDoacao().getSubcategoria(), match.getNecessidade().getSubcategoria()))) {
             throw new ApiException(Mensagem.SUBCATGEORIA_MATCH_DIFERENTE.getDescricao(), HttpStatus.BAD_REQUEST);
+        }
+
+        if (isFalse(Status.PENDENTE.equals(match.getDoacao().getStatus())) || isFalse(Status.PENDENTE.equals(match.getNecessidade().getStatus()))) {
+            throw new ApiException(Mensagem.STATUS_NAO_PENDENTE.getDescricao(), HttpStatus.BAD_REQUEST);
         }
     }
 }

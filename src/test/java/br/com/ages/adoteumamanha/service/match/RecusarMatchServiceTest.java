@@ -65,6 +65,6 @@ public class RecusarMatchServiceTest {
         assertEquals(PENDENTE, matchSalvo.getDoacao().getStatus());
         assertEquals(PENDENTE, matchSalvo.getNecessidade().getStatus());
         assertEquals(matchSalvo.getFinalizadoPor(), userPrincipal.getEmail());
-        assertNotNull(matchSalvo.getDataTermino());
+        assertNotNull(matchSalvo.getDataFechamento());
     }
 }

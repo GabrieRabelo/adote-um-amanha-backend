@@ -7,6 +7,7 @@ import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.domain.enumeration.Subcategoria;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.RecusarMatchRequest;
+import br.com.ages.adoteumamanha.dto.response.DescricaoMatchResponse;
 import br.com.ages.adoteumamanha.dto.response.MatchesResponse;
 import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -44,16 +45,16 @@ public class MatchController implements MatchControllerApi {
 
     @PostMapping("/{idNecessidade}/vincula/{idDoacao}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<ResumoMatchResponse> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
-                                           @PathVariable("idDoacao") final Long idDoacao,
-                                           @AuthenticationPrincipal final UserPrincipal userPrincipal) {
+    public ResponseEntity<DescricaoMatchResponse> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
+                                                          @PathVariable("idDoacao") final Long idDoacao,
+                                                          @AuthenticationPrincipal final UserPrincipal userPrincipal) {
 
-        return new ResponseEntity<>(matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal), HttpStatus.CREATED);
+        return new ResponseEntity(matchAdminService.cadastrar(idDoacao, idNecessidade, userPrincipal), HttpStatus.CREATED);
     }
 
     @GetMapping("/{idMatch}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<ResumoMatchResponse> buscarMatch(@PathVariable("idMatch") final Long idMatch) {
+    public ResponseEntity<DescricaoMatchResponse> buscarMatch(@PathVariable("idMatch") final Long idMatch) {
 
         buscarMatchService.buscarPorID(idMatch);
         return ResponseEntity.ok().body(buscarMatchService.buscarPorID(idMatch));
@@ -68,7 +69,7 @@ public class MatchController implements MatchControllerApi {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/{idMatch/recusar}")
+    @PostMapping("/{idMatch}/recusar")
     @RolesAllowed("ADMIN")
     public ResponseEntity<Void> recusarMatch(@PathVariable("idMatch") final Long idMatch,
                                              @AuthenticationPrincipal final UserPrincipal userPrincipal,
@@ -83,7 +84,7 @@ public class MatchController implements MatchControllerApi {
     public ResponseEntity<MatchesResponse> buscarMatches(@RequestParam(defaultValue = "0") final Integer pagina,
                                                          @RequestParam(defaultValue = "5") final Integer tamanho,
                                                          @RequestParam(defaultValue = "DESC") final Direcao direcao,
-                                                         @RequestParam(defaultValue = "data") final String ordenacao,
+                                                         @RequestParam(defaultValue = "dataCriacao") final String ordenacao,
                                                          @RequestParam(defaultValue = "", required = false) final String textoBusca,
                                                          @RequestParam(required = false) final List<Categoria> categorias,
                                                          @RequestParam(required = false) final List<Subcategoria> subcategorias,

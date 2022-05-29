@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
@@ -28,9 +29,28 @@ public class PedidoMapperTest {
     }
 
     @Test
-    public void mapper() {
+    public void mapper_doador() {
         final CadastrarPedidoRequest request = make(CadastrarPedidoRequest.builder()).build();
 
+        userPrincipal.setPerfil(DOADOR);
+        final Pedido response = MAPPER.apply(request, userPrincipal);
+
+        assertEquals(request.getAssunto(), response.getAssunto());
+        assertEquals(request.getDescricao(), response.getDescricao());
+        assertEquals(request.getCategoria(), response.getCategoria());
+        assertEquals(request.getSubcategoria(), response.getSubcategoria());
+        assertNotNull(response.getDataHora());
+        assertEquals(PENDENTE, response.getStatus());
+        assertEquals(buildTipoPedido(userPrincipal), response.getTipoPedido());
+        assertEquals(request.getUrlVideo(), response.getUrlVideo());
+        assertEquals(userPrincipal.getId(), response.getUsuario().getId());
+    }
+
+    @Test
+    public void mapper_casa() {
+        final CadastrarPedidoRequest request = make(CadastrarPedidoRequest.builder()).build();
+
+        userPrincipal.setPerfil(CASA);
         final Pedido response = MAPPER.apply(request, userPrincipal);
 
         assertEquals(request.getAssunto(), response.getAssunto());

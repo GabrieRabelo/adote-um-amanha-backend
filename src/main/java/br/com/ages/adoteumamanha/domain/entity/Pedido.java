@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -60,6 +59,10 @@ public class Pedido implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
+    @Column
     private String urlVideo;
+
+    @Column
+    private String finalizadoPor;
 
 }
