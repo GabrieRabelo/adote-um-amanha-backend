@@ -2,6 +2,7 @@ package br.com.ages.adoteumamanha.controller.api;
 
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.RecusarMatchRequest;
+import br.com.ages.adoteumamanha.dto.response.ResumoMatchResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,9 +39,9 @@ public interface MatchControllerApi {
             @ApiResponse(code = 403, message = "Acesso proibido"),
             @ApiResponse(code = 500, message = "Erro Interno")
     })
-    ResponseEntity<Void> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
-                                    @PathVariable("idDoacao") final Long idDoacao,
-                                    @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
+    ResponseEntity<ResumoMatchResponse> matchAdmin(@PathVariable("idNecessidade") final Long idNecessidade,
+                                                   @PathVariable("idDoacao") final Long idDoacao,
+                                                   @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
 
     @ApiOperation(value = "Serviço para recusar match",
             notes = "Serviço responsável por recusar um match pelo seu identificador")
