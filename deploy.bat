@@ -11,8 +11,8 @@ if ["%ERRORLEVEL%"]==["1"] (
 echo ~ 
 echo Deploy stage
 echo Establishing connection...
-ssh -i "C:\Users\%USERNAME%\.ssh\adote.pem" ec2-user@ec2-18-118-226-194.us-east-2.compute.amazonaws.com "bash ./scripts/%1/backup_backend.sh"  
+ssh -i "C:\Users\%USERNAME%\.ssh\adote.pem" ec2-user@adote-um-amanha.duckdns.org "bash ./scripts/%1/backup_backend.sh"  
 
-sftp -b "deploy%1.sftp" -i "C:\Users\%USERNAME%\.ssh\adote.pem" -P 22 ec2-user@ec2-18-118-226-194.us-east-2.compute.amazonaws.com
+sftp -b "deploy%1.sftp" -i "C:\Users\%USERNAME%\.ssh\adote.pem" -P 22 ec2-user@adote-um-amanha.duckdns.org
 
-ssh -i "C:\Users\%USERNAME%\.ssh\adote.pem" ec2-user@ec2-18-118-226-194.us-east-2.compute.amazonaws.com "bash ./scripts/%1/deploy_backend.sh"
+ssh -i "C:\Users\%USERNAME%\.ssh\adote.pem" ec2-user@adote-um-amanha.duckdns.org "bash ./scripts/%1/deploy_backend.sh"
