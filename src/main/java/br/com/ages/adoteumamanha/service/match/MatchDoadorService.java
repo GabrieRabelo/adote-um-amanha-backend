@@ -2,11 +2,14 @@ package br.com.ages.adoteumamanha.service.match;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.mapper.MatchMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
+import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
+import br.com.ages.adoteumamanha.service.mail.MailService;
 import br.com.ages.adoteumamanha.service.pedidos.BuscarPedidoService;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import br.com.ages.adoteumamanha.validator.MatchValidator;
@@ -15,6 +18,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.ADMIN;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE;
 
 @Slf4j
@@ -22,6 +29,8 @@ import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE
 @RequiredArgsConstructor
 public class MatchDoadorService {
 
+    private final MailService mailService;
+    private final UsuarioRepository usuarioRepository;
     private final MatchRepository repository;
     private final PedidoMapper pedidoMapper;
     private final BuscarPedidoService buscarPedidoService;
@@ -54,6 +63,29 @@ public class MatchDoadorService {
 
         log.info("Cadastrando novo match, do usuario com id: {}, para a necessidade da casa com id {}", doador.getId(), idNecessidade);
         repository.save(match);
+
+        sendEmail();
+        sendEmail(doacao.getUsuario().getEmail());
+        //sendEmail(match.getId());
+    }
+
+    public void sendEmail(){
+        List<String> users = usuarioRepository.findByPerfilAndAtivo( ADMIN ,true).stream()
+                .map(Usuario::getEmail)
+                .collect(Collectors.toList());
+
+        String[] emails = new String[users.size()];
+        users.toArray(emails);
+        String subject = "Novo vínculo cadastrado!";
+        String text = "Você pode verificar as informações em: xyz";
+        mailService.sendEmail(emails, subject, text);
+    }
+
+    public void sendEmail(String emailDoador){
+
+        String subject = "Novo vínculo cadastrado!";
+        String text = "Você pode verificar as informações em: xyz";
+        mailService.sendEmail(new String[]{emailDoador}, subject, text);
     }
 
 }
