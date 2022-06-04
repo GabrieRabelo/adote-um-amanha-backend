@@ -28,4 +28,11 @@ security:
   public:
     path: "/public/**"
 
-
+mail:
+  smtp:
+    host: ${smtp_host:smtp.mailtrap.io}
+    port: ${smtp_port:2525}
+    user: ${smtp_user:313504c6a12950}
+    pass: ${smtp_pass:d6d6d7d4c82ebc}
+    conf:
+      debug: true
