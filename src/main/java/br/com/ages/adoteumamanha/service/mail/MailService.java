@@ -16,7 +16,7 @@ public class MailService {
 
     private final JavaMailSender javaMailSender;
 
-    public void sendEmail(String[] emails, String subject, String text) {
+    public void sendEmail(String[] emails, String subject, String text, boolean isHtml) {
         try {
             MimeMessage mail = javaMailSender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mail, true);
@@ -24,7 +24,7 @@ public class MailService {
             message.setFrom("adoteumamanha@gmail.com");
             message.setTo(emails);
             message.setSubject(subject);
-            message.setText(text, false);
+            message.setText(text, isHtml);
 
             javaMailSender.send(mail);
 
