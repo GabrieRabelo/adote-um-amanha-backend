@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
 
 @RequiredArgsConstructor
@@ -35,6 +36,12 @@ public class UsuarioController implements UsuarioControllerApi {
     @PostMapping("/public/usuario")
     public ResponseEntity<Void> cadastrarDoador(@RequestBody final CadastrarUsuarioRequest request) {
         cadastrarUsuarioService.cadastrar(request, DOADOR);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/public/casa")
+    public ResponseEntity<Void> cadastrarCasa(@RequestBody final CadastrarUsuarioRequest request) {
+        cadastrarUsuarioService.cadastrar(request, CASA);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
