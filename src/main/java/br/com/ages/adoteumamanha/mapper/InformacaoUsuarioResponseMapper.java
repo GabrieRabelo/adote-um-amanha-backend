@@ -8,12 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Component
 public class InformacaoUsuarioResponseMapper implements Function<Usuario, InformacaoUsuarioResponse> {
 
-    public InformacaoUsuarioResponse apply(final Usuario usuario) {
+    public InformacaoUsuarioResponse apply(final Usuario usuario,
+                                           final int numeroDoacoesFinalizadas,
+                                           final int numeroDoacoesRecusadas) {
         return InformacaoUsuarioResponse.builder()
                 .withNome(usuario.getNome())
                 .withAtivo(usuario.getAtivo())
@@ -22,9 +25,14 @@ public class InformacaoUsuarioResponseMapper implements Function<Usuario, Inform
                 .withTelefone(usuario.getTelefone())
                 .withPerfil(usuario.getPerfil())
                 .withEndereco(usuario.getEndereco())
+                .withDoacoesAprovadas(numeroDoacoesFinalizadas)
+                .withDoacoesRecusadas(numeroDoacoesRecusadas)
                 .build();
-        //findPedidosByIdUsuarioETipoDoacao --> separar a lista em aprovadas e recusadas ignorar as pendentes
     }
 
+    @Override
+    public InformacaoUsuarioResponse apply(Usuario usuario) {
+        return null;
+    }
 }
 

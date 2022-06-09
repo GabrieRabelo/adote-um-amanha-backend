@@ -1,5 +1,8 @@
 package br.com.ages.adoteumamanha.service.usuarios;
 
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
+import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.InformacaoUsuarioResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
@@ -8,11 +11,15 @@ import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.InformacaoUsuarioResponseMapper;
 import br.com.ages.adoteumamanha.mapper.UsuarioResponseMapper;
+import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
 
@@ -22,6 +29,7 @@ import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
 public class BuscarUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PedidoRepository pedidoRepository;
     private final CasaDescricaoResponseMapper casaDescricaoResponseMapper;
     private final UsuarioResponseMapper usuarioResponseMapper;
     private final InformacaoUsuarioResponseMapper informacaoUsuarioResponseMapper;
@@ -43,9 +51,15 @@ public class BuscarUsuarioService {
     public InformacaoUsuarioResponse buscarInformacoesUsuarioPorId(final Long id) {
         log.info("Buscando usuário pelo id: {}", id);
 
-        return usuarioRepository.findById(id)
-                //faz a busca do nro de doações
-                .map(it -> informacaoUsuarioResponseMapper.apply(it))
-                .orElseThrow(() -> new ApiException(Mensagem.USUARIO_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND));
+        int numeroDoacoesFinalizadas = pedidoRepository.findByIdUsuarioAndTipoPedidoAndStatus(id, TipoPedido.DOACAO, Status.FINALIZADA);
+        int numeroDoacoesRecusadas = pedidoRepository.findByIdUsuarioAndTipoPedidoAndStatus(id, TipoPedido.DOACAO, Status.RECUSADO);
+
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+
+        if(usuario.isPresent()){
+            Usuario usuarioExistente = usuario.get();
+            return informacaoUsuarioResponseMapper.apply(usuarioExistente, numeroDoacoesFinalizadas, numeroDoacoesRecusadas);
+        }
+        throw new ApiException(Mensagem.USUARIO_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND);
     }
 }

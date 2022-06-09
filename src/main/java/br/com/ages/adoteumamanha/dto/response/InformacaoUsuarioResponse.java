@@ -22,7 +22,7 @@ public class InformacaoUsuarioResponse implements Serializable {
     private String telefone;
     private final Perfil perfil;
     private Endereco endereco;
-    // private int doacoesAprovadas;
-    // private int doacoesRecusadas;
+    private int doacoesAprovadas;
+    private int doacoesRecusadas;
 
 }
