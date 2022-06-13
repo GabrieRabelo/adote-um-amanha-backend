@@ -49,15 +49,14 @@ public class BuscarUsuarioService {
     public InformacaoUsuarioResponse buscarInformacoesUsuarioPorId(final Long id) {
         log.info("Buscando usuário pelo id: {}", id);
 
-        int numeroDoacoesFinalizadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.FINALIZADA);
-        int numeroDoacoesRecusadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.RECUSADO);
-
         Optional<Usuario> usuario = usuarioRepository.findById(id);
 
-        if(usuario.isPresent()){
-            Usuario usuarioExistente = usuario.get();
-            return informacaoUsuarioResponseMapper.apply(usuarioExistente, numeroDoacoesFinalizadas, numeroDoacoesRecusadas);
+        if(usuario.isEmpty()){
+            throw new ApiException(Mensagem.USUARIO_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND);
         }
-        throw new ApiException(Mensagem.USUARIO_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND);
+        Usuario usuarioExistente = usuario.get();
+        int numeroDoacoesFinalizadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.FINALIZADA);
+        int numeroDoacoesRecusadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.RECUSADO);
+        return informacaoUsuarioResponseMapper.apply(usuarioExistente, numeroDoacoesFinalizadas, numeroDoacoesRecusadas);
     }
 }
