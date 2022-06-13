@@ -69,31 +69,32 @@ public class MatchAdminService {
 
     }
 
-    public void sendEmail(Match match) {
-        List<String> users = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
-                .map(Usuario::getEmail)
-                .collect(Collectors.toList());
+    private void sendEmail(Match match) {
+        new Thread(() -> {
+            List<String> users = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
+                    .map(Usuario::getEmail)
+                    .collect(Collectors.toList());
 
 
-        String assunto = match.getNecessidade().getAssunto();
-        String data = match.getDataCriacao().toString();
-        String categoria = match.getNecessidade().getCategoria().name();
-        String subCategoria = match.getNecessidade().getSubcategoria().name();
-        String descricao = match.getDescricao();
-        String nomeCasa = match.getNecessidade().getUsuario().getNome();
-        String nomeDoador = match.getDoacao().getUsuario().getNome();
+            String assunto = match.getNecessidade().getAssunto();
+            String data = match.getDataCriacao().toString();
+            String categoria = match.getNecessidade().getCategoria().name();
+            String subCategoria = match.getNecessidade().getSubcategoria().name();
+            String descricao = match.getDescricao();
+            String nomeCasa = match.getNecessidade().getUsuario().getNome();
+            String nomeDoador = match.getDoacao().getUsuario().getNome();
 
-        String[] emails = users.toArray(new String[0]);
-        String subject = "Novo vínculo cadastrado!";
-        String text = "<h1>Novo Match Cadastrado!<h1>\n";
-                text += "<h2>Assunto: " + assunto + "</h2>\n";
-                text += "<h3>Data: " + data + "</h3>\n";
-                text += "<h3>Categoria: " + categoria + "</h3>\n";
-                text += "<h3>SubCategoria: " + subCategoria + "</h3>\n";
-                text += "<p>Descrição: " + descricao + "</p>\n";
-                text += "<h3>Casa: " + nomeCasa + "</h3>\n";
-                text += "<h3>Doador: " + nomeDoador + "</h3>\n";
-        mailService.sendEmail(emails, subject, text, true);
+            String[] emails = users.toArray(new String[0]);
+            String subject = "Novo vínculo cadastrado!";
+            String text = "<h1>Novo Match Cadastrado!<h1>\n";
+            text += "<h2>Assunto: " + assunto + "</h2>\n";
+            text += "<h3>Data: " + data + "</h3>\n";
+            text += "<h3>Categoria: " + categoria + "</h3>\n";
+            text += "<h3>SubCategoria: " + subCategoria + "</h3>\n";
+            text += "<p>Descrição: " + descricao + "</p>\n";
+            text += "<h3>Casa: " + nomeCasa + "</h3>\n";
+            text += "<h3>Doador: " + nomeDoador + "</h3>\n";
+            mailService.sendEmail(emails, subject, text, true);
+        }).start();
     }
 }
-
