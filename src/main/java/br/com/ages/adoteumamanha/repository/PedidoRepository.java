@@ -46,4 +46,11 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
                                                              @Param("tipos") final List<TipoPedido> tipoPedidos,
                                                              @Param("idUsuario") final Long idUsuario);
 
+    @Query(value = "SELECT COUNT(p) FROM Pedido p " +
+            " WHERE 1 = 1" +
+            "and (coalesce(:idUsuario) is null  or (p.usuario.id = :idUsuario))" +
+            "and p.status = :statusPedido")
+    int findNumberByIdUsuarioAndTipoPedidoAndStatus(@Param("idUsuario") final Long idUsuario,
+                                                    @Param("statusPedido") final Status statusPedido);
+
 }
