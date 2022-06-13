@@ -1,7 +1,7 @@
 ECHO OFF
 
 echo Build Stage
-call mvn install -DskipTests
+call mvn install -DskipTests -Djacoco.skip=true
 echo Build error level: %ERRORLEVEL%
 
 if ["%ERRORLEVEL%"]==["1"] (
