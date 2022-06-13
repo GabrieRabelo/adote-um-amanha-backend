@@ -16,7 +16,6 @@ public class InformacaoUsuarioResponse implements Serializable {
     private static final long serialVersionUID = -2338010642651294681L;
 
     private final String nome;
-    private Boolean ativo;
     private String email;
     private String documento;
     private String telefone;

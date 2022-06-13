@@ -2,7 +2,6 @@ package br.com.ages.adoteumamanha.service.usuarios;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
-import br.com.ages.adoteumamanha.domain.enumeration.TipoPedido;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.InformacaoUsuarioResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
@@ -15,7 +14,6 @@ import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +49,8 @@ public class BuscarUsuarioService {
     public InformacaoUsuarioResponse buscarInformacoesUsuarioPorId(final Long id) {
         log.info("Buscando usuário pelo id: {}", id);
 
-        int numeroDoacoesFinalizadas = pedidoRepository.findByIdUsuarioAndTipoPedidoAndStatus(id, TipoPedido.DOACAO, Status.FINALIZADA);
-        int numeroDoacoesRecusadas = pedidoRepository.findByIdUsuarioAndTipoPedidoAndStatus(id, TipoPedido.DOACAO, Status.RECUSADO);
+        int numeroDoacoesFinalizadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.FINALIZADA);
+        int numeroDoacoesRecusadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.RECUSADO);
 
         Optional<Usuario> usuario = usuarioRepository.findById(id);
 

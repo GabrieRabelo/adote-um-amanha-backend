@@ -12,14 +12,13 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Component
-public class InformacaoUsuarioResponseMapper implements Function<Usuario, InformacaoUsuarioResponse> {
+public class InformacaoUsuarioResponseMapper{
 
     public InformacaoUsuarioResponse apply(final Usuario usuario,
                                            final int numeroDoacoesFinalizadas,
                                            final int numeroDoacoesRecusadas) {
         return InformacaoUsuarioResponse.builder()
                 .withNome(usuario.getNome())
-                .withAtivo(usuario.getAtivo())
                 .withDocumento(usuario.getDocumento())
                 .withEmail(usuario.getEmail())
                 .withTelefone(usuario.getTelefone())
@@ -28,11 +27,6 @@ public class InformacaoUsuarioResponseMapper implements Function<Usuario, Inform
                 .withDoacoesAprovadas(numeroDoacoesFinalizadas)
                 .withDoacoesRecusadas(numeroDoacoesRecusadas)
                 .build();
-    }
-
-    @Override
-    public InformacaoUsuarioResponse apply(Usuario usuario) {
-        return null;
     }
 }
 
