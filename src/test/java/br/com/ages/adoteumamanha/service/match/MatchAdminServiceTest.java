@@ -23,7 +23,9 @@ import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.ADMIN;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.FINALIZADA;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.DOACAO;
 import static br.com.ages.adoteumamanha.domain.enumeration.TipoPedido.NECESSIDADE;
+import static br.com.ages.adoteumamanha.exception.Mensagem.REQUEST_INVALIDO;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -57,6 +59,29 @@ public class MatchAdminServiceTest {
         userPrincipal = UserPrincipal.create(Fixture.make(Usuario.builder())
                 .withPerfil(ADMIN)
                 .build());
+    }
+
+    @Test
+    public void request_invalida_idDoacao() {
+
+        try {
+            service.cadastrar(null, 1L, null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+            verifyNoInteractions(matchRepository, matchMapper, matchValidator, buscarPedidoService, descricaoMatchResponseMapper);
+        }
+    }
+
+
+    @Test
+    public void request_invalida_idNecessidade() {
+
+        try {
+            service.cadastrar(1L, null, null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+            verifyNoInteractions(matchRepository, matchMapper, matchValidator, buscarPedidoService, descricaoMatchResponseMapper);
+        }
     }
 
     @Test

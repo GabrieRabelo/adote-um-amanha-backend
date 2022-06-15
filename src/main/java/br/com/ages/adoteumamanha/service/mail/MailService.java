@@ -1,40 +1,39 @@
 package br.com.ages.adoteumamanha.service.mail;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+@Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MailService {
 
     private final JavaMailSender javaMailSender;
+    @Value("${mail.remetente}")
+    private String emailRemetente;
 
-    public String sendEmail() {
+    public void sendEmail(final String[] destinatarios, final String assunto, final String corpo, final Boolean isHtml) {
         try {
+
             MimeMessage mail = javaMailSender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mail, true);
 
-            message.setFrom("adoteumamanha@gmail.com");
-//            Exemplo de envio para multiplos usuários.
-//            message.setTo(InternetAddress.parse("adoteumamanha@gmail.com,cleysonbragadeoliveira@gmail.com"));
-//            message.setTo(new String[]{"adoteumamanha@gmail.com","cleysonbragadeoliveira@gmail.com"});
-            message.setTo("adoteumamanha@gmail.com");
-            message.setSubject("subject");
-            message.setText("Sample message", false);
+            message.setFrom(emailRemetente);
+            message.setTo(destinatarios);
+            message.setSubject(assunto);
+            message.setText(corpo, isHtml);
 
             javaMailSender.send(mail);
 
         } catch (Exception e) {
-            return(e.getMessage());
+            log.error("Erro ao enviar email: ", e.getMessage());
         }
-
-        return "ok";
     }
-
 
 }

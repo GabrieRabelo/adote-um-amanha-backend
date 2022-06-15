@@ -8,7 +8,7 @@ spring:
     name: adote-um-amanha
   jpa:
     hibernate:
-      ddl-auto: ${DB_DDL:update}
+      ddl-auto: ${DB_DDL:create-drop}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -28,7 +28,11 @@ security:
   public:
     path: "/public/**"
 
+url:
+  adote-um-amanha: ${URL_ADOTE_UM_AMANHA:http://adote-um-amanha.duckdns.org/}
+
 mail:
+  remetente: ${EMAIL_REMETENTE:adoteumamanha@gmail.com}
   smtp:
     host: ${smtp_host:smtp.mailtrap.io}
     port: ${smtp_port:2525}
@@ -36,3 +40,9 @@ mail:
     pass: ${smtp_pass:d6d6d7d4c82ebc}
     conf:
       debug: true
+
+resetar-password-token:
+  ttl: ${TTL_RESETAR_PASSWORD:10} # minutos
+
+cron:
+  deletar-token-expirado: ${CRON_DELETAR_TOKEN_EXPIRADO:0 */5 * ? * *}
