@@ -3,6 +3,7 @@ package br.com.ages.adoteumamanha.controller;
 import br.com.ages.adoteumamanha.controller.api.UsuarioControllerApi;
 import br.com.ages.adoteumamanha.dto.request.CadastrarUsuarioRequest;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
+import br.com.ages.adoteumamanha.dto.response.InformacaoUsuarioResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.service.usuarios.BuscarUsuarioService;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
 
@@ -36,6 +39,12 @@ public class UsuarioController implements UsuarioControllerApi {
     public ResponseEntity<Void> cadastrarDoador(@RequestBody final CadastrarUsuarioRequest request) {
         cadastrarUsuarioService.cadastrar(request, DOADOR);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/usuario/{id}")
+    @RolesAllowed({"ADMIN"})
+    public ResponseEntity<InformacaoUsuarioResponse> buscarUsuarioPorId(@PathVariable final Long id) {
+        return ResponseEntity.ok(buscarUsuarioService.buscarInformacoesUsuarioPorId(id));
     }
 
 }

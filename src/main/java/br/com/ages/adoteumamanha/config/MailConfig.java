@@ -1,9 +1,8 @@
 package br.com.ages.adoteumamanha.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -28,7 +27,7 @@ public class MailConfig {
     private String debug;
 
     @Bean
-    public JavaMailSender javaMailSender()  {
+    public JavaMailSender javaMailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
         Properties props = javaMailSender.getJavaMailProperties();
