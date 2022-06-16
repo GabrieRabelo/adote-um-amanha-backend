@@ -29,8 +29,6 @@ import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE
 @RequiredArgsConstructor
 public class MatchDoadorService {
 
-
-
     private final MatchRepository repository;
     private final PedidoMapper pedidoMapper;
     private final BuscarPedidoService buscarPedidoService;
@@ -64,5 +62,6 @@ public class MatchDoadorService {
         log.info("Cadastrando novo match, do usuario com id: {}, para a necessidade da casa com id {}", doador.getId(), idNecessidade);
         repository.save(match);
     }
+
 }
 

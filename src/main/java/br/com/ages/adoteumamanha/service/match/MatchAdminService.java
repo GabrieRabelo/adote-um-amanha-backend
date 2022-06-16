@@ -72,10 +72,9 @@ public class MatchAdminService {
 
     private void sendEmail(Match match) {
         new Thread(() -> {
-            List<String> users = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
+            String[] emails = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
                     .map(Usuario::getEmail)
-                    .collect(Collectors.toList());
-            String[] emails = users.toArray(new String[0]);
+                    .toArray(String[]::new);
 
             String assunto = match.getNecessidade().getAssunto();
             String data = match.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -88,15 +87,15 @@ public class MatchAdminService {
             String nomeDoador = match.getDoacao().getUsuario().getNome();
 
             String subject = "Novo vínculo cadastrado!";
-            String text = "<h1>Um novo vínculo foi cadastrado!<h1>\n";
-            text += "<h2>Descrição: " + descricao + "</h2>\n";
-            text += "<h2>Data de cadastro: " + data + "</h2>\n";
-            text += "<h2>Assunto: " + assunto + "</h2>\n";
-            text += "<h3>Categoria: " + categoria + "</h3>\n";
-            text += "<h3>Sub categoria: " + subCategoria + "</h3>\n";
-            text += "<h3>Casa: " + nomeCasa + "</h3>\n";
+            String text = "<h1>Um novo vínculo foi cadastrado!</h1>\n";
+            text += "<p>Descrição: " + descricao + "</p>\n";
+            text += "<p>Data de cadastro: " + data + "</p>\n";
+            text += "<p>Assunto: " + assunto + "</p>\n";
+            text += "<p>Categoria: " + categoria + "</p>\n";
+            text += "<p>Sub categoria: " + subCategoria + "</p>\n";
+            text += "<p>Casa: " + nomeCasa + "</p>\n";
             text += "<p>Descrição da necessidade: " + descricaoNecessidade + "</p>\n";
-            text += "<h3>Doador: " + nomeDoador + "</h3>\n";
+            text += "<p>Doador: " + nomeDoador + "</p>\n";
             text += "<p>Descrição da doação: " + descricaoDoacao + "</p>\n";
             mailService.sendEmail(emails, subject, text, true);
         }).start();
