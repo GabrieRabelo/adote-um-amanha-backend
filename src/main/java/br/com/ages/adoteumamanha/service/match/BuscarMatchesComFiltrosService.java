@@ -32,7 +32,8 @@ public class BuscarMatchesComFiltrosService {
     private final MatchesResponseMapper matchesResponseMapper;
 
     public MatchesResponse buscar(final Integer pagina,
-                                  final Integer tamanho, final String ordenacao,
+                                  final Integer tamanho,
+                                  final String ordenacao,
                                   final Direcao direcao,
                                   final List<Categoria> categorias,
                                   final List<Subcategoria> subcategorias,

@@ -1,11 +1,16 @@
 package br.com.ages.adoteumamanha.service;
 
+import br.com.ages.adoteumamanha.domain.entity.Endereco;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
+import br.com.ages.adoteumamanha.domain.enumeration.Status;
+import br.com.ages.adoteumamanha.dto.response.InformacaoUsuarioResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.fixture.Fixture;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
+import br.com.ages.adoteumamanha.mapper.InformacaoUsuarioResponseMapper;
 import br.com.ages.adoteumamanha.mapper.UsuarioResponseMapper;
+import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import br.com.ages.adoteumamanha.service.usuarios.BuscarUsuarioService;
 import org.junit.Test;
@@ -30,12 +35,17 @@ public class BuscarUsuarioServiceTest {
 
     @Mock
     private UsuarioRepository repository;
+    @Mock
+    private PedidoRepository pedidoRepository;
 
     @Mock
     private CasaDescricaoResponseMapper casaDescricaoResponseMapper;
 
     @Mock
     private UsuarioResponseMapper usuarioResponseMapper;
+
+    @Mock
+    private InformacaoUsuarioResponseMapper informacaoUsuarioResponseMapper;
 
     @Test
     public void buscar_casa_ok() {
@@ -72,6 +82,48 @@ public class BuscarUsuarioServiceTest {
 
         verify(repository).findById(id);
         verify(usuarioResponseMapper).apply(usuario);
+    }
+
+    @Test
+    public void buscar_informacoes_usuario_por_id_ok() {
+
+        long id = 1;
+        var usuario = Fixture.make(Usuario.builder()).build();
+
+        when(pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.FINALIZADA)).thenReturn(2);
+        when(pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.RECUSADO)).thenReturn(1);
+
+        when(repository.findById(id)).thenReturn(Optional.of(usuario));
+        when(informacaoUsuarioResponseMapper.apply(usuario, 2, 1)).thenCallRealMethod();
+
+        var result = service.buscarInformacoesUsuarioPorId(id);
+
+        var expectedResult = InformacaoUsuarioResponse.builder()
+                .withNome(usuario.getNome())
+                .withDocumento(usuario.getDocumento())
+                .withEmail(usuario.getEmail())
+                .withTelefone(usuario.getTelefone())
+                .withPerfil(usuario.getPerfil())
+                .withEndereco(usuario.getEndereco())
+                .withDoacoesAprovadas(2)
+                .withDoacoesRecusadas(1)
+                .build();
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+
+        verify(repository).findById(id);
+        verify(informacaoUsuarioResponseMapper).apply(usuario, 2, 1);
+    }
+
+    @Test
+    public void buscar_informacoes_usuario_por_id_erro() {
+
+        try {
+            service.buscarInformacoesUsuarioPorId(null);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(USUARIO_NAO_ENCONTRADO.getDescricao()));
+            verifyNoInteractions(informacaoUsuarioResponseMapper);
+        }
     }
 
     @Test

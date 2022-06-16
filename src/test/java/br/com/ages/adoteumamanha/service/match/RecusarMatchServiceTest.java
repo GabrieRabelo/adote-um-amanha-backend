@@ -15,14 +15,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static br.com.ages.adoteumamanha.domain.enumeration.Status.PENDENTE;
-import static br.com.ages.adoteumamanha.domain.enumeration.Status.RECUSADO;
+import static br.com.ages.adoteumamanha.domain.enumeration.Status.*;
+import static br.com.ages.adoteumamanha.exception.Mensagem.*;
 import static br.com.ages.adoteumamanha.fixture.Fixture.make;
 import static java.util.Optional.of;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RecusarMatchServiceTest {
@@ -66,5 +65,96 @@ public class RecusarMatchServiceTest {
         assertEquals(PENDENTE, matchSalvo.getNecessidade().getStatus());
         assertEquals(matchSalvo.getFinalizadoPor(), userPrincipal.getEmail());
         assertNotNull(matchSalvo.getDataFechamento());
+    }
+
+    @Test
+    public void match_nao_encontrado() {
+
+        try {
+            service.recusar(null, userPrincipal, make(RecusarMatchRequest.builder()).build());
+
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(MATCH_NAO_ENCONTRADO.getDescricao()));
+            verify(repository, times(0)).save(any());
+        }
+    }
+
+    @Test
+    public void request_null() {
+
+        final Long idMatch = 1L;
+
+        try {
+            service.recusar(idMatch, userPrincipal, null);
+
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+            verify(repository, times(0)).save(any());
+        }
+    }
+
+    @Test
+    public void motivo_null() {
+
+        final Long idMatch = 1L;
+        final Match match = make(Match.builder())
+                .withStatus(Status.RECUSADO)
+                .build();
+
+        final RecusarMatchRequest request = make(RecusarMatchRequest.builder())
+                .withMotivoRecusa(null)
+                .build();
+
+        try {
+            service.recusar(idMatch, userPrincipal, request);
+
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(REQUEST_INVALIDO.getDescricao()));
+            verify(repository, times(0)).save(any());
+        }
+    }
+
+    @Test
+    public void match_recusado() {
+
+        final Long idMatch = 1L;
+        final Match match = make(Match.builder())
+                .withStatus(Status.RECUSADO)
+                .build();
+
+        final RecusarMatchRequest request = make(RecusarMatchRequest.builder())
+                .build();
+
+        when(repository.findById(idMatch)).thenReturn(of(match));
+
+        try {
+            service.recusar(idMatch, userPrincipal, request);
+
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(MATCH_FINALIZADA_OU_RECUSADA.getDescricao()));
+            verify(repository, times(0)).save(any());
+        }
+    }
+
+    @Test
+    public void match_finalizado() {
+
+        final Long idMatch = 1L;
+        final Match match = make(Match.builder())
+                .withStatus(FINALIZADA)
+                .build();
+
+        final RecusarMatchRequest request = make(RecusarMatchRequest.builder())
+                .build();
+
+        when(repository.findById(idMatch)).thenReturn(of(match));
+
+        try {
+            service.recusar(idMatch, userPrincipal, request);
+
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(MATCH_FINALIZADA_OU_RECUSADA.getDescricao()));
+            verify(repository, times(0)).save(any());
+        }
     }
 }

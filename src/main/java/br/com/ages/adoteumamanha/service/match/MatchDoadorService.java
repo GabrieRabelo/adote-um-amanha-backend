@@ -2,11 +2,14 @@ package br.com.ages.adoteumamanha.service.match;
 
 import br.com.ages.adoteumamanha.domain.entity.Match;
 import br.com.ages.adoteumamanha.domain.entity.Pedido;
+import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
 import br.com.ages.adoteumamanha.mapper.MatchMapper;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
 import br.com.ages.adoteumamanha.repository.MatchRepository;
+import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
+
 import br.com.ages.adoteumamanha.service.pedidos.BuscarPedidoService;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import br.com.ages.adoteumamanha.validator.MatchValidator;
@@ -15,6 +18,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.ADMIN;
 import static br.com.ages.adoteumamanha.domain.enumeration.Status.MATCH_PENDENTE;
 
 @Slf4j
