@@ -14,4 +14,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByIdAndPerfil(Long id, Perfil perfil);
 
+    Usuario findByPerfilAndId(Perfil perfil, Long id);
 }
