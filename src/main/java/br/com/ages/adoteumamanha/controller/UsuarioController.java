@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 
+import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.CASA;
 import static br.com.ages.adoteumamanha.domain.enumeration.Perfil.DOADOR;
 import static org.springframework.data.domain.Sort.by;
 
@@ -46,6 +47,12 @@ public class UsuarioController implements UsuarioControllerApi {
         cadastrarUsuarioService.cadastrar(request, DOADOR);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @RolesAllowed({"ADMIN"})
+    @PostMapping("/casa")
+    public ResponseEntity<Void> cadastrarCasa(@RequestBody final CadastrarUsuarioRequest request) {
+        cadastrarUsuarioService.cadastrar(request, CASA);
+        return new ResponseEntity<>(HttpStatus.CREATED);
 
     @GetMapping(value = "/usuario/{id}")
     @RolesAllowed({"ADMIN"})
