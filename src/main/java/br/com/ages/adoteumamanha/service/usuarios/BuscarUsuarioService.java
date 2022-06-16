@@ -4,16 +4,19 @@ import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
 import br.com.ages.adoteumamanha.dto.response.InformacaoUsuarioResponse;
+import br.com.ages.adoteumamanha.dto.response.ResumoUsuariosResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.InformacaoUsuarioResponseMapper;
+import br.com.ages.adoteumamanha.mapper.ResumoUsuariosMapper;
 import br.com.ages.adoteumamanha.mapper.UsuarioResponseMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,7 @@ public class BuscarUsuarioService {
     private final CasaDescricaoResponseMapper casaDescricaoResponseMapper;
     private final UsuarioResponseMapper usuarioResponseMapper;
     private final InformacaoUsuarioResponseMapper informacaoUsuarioResponseMapper;
+    private final ResumoUsuariosMapper resumoUsuariosMapper;
 
     public CasaResponse buscarCasaPorId(final Long id) {
         log.info("Buscando casa pelo id: {}", id);
@@ -58,5 +62,13 @@ public class BuscarUsuarioService {
         int numeroDoacoesFinalizadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.FINALIZADA);
         int numeroDoacoesRecusadas = pedidoRepository.findNumberByIdUsuarioAndTipoPedidoAndStatus(id, Status.RECUSADO);
         return informacaoUsuarioResponseMapper.apply(usuarioExistente, numeroDoacoesFinalizadas, numeroDoacoesRecusadas);
+    }
+
+    public ResumoUsuariosResponse buscarDoadores(String nome, Pageable pageable) {
+
+        var usuarios =  usuarioRepository.findAllDoadorComFiltro(nome, pageable);
+
+        return resumoUsuariosMapper.apply(usuarios);
+
     }
 }
