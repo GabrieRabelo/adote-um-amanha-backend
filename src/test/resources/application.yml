@@ -19,3 +19,22 @@ security:
     expiration: ${JWT_EXPIRATION:86400000} # 1 dia em sec
   public:
     path: "/public/**"
+
+url:
+  adote-um-amanha: ${URL_ADOTE_UM_AMANHA:http://adote-um-amanha.duckdns.org/}
+
+mail:
+  remetente: ${EMAIL_REMETENTE:adoteumamanha@gmail.com}
+  smtp:
+    host: ${smtp_host:smtp.mailtrap.io}
+    port: ${smtp_port:2525}
+    user: ${smtp_user:313504c6a12950}
+    pass: ${smtp_pass:d6d6d7d4c82ebc}
+    conf:
+      debug: true
+
+resetar-password-token:
+  ttl: ${TTL_RESETAR_PASSWORD:10} # minutos
+
+cron:
+  deletar-token-expirado: ${CRON_DELETAR_TOKEN_EXPIRADO:0 */5 * ? * *}

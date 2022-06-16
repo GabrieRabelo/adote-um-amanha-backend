@@ -53,6 +53,7 @@ public class UsuarioController implements UsuarioControllerApi {
     public ResponseEntity<Void> cadastrarCasa(@RequestBody final CadastrarUsuarioRequest request) {
         cadastrarUsuarioService.cadastrar(request, CASA);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
     @GetMapping(value = "/usuario/{id}")
     @RolesAllowed({"ADMIN"})
