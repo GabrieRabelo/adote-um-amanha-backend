@@ -4,15 +4,19 @@ import br.com.ages.adoteumamanha.domain.entity.Pedido;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.exception.ApiException;
+import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.PedidoMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import br.com.ages.adoteumamanha.validator.CadastrarPedidoRequestValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import br.com.ages.adoteumamanha.service.mail.MailService;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import java.time.format.DateTimeFormatter;
@@ -42,41 +46,37 @@ public class CadastrarPedidoService {
 
         log.info("Cadastrando pedido para o usuário com id: {}", userPrincipal.getId());
         repository.save(entity);
-        sendEmail(entity);
-        log.info("Enviando email aos Admins");
+        if(entity.getTipoPedido() == DOACAO){
+            log.info("Enviando email aos Admins");
+            sendEmail(entity);
+        }
     }
     private void sendEmail(Pedido pedido) {
         new Thread(() -> {
-            List<String> users = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
+            String[] emails = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
                     .map(Usuario::getEmail)
-                    .collect(Collectors.toList());
-            String[] emails = users.toArray(new String[0]);
+                    .toArray(String[]::new);
 
             String assunto = pedido.getAssunto();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = pedido.getDataHora().format(formatter);
+            String data = pedido.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             String categoria = pedido.getCategoria().name();
             String subCategoria = pedido.getSubcategoria().name();
             String descricao = pedido.getDescricao();
-            String tipo;
-            Perfil perfil;
-            if(pedido.getTipoPedido() == DOACAO){
-                tipo = "doação";
-                perfil = DOADOR;
+            Optional<Usuario> user = usuarioRepository.findById(pedido.getUsuario().getId());
+            String nomeUsuario;
+            if(user.isPresent()){
+                nomeUsuario = user.get().getNome();
             } else {
-                tipo = "necessidade";
-                perfil = CASA;
+                throw new ApiException(Mensagem.USUARIO_NAO_ENCONTRADO.getDescricao(), HttpStatus.NOT_FOUND);
             }
-
-            String nomeUsuario = usuarioRepository.findByPerfilAndId(perfil, pedido.getUsuario().getId()).getNome();
-            String subject = "Nova " + tipo + " cadastrada!";
-            String text = "<h1>Uma nova " + tipo + " foi cadastrada!<h1>\n";
-            text += "<h2>Algumas informações importantes da " + tipo + " cadastrada</h2>\n";
-            text += "<h2>Assunto: " + assunto + "</h2>\n";
-            text += "<h3>Data: " + data + "</h3>\n";
-            text += "<h3>Categoria: " + categoria + "</h3>\n";
-            text += "<h3>Subcategoria: " + subCategoria + "</h3>\n";
-            text += "<h4>Usuário: " + nomeUsuario + "</h4>\n";
+            String subject = "Nova doação cadastrada!";
+            String text = "<h1>Uma nova doação foi cadastrada!</h1>\n";
+            text += "<p>Algumas informações importantes da doação cadastrada</p>\n";
+            text += "<p>Assunto: " + assunto + "</p>\n";
+            text += "<p>Data: " + data + "</p>\n";
+            text += "<p>Categoria: " + categoria + "</p>\n";
+            text += "<p>Subcategoria: " + subCategoria + "</p>\n";
+            text += "<p>Usuário: " + nomeUsuario + "</p>\n";
             text += "<p>Descrição: " + descricao + "</p>\n";
             mailService.sendEmail(emails, subject, text, true);
         }).start();
