@@ -1,7 +1,9 @@
 package br.com.ages.adoteumamanha.controller.api;
 
+import br.com.ages.adoteumamanha.domain.enumeration.Direcao;
 import br.com.ages.adoteumamanha.dto.request.CadastrarUsuarioRequest;
 import br.com.ages.adoteumamanha.dto.response.CasaResponse;
+import br.com.ages.adoteumamanha.dto.response.ResumoUsuariosResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
 import io.swagger.annotations.Api;
@@ -48,4 +50,18 @@ public interface UsuarioControllerApi {
             @ApiResponse(code = 500, message = "Erro Interno")
     })
     ResponseEntity<Void> cadastrarDoador(@RequestBody CadastrarUsuarioRequest request);
+
+    @ApiOperation(value = "Serviço responsável por preencher lista de doadores no front",
+            notes = "Serviço responsável por preencher lista de doadores no front")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<ResumoUsuariosResponse> buscarListaDeUsuarios(final Integer pagina,
+                                                                 final Integer tamanho,
+                                                                 final Direcao direcao,
+                                                                 final String ordenacao,
+                                                                 final String nome);
 }

@@ -1,14 +1,16 @@
-package br.com.ages.adoteumamanha.service;
+package br.com.ages.adoteumamanha.service.usuarios;
 
 import br.com.ages.adoteumamanha.domain.entity.Endereco;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.domain.enumeration.Perfil;
 import br.com.ages.adoteumamanha.domain.enumeration.Status;
 import br.com.ages.adoteumamanha.dto.response.InformacaoUsuarioResponse;
+import br.com.ages.adoteumamanha.dto.response.ResumoUsuariosResponse;
 import br.com.ages.adoteumamanha.dto.response.UsuarioResponse;
 import br.com.ages.adoteumamanha.fixture.Fixture;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.InformacaoUsuarioResponseMapper;
+import br.com.ages.adoteumamanha.mapper.ResumoUsuariosResponseMapper;
 import br.com.ages.adoteumamanha.mapper.UsuarioResponseMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
@@ -18,7 +20,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 import static br.com.ages.adoteumamanha.exception.Mensagem.CASA_NAO_ENCONTRADA;
@@ -46,6 +52,9 @@ public class BuscarUsuarioServiceTest {
 
     @Mock
     private InformacaoUsuarioResponseMapper informacaoUsuarioResponseMapper;
+
+    @Mock
+    private ResumoUsuariosResponseMapper resumoUsuariosResponseMapper;
 
     @Test
     public void buscar_casa_ok() {
@@ -146,5 +155,24 @@ public class BuscarUsuarioServiceTest {
             assertTrue(e.getMessage().contains(USUARIO_NAO_ENCONTRADO.getDescricao()));
             verifyNoInteractions(usuarioResponseMapper);
         }
+    }
+
+    @Test
+    public void buscar_lista_de_doadores() {
+        var page = Fixture.make(PageRequest.class);
+        var name = Fixture.make(String.class);
+
+        var usuario = Fixture.make(Usuario.class);
+        var userPage = new PageImpl<>(List.of(usuario));
+        var response = Fixture.make(ResumoUsuariosResponse.class);
+
+        when(repository.findAllDoadorComFiltro(name, page)).thenReturn(userPage);
+        when(resumoUsuariosResponseMapper.apply(userPage)).thenReturn(response);
+
+        service.buscarDoadores(name, page);
+
+        verify(repository).findAllDoadorComFiltro(any(), any());
+        verify(resumoUsuariosResponseMapper).apply(any());
+
     }
 }
