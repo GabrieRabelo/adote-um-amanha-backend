@@ -26,6 +26,7 @@ public class DescricaoPedidoResponseMapper implements Function<Pedido, Descricao
                         .withNomeUsuario(p.getUsuario().getNome())
                         .withUrlVideo(p.getUrlVideo())
                         .withTipo(p.getTipoPedido())
+                        .withMotivoRecusa(p.getMotivoRecusa())
                         .build())
                 .orElse(null);
     }

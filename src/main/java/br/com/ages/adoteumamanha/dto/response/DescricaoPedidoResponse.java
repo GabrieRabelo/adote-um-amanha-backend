@@ -31,5 +31,6 @@ public class DescricaoPedidoResponse implements Serializable {
 
     private final Status status;
     private final TipoPedido tipo;
+    private final String motivoRecusa;
 
 }

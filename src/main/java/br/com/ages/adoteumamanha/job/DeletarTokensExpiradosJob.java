@@ -1,7 +1,7 @@
 package br.com.ages.adoteumamanha.job;
 
 import br.com.ages.adoteumamanha.domain.entity.ResetarSenha;
-import br.com.ages.adoteumamanha.redis.ResetarSenhaRepository;
+import br.com.ages.adoteumamanha.repository.ResetarSenhaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

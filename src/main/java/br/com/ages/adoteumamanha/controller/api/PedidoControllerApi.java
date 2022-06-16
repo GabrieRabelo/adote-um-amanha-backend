@@ -3,6 +3,7 @@ package br.com.ages.adoteumamanha.controller.api;
 import br.com.ages.adoteumamanha.domain.enumeration.*;
 import br.com.ages.adoteumamanha.dto.request.AtualizarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.request.CadastrarPedidoRequest;
+import br.com.ages.adoteumamanha.dto.request.RecusarPedidoRequest;
 import br.com.ages.adoteumamanha.dto.response.DescricaoPedidoResponse;
 import br.com.ages.adoteumamanha.dto.response.PedidosResponse;
 import br.com.ages.adoteumamanha.security.UserPrincipal;
@@ -110,7 +111,7 @@ public interface PedidoControllerApi {
     })
     ResponseEntity<DescricaoPedidoResponse> buscarDescricaoNecessidade(@PathVariable final Long id);
 
-    @ApiOperation(value = "Serviço buscar um pedido especifico",
+    @ApiOperation(value = "Serviço buscar um pedido específico",
             notes = "Serviço responsável por buscar a descrição de um pedido especifico um id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Sucesso"),
@@ -122,5 +123,18 @@ public interface PedidoControllerApi {
     ResponseEntity<DescricaoPedidoResponse> buscarDescricaoPedido(@PathVariable final Long id,
                                                                   @RequestParam final TipoPedido tipoPedido,
                                                                   @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal);
+
+    @ApiOperation(value = "Serviço para recusar um pedido específico",
+            notes = "Serviço responsável por recusar um pedido dado seu id e o seu tipo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 400, message = "Solicitação Inválida"),
+            @ApiResponse(code = 401, message = "Token de acesso inválido"),
+            @ApiResponse(code = 403, message = "Acesso proibido"),
+            @ApiResponse(code = 500, message = "Erro Interno")
+    })
+    ResponseEntity<Void> recusarPedido(@PathVariable final Long id,
+                                                          @ApiIgnore @AuthenticationPrincipal final UserPrincipal userPrincipal,
+                                                          @RequestBody RecusarPedidoRequest recusarPedidoRequest);
 
 }

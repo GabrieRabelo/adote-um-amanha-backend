@@ -2,7 +2,7 @@ package br.com.ages.adoteumamanha.service.password;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.exception.ApiException;
-import br.com.ages.adoteumamanha.redis.ResetarSenhaRepository;
+import br.com.ages.adoteumamanha.repository.ResetarSenhaRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import br.com.ages.adoteumamanha.service.mail.MailService;
 import br.com.ages.adoteumamanha.util.TokenGeneratorUtils;
