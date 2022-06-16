@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,11 +60,13 @@ public class MatchAdminService {
         necesidade.setStatus(FINALIZADA);
         doacao.setStatus(FINALIZADA);
 
+        log.info("Cadastrando match da doação id: {} com necessidade id {} pelo administrador", idDoacao, idNecessidade);
+        Match savedMatch = repository.save(match);
+
         log.info("Enviando email aos Admins");
         sendEmail(match);
 
-        log.info("Cadastrando match da doação id: {} com necessidade id {} pelo administrador", idDoacao, idNecessidade);
-        return descricaoMatchResponseMapper.apply(repository.save(match));
+        return descricaoMatchResponseMapper.apply(savedMatch);
 
     }
 
@@ -72,26 +75,29 @@ public class MatchAdminService {
             List<String> users = usuarioRepository.findByPerfilAndAtivo(ADMIN, true).stream()
                     .map(Usuario::getEmail)
                     .collect(Collectors.toList());
-
+            String[] emails = users.toArray(new String[0]);
 
             String assunto = match.getNecessidade().getAssunto();
-            String data = match.getDataCriacao().toString();
+            String data = match.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             String categoria = match.getNecessidade().getCategoria().name();
             String subCategoria = match.getNecessidade().getSubcategoria().name();
             String descricao = match.getDescricao();
+            String descricaoNecessidade = match.getNecessidade().getDescricao();
+            String descricaoDoacao = match.getDoacao().getDescricao();
             String nomeCasa = match.getNecessidade().getUsuario().getNome();
             String nomeDoador = match.getDoacao().getUsuario().getNome();
 
-            String[] emails = users.toArray(new String[0]);
             String subject = "Novo vínculo cadastrado!";
-            String text = "<h1>Novo Match Cadastrado!<h1>\n";
+            String text = "<h1>Um novo vínculo foi cadastrado!<h1>\n";
+            text += "<h2>Descrição: " + descricao + "</h2>\n";
+            text += "<h2>Data de cadastro: " + data + "</h2>\n";
             text += "<h2>Assunto: " + assunto + "</h2>\n";
-            text += "<h3>Data: " + data + "</h3>\n";
             text += "<h3>Categoria: " + categoria + "</h3>\n";
-            text += "<h3>SubCategoria: " + subCategoria + "</h3>\n";
-            text += "<p>Descrição: " + descricao + "</p>\n";
+            text += "<h3>Sub categoria: " + subCategoria + "</h3>\n";
             text += "<h3>Casa: " + nomeCasa + "</h3>\n";
+            text += "<p>Descrição da necessidade: " + descricaoNecessidade + "</p>\n";
             text += "<h3>Doador: " + nomeDoador + "</h3>\n";
+            text += "<p>Descrição da doação: " + descricaoDoacao + "</p>\n";
             mailService.sendEmail(emails, subject, text, true);
         }).start();
     }
