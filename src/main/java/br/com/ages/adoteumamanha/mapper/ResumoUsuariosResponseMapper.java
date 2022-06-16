@@ -13,11 +13,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class ResumoUsuariosMapper implements Function<Page<Usuario>, ResumoUsuariosResponse> {
+public class ResumoUsuariosResponseMapper implements Function<Page<Usuario>, ResumoUsuariosResponse> {
 
     final ResumoUsuarioResponseMapper resumoUsuarioResponseMapper;
 
-    public ResumoUsuariosMapper(ResumoUsuarioResponseMapper resumoUsuarioResponseMapper) {
+    public ResumoUsuariosResponseMapper(ResumoUsuarioResponseMapper resumoUsuarioResponseMapper) {
         this.resumoUsuarioResponseMapper = resumoUsuarioResponseMapper;
     }
 

@@ -10,7 +10,7 @@ import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.CasaDescricaoResponseMapper;
 import br.com.ages.adoteumamanha.mapper.InformacaoUsuarioResponseMapper;
-import br.com.ages.adoteumamanha.mapper.ResumoUsuariosMapper;
+import br.com.ages.adoteumamanha.mapper.ResumoUsuariosResponseMapper;
 import br.com.ages.adoteumamanha.mapper.UsuarioResponseMapper;
 import br.com.ages.adoteumamanha.repository.PedidoRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
@@ -34,7 +34,7 @@ public class BuscarUsuarioService {
     private final CasaDescricaoResponseMapper casaDescricaoResponseMapper;
     private final UsuarioResponseMapper usuarioResponseMapper;
     private final InformacaoUsuarioResponseMapper informacaoUsuarioResponseMapper;
-    private final ResumoUsuariosMapper resumoUsuariosMapper;
+    private final ResumoUsuariosResponseMapper resumoUsuariosResponseMapper;
 
     public CasaResponse buscarCasaPorId(final Long id) {
         log.info("Buscando casa pelo id: {}", id);
@@ -68,7 +68,7 @@ public class BuscarUsuarioService {
 
         var usuarios =  usuarioRepository.findAllDoadorComFiltro(nome, pageable);
 
-        return resumoUsuariosMapper.apply(usuarios);
+        return resumoUsuariosResponseMapper.apply(usuarios);
 
     }
 }
