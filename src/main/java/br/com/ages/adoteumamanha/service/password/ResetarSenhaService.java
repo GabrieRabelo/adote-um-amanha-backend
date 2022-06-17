@@ -5,7 +5,7 @@ import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.NovaSenhaRequest;
 import br.com.ages.adoteumamanha.exception.ApiException;
 import br.com.ages.adoteumamanha.exception.Mensagem;
-import br.com.ages.adoteumamanha.redis.ResetarSenhaRepository;
+import br.com.ages.adoteumamanha.repository.ResetarSenhaRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

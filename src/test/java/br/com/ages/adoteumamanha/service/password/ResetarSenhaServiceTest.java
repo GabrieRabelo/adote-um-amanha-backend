@@ -3,7 +3,7 @@ package br.com.ages.adoteumamanha.service.password;
 import br.com.ages.adoteumamanha.domain.entity.ResetarSenha;
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.NovaSenhaRequest;
-import br.com.ages.adoteumamanha.redis.ResetarSenhaRepository;
+import br.com.ages.adoteumamanha.repository.ResetarSenhaRepository;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

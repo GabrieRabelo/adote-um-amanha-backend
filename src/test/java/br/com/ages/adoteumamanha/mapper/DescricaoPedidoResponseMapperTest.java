@@ -29,6 +29,7 @@ public class DescricaoPedidoResponseMapperTest {
         assertEquals(pedido.getUrlVideo(), response.getUrlVideo());
         assertEquals(pedido.getUsuario().getId(), response.getIdUsuario());
         assertEquals(pedido.getUsuario().getNome(), response.getNomeUsuario());
+        assertEquals(pedido.getMotivoRecusa(), response.getMotivoRecusa());
 
     }
 
