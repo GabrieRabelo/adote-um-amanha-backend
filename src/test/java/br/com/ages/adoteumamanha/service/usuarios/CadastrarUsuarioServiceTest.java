@@ -2,9 +2,12 @@ package br.com.ages.adoteumamanha.service.usuarios;
 
 import br.com.ages.adoteumamanha.domain.entity.Usuario;
 import br.com.ages.adoteumamanha.dto.request.CadastrarUsuarioRequest;
+import br.com.ages.adoteumamanha.exception.ApiException;
+import br.com.ages.adoteumamanha.exception.Mensagem;
 import br.com.ages.adoteumamanha.mapper.UsuarioMapper;
 import br.com.ages.adoteumamanha.repository.UsuarioRepository;
 import br.com.ages.adoteumamanha.validator.CadastrarUsuarioRequestValidator;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -44,6 +47,7 @@ public class CadastrarUsuarioServiceTest {
                 .withEmail("marcelo@email.com")
                 .build();
 
+        when(repository.existsByEmailOrDocumento(request.getEmail(), request.getDocumento())).thenReturn(Boolean.FALSE);
         when(mapper.apply(request, DOADOR)).thenCallRealMethod();
 
         service.cadastrar(request, DOADOR);
@@ -70,6 +74,22 @@ public class CadastrarUsuarioServiceTest {
         assertTrue(entity.getAtivo());
         assertEquals(DOADOR, entity.getPerfil());
 
+    }
+
+    @Test
+    public void cadastrar_cpf_ou_email_ja_existe() {
+        final CadastrarUsuarioRequest request = make(CadastrarUsuarioRequest.builder())
+                .withEmail("marcelo@email.com")
+                .build();
+
+        when(repository.existsByEmailOrDocumento(request.getEmail(), request.getDocumento())).thenReturn(Boolean.TRUE);
+        when(mapper.apply(request, DOADOR)).thenCallRealMethod();
+
+        Assertions.assertThatCode(()-> service.cadastrar(request, DOADOR))
+                .isInstanceOf(ApiException.class)
+                .hasMessage(Mensagem.EMAIL_OU_CPF_JA_CADASTRADO.getDescricao());
+
+        verify(validator).validar(request);
     }
 }
 

@@ -19,6 +19,6 @@ public class AtualizarPedidoRequest implements Serializable {
     private final String descricao;
     private final Categoria categoria;
     private final Subcategoria subcategoria;
-    private final String UrlVideo;
+    private final String urlVideo;
 
 }
